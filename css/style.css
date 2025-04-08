@@ -6,42 +6,70 @@
 
 :root {
     --primary-color: #3498db;
-    --header-text-color: #fff;
+    --primary-hover-color: #2980b9;
     --secondary-color: #2ecc71;
-    --main-text-color: #333;
+    --secondary-hover-color: #27ae60;
+    --primary-text-color: #fff;
+    --secondary-text-color: #333;
 
     --default-padding: 2em;
     --default-padding-secondary: 1em;
+
+    --border-radius: .25em;
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    color: var(--main-text-color);
+    color: var(--secondary-text-color);
 }
 
 button {
     border: 0;
     padding: var(--default-padding-secondary)  var(--default-padding) ;
+    border-radius: var(--border-radius);
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
+button.primary {
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+    &:hover {
+        background-color: var(--primary-hover-color);
+    }
+}
+button.secondary {
+    background-color: var(--secondary-color);
+    color: var(--primary-text-color);
+
+    &:hover {
+        background-color: var(--secondary-hover-color);
+    }
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
 #header{
-    height: 100px;
+    /* height: 100px; */
     background-color: var(--primary-color);
     padding: var(--default-padding);
-
+    display: flex;
+    align-content: flex-start;
+    gap: 1em;
 }
 
 #header h1{
-    color: var(--header-text-color);
+    color: var(--primary-text-color);
 }
 
-#header button.primary {
-    background-color: var(--primary-color);
-    color: var(--header-text-color);
 
-}
-#header button.secondary {
-    background-color: var(--secondary-color);
-    color: var(--header-text-color);
-
-}
