@@ -20,13 +20,24 @@
     </header>
 
     <main>
-        <div id="login">
-            <h2>Log in to Mybook</h2>
-            <input type="text" name="email" id="email" placeholder="Enter your email">
-            <input type="password" name="password" id="password" placeholder="Password">
-            <button class="primary">Login</button>
-            <p><a href="#">Forgotten Password?</a><a href="#">Sign Up for Mybook</a></p>
+        <div id="left-container">
+
         </div>
+
+        <div id="main-container">
+            <div id="login" class="container">
+                <h2>Log in to Mybook</h2>
+                <input type="text" name="email" id="email" placeholder="Enter your email">
+                <input type="password" name="password" id="password" placeholder="Password">
+                <button class="primary">Login</button>
+                <ul class="links">
+                    <li><a href="#">Forgotten Password?</a></li>
+                    <li><a href="#">Sign Up for Mybook</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="right-container"></div>
     </main>
 
     <footer>
