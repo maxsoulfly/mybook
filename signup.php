@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyBook | Log In</title>
+    <title>MyBook | Sign Up</title>
 
     <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,8 +16,7 @@
 <body>
     <header id="header">
         <h1>MyBook</h1>
-        <a href="signup.php" class="button secondary">Sign Up</a>
-
+        <button class="secondary">Sign Up</button>
     </header>
 
     <main>
@@ -27,7 +26,7 @@
 
         <div id="main-container">
             <div id="login" class="container">
-                <h2>Log in to Mybook</h2>
+                <h2>Sign Up to Mybook</h2>
                 <input type="text" name="email" id="email" placeholder="Enter your email">
                 <input type="password" name="password" id="password" placeholder="Password">
                 <button class="primary">Login</button>
