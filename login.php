@@ -2,7 +2,7 @@
 $page_title = "Log In";
 $page = "login";
 
-include('includes/header.php');
+include 'includes/header.php';
 ?>
 
 <main>
@@ -11,7 +11,7 @@ include('includes/header.php');
     </div>
 
     <div id="main-container">
-        <div id="login" class="container">
+        <div class="container form-container">
             <h2>Log in to Mybook</h2>
             <input type="text" name="email" id="email" placeholder="Enter your email">
             <input type="password" name="password" id="password" placeholder="Password">
@@ -27,4 +27,4 @@ include('includes/header.php');
 </main>
 
 
-<?php include('includes/footer.php'); ?>
+<?php include 'includes/footer.php'; ?>
