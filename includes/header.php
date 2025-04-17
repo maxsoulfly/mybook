@@ -17,14 +17,16 @@
 </head>
 
 <body>
-    <header id="header">
-        <h1><a href="/index.php">MyBook</a></h1>
-        <?php if ($page === "login"): ?>
-            <a href="<?= $BASE_URL ?>/pages/signup.php" class="button secondary">Sign Up</a>
+    <header id="header" class="<?= !empty($fullHeader) ? 'header-large' : '' ?>">
+        <?php if (!empty($fullHeader)): ?>
+            <h1><a href="<?= $BASE_URL ?>/index.php">MyBook</a></h1>
+            <a href="<?= $BASE_URL ?>/pages/<?= $page === 'login' ? 'signup' : 'login' ?>.php" class="button secondary">
+                <?= $page === 'login' ? 'Sign Up' : 'Log In' ?>
+            </a>
         <?php else: ?>
-            <a href="<?= $BASE_URL ?>/pages/login.php" class="button secondary">Log In</a>
+            <h1><a href="<?= $BASE_URL ?>/index.php">MyBook</a></h1>
+            <!-- <img src="<?= $BASE_URL ?>/assets/img/user1.jpg" alt="Profile" class="avatar-small"> -->
+            <!-- <span class="username">Maxx Dee</span> -->
+            <i class="mdi mdi-magnify"></i>
         <?php endif; ?>
-
-        <i class="mdi mdi-magnify"></i>
-
     </header>

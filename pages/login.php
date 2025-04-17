@@ -1,6 +1,7 @@
 <?php
 $page_title = "Log In";
 $page = "login";
+$fullHeader = true; // flag for big header
 
 include_once __DIR__ . '/../includes/header.php';
 ?>

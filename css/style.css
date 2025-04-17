@@ -74,20 +74,27 @@ a {
 a:hover {
     text-decoration: underline;
 }
-
 #header {
     background-color: var(--primary-color);
-    padding: var(--padding-default);
+    padding: var(--padding-small);
     display: flex;
     align-content: flex-start;
     gap: var(--padding-small);
     box-shadow: var(--shadow-default);
 }
 
+#header.header-large {
+    align-items: center;
+    padding: var(--padding-bigger);
+    gap: var(--padding-default);
+    text-align: center;
+}
+
 #header h1 a {
     color: var(--secondary-text-color);
     text-decoration: none;
 }
+
 main {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
