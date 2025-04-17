@@ -99,6 +99,7 @@ main {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-default);
 }
+
 .form-section {
     display: grid;
     place-items: center;
