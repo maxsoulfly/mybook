@@ -9,7 +9,7 @@
     <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 
 </head>
 
@@ -18,9 +18,9 @@
         <h1><a href="/index.php">MyBook</a></h1>
         <?php
         if ($page == "login") {
-            echo '<a href="signup.php" class="button secondary">Sign Up</a>';
+            echo '<a href="/pages/signup.php" class="button secondary">Sign Up</a>';
         } else {
-            echo '<a href="login.php" class="button secondary">Log In</a>';
+            echo '<a href="/pages/login.php" class="button secondary">Log In</a>';
         }
         ?>
 

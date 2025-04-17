@@ -11,15 +11,8 @@ include 'includes/header.php';
     </div>
 
     <div id="main-container">
-        <div id="login" class="container">
-            <h2>Log in to Mybook</h2>
-            <input type="text" name="email" id="email" placeholder="Enter your email">
-            <input type="password" name="password" id="password" placeholder="Password">
-            <button class="primary">Login</button>
-            <ul class="links">
-                <li><a href="#">Forgotten Password?</a></li>
-                <li><a href="signup.php">Sign Up for Mybook</a></li>
-            </ul>
+        <div class="container">
+
         </div>
     </div>
 
