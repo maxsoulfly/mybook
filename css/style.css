@@ -85,7 +85,6 @@ a:hover {
 #header h1 {
     color: var(--secondary-text-color);
 }
-
 main {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -100,41 +99,46 @@ main {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-default);
 }
-
-#login {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.form-section {
+    display: grid;
+    place-items: center;
     gap: var(--padding-small);
     padding: var(--padding-bigger);
 }
 
-#login button,
-#login input {
-    width: 50%;
+.form-section form {
+    display: grid;
+    place-items: center;
+    gap: var(--padding-small);
+    width: 100%;
 }
 
-#login input {
+.form-section input,
+.form-section select,
+.form-section button {
+    width: 50%;
     padding: var(--padding-small);
-    border: var(--default-border);
     border-radius: var(--border-radius);
     box-sizing: border-box;
 }
 
-#login ul.links {
+.form-section input {
+    border: var(--default-border);
+}
+
+.form-section ul.links {
     list-style: none;
     display: flex;
     gap: var(--padding-small);
     padding: 0;
 }
 
-#login ul.links li {
+.form-section ul.links li {
     display: inline;
     position: relative;
 }
 
-#login ul.links li:not(:last-child)::after {
+.form-section ul.links li:not(:last-child)::after {
     content: '•';
     position: absolute;
     right: -0.75em;

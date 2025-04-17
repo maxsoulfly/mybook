@@ -2,7 +2,7 @@
 $page_title = "Sign Up";
 $page = "signup";
 
-include('includes/header.php');
+include 'includes/header.php';
 ?>
 
 <main>
@@ -10,21 +10,37 @@ include('includes/header.php');
 
     </div>
 
-    <div id="main-container">
-        <div id="login" class="container">
-            <h2>Log in to Mybook</h2>
-            <input type="text" name="email" id="email" placeholder="Enter your email">
-            <input type="password" name="password" id="password" placeholder="Password">
-            <button class="primary">Login</button>
-            <ul class="links">
-                <li><a href="#">Forgotten Password?</a></li>
-                <li><a href="signup.php">Sign Up for Mybook</a></li>
-            </ul>
+
+    <div class="main-container">
+        <div class="form-section container">
+            <h2>Sign up to Mybook</h2>
+            <form action="">
+                <input type="text" name="first_name" placeholder="First Name">
+                <input type="text" name="last_name" placeholder="Last Name">
+
+                <select name="gender">
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <input type="text" name="email" placeholder="Enter your email">
+                <input type="password" name="password" placeholder="Password">
+                <input type="password" name="retype_password" placeholder="Retype Password">
+
+                <button class="primary">Create Account</button>
+
+                <ul class="links">
+                    <li><a href="login.php">Log in to Mybook</a></li>
+                </ul>
+            </form>
         </div>
     </div>
+
 
     <div id="right-container"></div>
 </main>
 
 
-<?php include('includes/footer.php'); ?>
+<?php include 'includes/footer.php'; ?>
