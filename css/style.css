@@ -78,7 +78,7 @@ a:hover {
     background-color: var(--primary-color);
     padding: var(--padding-small);
     display: flex;
-    align-content: flex-start;
+    align-items: flex-start;
     gap: var(--padding-small);
     box-shadow: var(--shadow-default);
 }
@@ -131,6 +131,11 @@ main {
     padding: var(--padding-small);
     border-radius: var(--border-radius);
     box-sizing: border-box;
+}
+
+.form-section select {
+    border: var(--default-border);
+    color: var(--primary-text-color);
 }
 
 .form-section input {
