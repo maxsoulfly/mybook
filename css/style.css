@@ -52,6 +52,7 @@ a.primary {
     color: var(--secondary-text-color);
     &:hover {
         background-color: var(--primary-hover-color);
+        text-decoration: none;
     }
 }
 button.secondary,
@@ -61,6 +62,7 @@ a.secondary {
 
     &:hover {
         background-color: var(--secondary-hover-color);
+        text-decoration: none;
     }
 }
 
@@ -82,8 +84,9 @@ a:hover {
     box-shadow: var(--shadow-default);
 }
 
-#header h1 {
+#header h1 a {
     color: var(--secondary-text-color);
+    text-decoration: none;
 }
 main {
     display: grid;

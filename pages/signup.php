@@ -2,7 +2,7 @@
 $page_title = "Sign Up";
 $page = "signup";
 
-include 'includes/header.php';
+include '../includes/header.php';
 ?>
 
 <main>
@@ -43,4 +43,4 @@ include 'includes/header.php';
 </main>
 
 
-<?php include 'includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
