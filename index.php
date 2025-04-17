@@ -1,8 +1,8 @@
 <?php
-$page_title = "Log In";
-$page = "login";
+$page_title = "Index";
+$page = "index";
 
-include 'includes/header.php';
+include_once __DIR__ . '/includes/footer.php';
 ?>
 
 <main>
@@ -12,7 +12,7 @@ include 'includes/header.php';
 
     <div id="main-container">
         <div class="container">
-
+            <a href="<?= $BASE_URL ?>/pages/profile.php">Profile</a>
         </div>
     </div>
 
@@ -20,4 +20,4 @@ include 'includes/header.php';
 </main>
 
 
-<?php include 'includes/footer.php'; ?>
+<?php include_once __DIR__ . '/includes/footer.php'; ?>

@@ -1,6 +1,6 @@
 <?php
-$page_title = "Log In";
-$page = "login";
+$page_title = "Profile";
+$page = "profile";
 
 include_once __DIR__ . '/../includes/header.php';
 ?>

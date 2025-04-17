@@ -2,7 +2,7 @@
 $page_title = "Sign Up";
 $page = "signup";
 
-include '../includes/header.php';
+include_once __DIR__ . '/../includes/header.php';
 ?>
 
 <main>
@@ -32,7 +32,7 @@ include '../includes/header.php';
                 <button class="primary">Create Account</button>
 
                 <ul class="links">
-                    <li><a href="login.php">Log in to Mybook</a></li>
+                    <li><a href="<?= $BASE_URL ?>/pages/login.php">Log in to Mybook</a></li>
                 </ul>
             </form>
         </div>
@@ -43,4 +43,4 @@ include '../includes/header.php';
 </main>
 
 
-<?php include '../includes/footer.php'; ?>
+<?php include_once __DIR__ . '/../includes/footer.php'; ?>
