@@ -1,0 +1,220 @@
+/* Profile / avatar */
+.profile-top {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: var(--profile-top-height);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--secondary-text-color);
+    text-align: center;
+    padding: var(--padding-smaller);
+    gap: var(--padding-smaller);
+}
+
+.profile-top img {
+    box-shadow: var(--shadow-large);
+}
+
+.profile-top p.username {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 1);
+    font-size: var(--font-size-large);
+}
+
+.profile-nav {
+    background-color: var(--container-bg-color);
+    box-shadow: var(--shadow-default);
+    border-bottom-left-radius: var(--border-radius-medium);
+    border-bottom-right-radius: var(--border-radius-medium);
+}
+
+.profile-nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: var(--padding-smaller) var(--padding-small);
+}
+
+.profile-nav a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    padding: var(--padding-smaller) var(--padding-small);
+    border-radius: var(--border-radius-large);
+}
+
+.profile-nav a:hover {
+    background-color: var(--primary-bg-color);
+}
+
+.avatar-small {
+    border-radius: 50%;
+    width: var(--avatar-size-small);
+    height: var(--avatar-size-small);
+    object-fit: cover;
+}
+.avatar a {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: var(--padding-small);
+}
+
+.avatar-small img,
+img.avatar-small {
+    border-radius: 50%;
+    width: var(--avatar-size-small);
+    height: var(--avatar-size-small);
+    object-fit: cover;
+}
+
+.avatar-medium img,
+img.avatar-medium {
+    border-radius: 50%;
+    width: var(--avatar-size-medium);
+    height: var(--avatar-size-medium);
+    object-fit: cover;
+}
+
+.avatar-large img,
+img.avatar-large {
+    border-radius: 50%;
+    width: var(--avatar-size-large);
+    height: var(--avatar-size-large);
+    object-fit: cover;
+}
+
+.content-container {
+    display: flex;
+    gap: var(--padding-default);
+    padding: var(--padding-default) 0;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-wrap: wrap; /* enables responsive stacking */
+}
+
+.left-content {
+    flex: 2;
+    min-width: 250px;
+}
+
+.main-content {
+    flex: 3;
+    min-width: 300px;
+}
+
+.post {
+    margin-bottom: var(--padding-default);
+    padding: var(--padding-default);
+    background: var(--container-bg-color);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-default);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-small);
+    margin-bottom: var(--padding-small);
+}
+
+.post-header img {
+    width: var(--avatar-size-medium-small);
+    height: var(--avatar-size-medium-small);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-user-info {
+    display: flex;
+    flex-direction: column;
+    font-size: var(--font-size-small);
+}
+
+.post-date {
+    color: var(--lighter-text-color);
+    font-size: var(--font-size-small);
+}
+
+.post-content {
+    font-size: var(--font-size-medium);
+    margin-bottom: var(--padding-small);
+}
+
+.post-actions {
+    display: flex;
+    gap: var(--padding-default);
+}
+
+.post-actions a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.post-actions a:hover {
+    text-decoration: underline;
+}
+
+.status-box {
+    background: var(--container-bg-color);
+    padding: var(--padding-default);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-default);
+    margin-bottom: var(--padding-default);
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-small);
+}
+
+.status-box textarea {
+    width: 100%;
+    resize: vertical;
+    border: var(--default-border);
+    border-radius: var(--border-radius);
+    padding: var(--padding-small);
+    font-size: var(--font-size-medium);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.status-box button {
+    align-self: flex-end;
+}
+
+.friends-box {
+    margin-bottom: var(--padding-default);
+    background: var(--container-bg-color);
+    padding: var(--padding-default);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-default);
+}
+
+.friends-box h3 {
+    margin-bottom: var(--padding-small);
+}
+
+.friends-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-small);
+}
+
+.friends-list li {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-small);
+}
+
+.friends-list img {
+    width: var(--avatar-size-medium);
+    height: var(--avatar-size-medium);
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--shadow-default);
+}

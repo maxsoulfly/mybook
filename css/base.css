@@ -1,0 +1,62 @@
+/* Global Reset */
+* {
+    margin: 0;
+}
+
+/* Root Variables */
+:root {
+    --primary-color: #3498db;
+    --primary-hover-color: #2980b9;
+    --secondary-color: #2ecc71;
+    --secondary-hover-color: #27ae60;
+    --primary-text-color: #333;
+    --lighter-text-color: #999;
+    --secondary-text-color: #fff;
+
+    --container-bg-color: #fff;
+    --primary-bg-color: #eeeeee;
+    --default-border: 1px solid #ccc;
+
+    --padding-smaller: 0.5em;
+    --padding-small: 1em;
+    --padding-default: 2em;
+    --padding-bigger: 4em;
+    --biggest-padding: 8em;
+
+    --profile-top-height: 300px;
+    --container-width: 1000px;
+
+    --border-radius-small: 0.125em;
+    --border-radius-medium: 0.25em;
+    --border-radius-large: 0.5em;
+
+    --shadow-default: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 6px 10px rgba(0, 0, 0, 0.15);
+    --shadow-large: 0 8px 15px rgba(0, 0, 0, 0.2);
+
+    --font-size-small: 0.875rem;
+    --font-size-medium: 1rem;
+    --font-size-large: 1.25rem;
+
+    --avatar-size-small: 2em;
+    --avatar-size-medium-small: 3em;
+    --avatar-size-medium: 4em;
+    --avatar-size-large: 8em;
+}
+
+/* Body */
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--primary-text-color);
+    background-color: var(--primary-bg-color);
+}
+
+/* Links */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

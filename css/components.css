@@ -1,0 +1,113 @@
+/* Buttons */
+button,
+a.button {
+    font-size: var(--font-size-small);
+    border: 0;
+    padding: var(--padding-small) var(--padding-default);
+    border-radius: var(--border-radius-medium);
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+button.primary,
+a.primary {
+    background-color: var(--primary-color);
+    color: var(--secondary-text-color);
+    &:hover {
+        background-color: var(--primary-hover-color);
+        text-decoration: none;
+    }
+}
+
+button.secondary,
+a.secondary {
+    background-color: var(--secondary-color);
+    color: var(--secondary-text-color);
+
+    &:hover {
+        background-color: var(--secondary-hover-color);
+        text-decoration: none;
+    }
+}
+
+
+/* Search Form */
+.search-form {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.5em 2.5em 0.5em 0.75em; /* space for icon on right */
+    border: 1px solid var(--border-color-light, #ccc);
+    border-radius: var(--border-radius-medium);
+    font-size: var(--font-size-medium, 1rem);
+    box-sizing: border-box;
+}
+
+.search-icon {
+    position: absolute;
+    right: 0.75em;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    color: var(--icon-color, #555);
+    pointer-events: none;
+}
+
+
+/* Form Section */
+.form-section {
+    display: grid;
+    place-items: center;
+    gap: var(--padding-small);
+    padding: var(--padding-bigger);
+}
+
+.form-section form {
+    display: grid;
+    place-items: center;
+    gap: var(--padding-small);
+    width: 100%;
+}
+
+.form-section input,
+.form-section select,
+.form-section button {
+    width: 50%;
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-medium);
+    box-sizing: border-box;
+}
+
+.form-section select {
+    border: var(--default-border);
+    color: var(--primary-text-color);
+}
+
+.form-section input {
+    border: var(--default-border);
+}
+
+.form-section ul.links {
+    list-style: none;
+    display: flex;
+    gap: var(--padding-small);
+    padding: 0;
+}
+
+.form-section ul.links li {
+    display: inline;
+    position: relative;
+}
+
+.form-section ul.links li:not(:last-child)::after {
+    content: '•';
+    position: absolute;
+    right: -0.75em;
+    color: var(--lighter-text-color);
+}
