@@ -35,10 +35,6 @@
                 </form>
                 <div class="avatar">
                     <a href="<?= $BASE_URL ?>/pages/profile.php">
-                        <?php
-                            $profilePicUrl = $BASE_URL . '/assets/img/user1.jpg';
-                            $username = 'Boris Gee';
-                        ?>
                         <img src="<?= $profilePicUrl ?>" alt="Profile" class="avatar-small">
                         <span class="username"><?= $username ?></span>
                     </a>
