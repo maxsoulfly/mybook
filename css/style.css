@@ -38,6 +38,7 @@
     --font-size-large: 1.25rem;
 
     --avatar-size-small: 2em;
+    --avatar-size-medium-small: 3em;
     --avatar-size-medium: 4em;
     --avatar-size-large: 8em;
 }
@@ -211,8 +212,8 @@ a:hover {
 
 .avatar-small {
     border-radius: 50%;
-    width: 2em;
-    height: 2em;
+    width: var(--avatar-size-small);
+    height: var(--avatar-size-small);
     object-fit: cover;
 }
 .avatar a {
@@ -281,8 +282,8 @@ img.avatar-large {
 }
 
 .post-header img {
-    width: 40px;
-    height: 40px;
+    width: var(--avatar-size-medium-small);
+    height: var(--avatar-size-medium-small);
     border-radius: 50%;
     object-fit: cover;
 }
