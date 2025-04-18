@@ -17,6 +17,7 @@
     --primary-bg-color: #eeeeee;
     --default-border: 1px solid #ccc;
 
+    --padding-smaller: 0.5em;
     --padding-small: 1em;
     --padding-default: 2em;
     --padding-bigger: 4em;
@@ -24,8 +25,13 @@
 
     --container-width: 1000px;
 
-    --border-radius: 0.25em;
+    --border-radius-small: 0.125em;
+    --border-radius-medium: 0.25em;
+    --border-radius-large: 0.5em;
+
     --shadow-default: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 6px 10px rgba(0, 0, 0, 0.15);
+    --shadow-large: 0 8px 15px rgba(0, 0, 0, 0.2);
 
     --font-size-small: 0.875rem;
     --font-size-medium: 1rem;
@@ -33,7 +39,7 @@
 
     --avatar-size-small: 2em;
     --avatar-size-medium: 4em;
-    --avatar-size-large: 6em;
+    --avatar-size-large: 8em;
 }
 
 /* Body */
@@ -49,7 +55,7 @@ a.button {
     font-size: var(--font-size-small);
     border: 0;
     padding: var(--padding-small) var(--padding-default);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-medium);
 
     &:hover {
         cursor: pointer;
@@ -120,29 +126,117 @@ a:hover {
     margin: 0 auto;
 }
 
-#header.header-compact .wrapper .avatar-small {
+#header a {
+    color: var(--secondary-text-color);
+    text-decoration: none;
+}
+
+/* Profile / avatar */
+.profile-top {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 300px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--secondary-text-color);
+    text-align: center;
+    padding: var(--padding-smaller);
+    gap: var(--padding-smaller);
+}
+
+.profile-top img {
+    box-shadow: var(--shadow-large);
+}
+
+.profile-top p.username {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 1);
+    font-size: var(--font-size-large);
+}
+
+.profile-nav {
+    background-color: var(--container-bg-color);
+    box-shadow: var(--shadow-default);
+    border-bottom-left-radius: var(--border-radius-medium);
+    border-bottom-right-radius: var(--border-radius-medium);
+}
+
+.profile-nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: var(--padding-smaller) var(--padding-small);
+}
+
+.profile-nav a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    padding: var(--padding-smaller) var(--padding-small);
+    border-radius: var(--border-radius-large);
+}
+
+.profile-nav a:hover {
+    background-color: var(--primary-bg-color);
+}
+
+.avatar-small {
     border-radius: 50%;
     width: 2em;
     height: 2em;
     object-fit: cover;
 }
-#header.header-compact .wrapper .avatar a {
+.avatar a {
     display: flex;
     align-items: center;
     justify-content: end;
     gap: var(--padding-small);
 }
 
-#header.header-compact .wrapper .avatar img {
+.avatar-small img,
+img.avatar-small {
     border-radius: 50%;
     width: var(--avatar-size-small);
     height: var(--avatar-size-small);
     object-fit: cover;
 }
 
-#header a {
-    color: var(--secondary-text-color);
-    text-decoration: none;
+.avatar-medium img,
+img.avatar-medium {
+    border-radius: 50%;
+    width: var(--avatar-size-medium);
+    height: var(--avatar-size-medium);
+    object-fit: cover;
+}
+
+.avatar-large img,
+img.avatar-large {
+    border-radius: 50%;
+    width: var(--avatar-size-large);
+    height: var(--avatar-size-large);
+    object-fit: cover;
+}
+
+.content-container {
+    display: flex;
+    gap: var(--padding-default);
+    padding: var(--padding-default);
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-wrap: wrap; /* enables responsive stacking */
+}
+
+.left-content {
+    flex: 2;
+    min-width: 250px;
+}
+
+.main-content {
+    flex: 3;
+    min-width: 300px;
 }
 
 /* Search Form */
@@ -156,7 +250,7 @@ a:hover {
     width: 100%;
     padding: 0.5em 2.5em 0.5em 0.75em; /* space for icon on right */
     border: 1px solid var(--border-color-light, #ccc);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-medium);
     font-size: var(--font-size-medium, 1rem);
     box-sizing: border-box;
 }
@@ -184,7 +278,7 @@ main {
     max-width: var(--container-width);
     padding: var(--padding-default);
     margin-top: var(--padding-default);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-medium);
     box-shadow: var(--shadow-default);
 }
 
@@ -193,7 +287,7 @@ main {
     max-width: var(--container-width);
     padding: var(--padding-default);
     margin-top: var(--padding-bigger);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-medium);
     box-shadow: var(--shadow-default);
 }
 
@@ -217,7 +311,7 @@ main {
 .form-section button {
     width: 50%;
     padding: var(--padding-small);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-medium);
     box-sizing: border-box;
 }
 
