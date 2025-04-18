@@ -17,16 +17,28 @@
 </head>
 
 <body>
-    <header id="header" class="<?= !empty($fullHeader) ? 'header-large' : '' ?>">
+    <header id="header" class="<?= !empty($fullHeader) ? 'header-large' : 'header-compact' ?>">
+
         <?php if (!empty($fullHeader)): ?>
             <h1><a href="<?= $BASE_URL ?>/index.php">MyBook</a></h1>
             <a href="<?= $BASE_URL ?>/pages/<?= $page === 'login' ? 'signup' : 'login' ?>.php" class="button secondary">
                 <?= $page === 'login' ? 'Sign Up' : 'Log In' ?>
             </a>
+
         <?php else: ?>
-            <h1><a href="<?= $BASE_URL ?>/index.php">MyBook</a></h1>
-            <!-- <img src="<?= $BASE_URL ?>/assets/img/user1.jpg" alt="Profile" class="avatar-small"> -->
-            <!-- <span class="username">Maxx Dee</span> -->
-            <i class="mdi mdi-magnify"></i>
+            <div class="wrapper">
+                <h1><a href="<?= $BASE_URL ?>/index.php">MyBook</a></h1>
+                <form action="<?= $BASE_URL ?>/search.php" method="get" class="search-form">
+                    <input type="text" name="q" placeholder="Search for people, places and things" class="input search-input">
+                    <i class="mdi mdi-magnify search-icon"></i>
+
+                </form>
+                <div class="avatar">
+                    <a href="<?= $BASE_URL ?>/pages/profile.php">
+                        <img src="<?= $BASE_URL ?>/assets/img/user1.jpg" alt="Profile" class="avatar-small">
+                        <span class="username">Boris Gee</span>
+                    </a>
+                </div>
+            </div>
         <?php endif; ?>
     </header>

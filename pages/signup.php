@@ -13,7 +13,7 @@ include_once __DIR__ . '/../includes/header.php';
 
 
     <div class="main-container">
-        <div class="form-section container">
+        <div class="form-section container-centered">
             <h2>Sign up to Mybook</h2>
             <form action="">
                 <input type="text" name="first_name" placeholder="First Name">
