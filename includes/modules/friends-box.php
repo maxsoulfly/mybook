@@ -1,4 +1,4 @@
-<div class="friends-box">
+<div class="sidebar-box">
     <h3>Friends</h3>
     <ul class="friends-list">
         <li>
