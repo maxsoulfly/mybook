@@ -107,7 +107,7 @@ img.avatar-large {
 }
 
 .post {
-    margin-bottom: var(--padding-default);
+    margin-bottom: var(--padding-small);
     padding: var(--padding-default);
     background: var(--container-bg-color);
     border-radius: var(--border-radius-medium);
@@ -164,7 +164,7 @@ img.avatar-large {
     padding: var(--padding-default);
     border-radius: var(--border-radius-medium);
     box-shadow: var(--shadow-default);
-    margin-bottom: var(--padding-default);
+    margin-bottom: var(--padding-small);
     display: flex;
     flex-direction: column;
     gap: var(--padding-small);
