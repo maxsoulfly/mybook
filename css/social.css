@@ -185,7 +185,7 @@ img.avatar-large {
     align-self: flex-end;
 }
 
-.friends-box {
+.sidebar-box {
     margin-bottom: var(--padding-default);
     background: var(--container-bg-color);
     padding: var(--padding-default);
@@ -193,7 +193,7 @@ img.avatar-large {
     box-shadow: var(--shadow-default);
 }
 
-.friends-box h3 {
+.sidebar-box h3 {
     margin-bottom: var(--padding-small);
 }
 
