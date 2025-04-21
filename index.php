@@ -22,8 +22,6 @@ include_once __DIR__ . '/config.php';
 $page_title = "Index";
 $page = "index";
 
-
-// $coverImage = $BASE_URL . '/assets/img/mountain.jpg';
 $profilePicUrl = $BASE_URL . '/assets/img/user1.jpg';
 $username = 'Boris Gee';
 
@@ -36,10 +34,7 @@ include_once __DIR__ . '/includes/header.php';
     </div>
 
     <div id="main-container">
-        <div class="container">
-            <a href="<?= $BASE_URL ?>/pages/profile.php">Profile</a>
-            <a href="<?= $BASE_URL ?>/pages/timeline.php">Timeline</a>
-        </div>
+        <?php include_once __DIR__ . '/includes/index-nav.php'; ?>
     </div>
 
     <div id="right-container"></div>
