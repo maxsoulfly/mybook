@@ -1,26 +1,21 @@
+<?php
+include_once __DIR__ . '/../functions.php';
+
+$friends = [
+    ["username" => "Boris Gee", "avatar" => "/assets/img/user1.jpg"],
+    ["username" => "John Doe", "avatar" => "/assets/img/user2.jpg"],
+    ["username" => "Mika Strong", "avatar" => "/assets/img/user3.jpg"],
+    ["username" => "Ali Sun", "avatar" => "/assets/img/user4.jpg"],
+];
+?>
+
 <div class="sidebar-box">
     <h3>Friends</h3>
     <ul class="friends-list">
-        <li>
-            <img
-                src="<?= $BASE_URL ?>/assets/img/user2.jpg"
-                alt="Friend"
-            />
-            Jane Doe
-        </li>
-        <li>
-            <img
-                src="<?= $BASE_URL ?>/assets/img/user3.jpg"
-                alt="Friend"
-            />
-            Mike Strong
-        </li>
-        <li>
-            <img
-                src="<?= $BASE_URL ?>/assets/img/user4.jpg"
-                alt="Friend"
-            />
-            Ali Sun
-        </li>
+        <?
+        foreach ($friends as $friend) {
+            renderFriend($friend["username"], $friend["avatar"]);
+        }
+        ?>
     </ul>
 </div>

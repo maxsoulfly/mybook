@@ -8,8 +8,8 @@ $page = "profile";
 
 
 $coverImage = $BASE_URL . '/assets/img/mountain.jpg';
-$profilePicUrl = $BASE_URL . '/assets/img/user1.jpg';
-$username = 'Boris Gee';
+$profilePicUrl = $BASE_URL . '/assets/img/selfie.jpg';
+$username = 'Shaniqua Bee';
 
 
 include_once __DIR__ . '/../includes/header.php';
@@ -27,12 +27,12 @@ include_once __DIR__ . '/../includes/header.php';
         <!-- Friends here -->
         <div class="content-container">
 
-            
-        <?php include_once __DIR__ . '/../includes/timeline-sidebar.php'; ?>
-        <?php include_once __DIR__ . '/../includes/timeline-main.php'; ?>
+
+            <?php include_once __DIR__ . '/../includes/timeline-sidebar.php'; ?>
+            <?php include_once __DIR__ . '/../includes/timeline-main.php'; ?>
 
         </div>
-    <!-- <div id="right-container"></div> -->
+        <!-- <div id="right-container"></div> -->
 </main>
 
 
