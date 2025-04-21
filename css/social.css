@@ -185,6 +185,11 @@ img.avatar-large {
     align-self: flex-end;
 }
 
+.sidebar-box--nobg {
+    margin-bottom: var(--padding-default);
+    padding: var(--padding-default);
+}
+
 .sidebar-box {
     margin-bottom: var(--padding-default);
     background: var(--container-bg-color);

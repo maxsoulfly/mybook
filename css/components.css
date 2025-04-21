@@ -32,7 +32,6 @@ a.secondary {
     }
 }
 
-
 /* Search Form */
 .search-form {
     position: relative;
@@ -58,7 +57,6 @@ a.secondary {
     color: var(--icon-color, #555);
     pointer-events: none;
 }
-
 
 /* Form Section */
 .form-section {
@@ -110,4 +108,18 @@ a.secondary {
     position: absolute;
     right: -0.75em;
     color: var(--lighter-text-color);
+}
+
+/* Utility Classes */
+
+.border {
+    border: 4px solid var(--container-bg-color);
+}
+
+.shadow {
+    box-shadow: var(--shadow-default);
+}
+
+.text-shadow {
+    text-shadow: var(--shadow-default);
 }
