@@ -3,6 +3,12 @@
 <?php
 $posts = [
     [
+        'username' => 'Shaniqua Bee',
+        'avatar' => '/assets/img/selfie.jpg',
+        'date' => 'April 21, 2025',
+        'content' => 'Refactoring! Refactoring! Refactoring!'
+    ],
+    [
         'username' => 'Boris Gee',
         'avatar' => '/assets/img/user1.jpg',
         'date' => 'April 18, 2025',
