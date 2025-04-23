@@ -12,7 +12,7 @@ $friends = [
 <div class="sidebar-box">
     <h3>Friends</h3>
     <ul class="friends-list">
-        <?
+        <?php
         foreach ($friends as $friend) {
             renderFriend($friend["username"], $friend["avatar"]);
         }
