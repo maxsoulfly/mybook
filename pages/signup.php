@@ -18,6 +18,7 @@ include_once __DIR__ . '/../includes/header.php';
             <form action="">
                 <input type="text" name="first_name" placeholder="First Name">
                 <input type="text" name="last_name" placeholder="Last Name">
+                <input type="text" name="username" placeholder="Username">
 
                 <select name="gender">
                     <option value="" disabled selected>Select Gender</option>
