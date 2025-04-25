@@ -1,35 +1,23 @@
 <?php include_once __DIR__ . '/../functions.php'; ?>
 
 <?php
-$posts = [
-    [
-        'username' => 'Shaniqua Bee',
-        'avatar' => '/assets/img/selfie.jpg',
-        'date' => 'April 21, 2025',
-        'content' => 'Refactoring! Refactoring! Refactoring!'
-    ],
-    [
-        'username' => 'Boris Gee',
-        'avatar' => '/assets/img/user1.jpg',
-        'date' => 'April 18, 2025',
-        'content' => 'Just finished building the profile layout!'
-    ],
-    [
-        'username' => 'John Doe',
-        'avatar' => '/assets/img/user2.jpg',
-        'date' => 'April 17, 2025',
-        'content' => 'Loving this new view from the mountain. 🌄'
-    ],
-    [
-        'username' => 'Mika Strong',
-        'avatar' => '/assets/img/user3.jpg',
-        'date' => 'April 16, 2025',
-        'content' => 'Is it too early to say this might be the best coffee I\'ve ever had?'
-    ],
-];
+$pdo = getDBConnection();
+$profileId = $user['id'];
+
+
+$stmt = $pdo->prepare(
+    'SELECT posts.*, users.first_name, users.last_name, users.avatar
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            WHERE recipient_id = :id OR (recipient_id IS NULL AND user_id = :id)
+            ORDER BY created_at DESC
+'
+);
+$stmt->execute(['id' => $profileId]);
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($posts as $post) {
-    renderPost($post['username'], $post['avatar'], $post['date'], $post['content']);
+    renderPost($post['first_name'] . ' ' . $post['last_name'], $post['avatar'], $post['created_at'], $post['content']);
 }
 
 ?>
