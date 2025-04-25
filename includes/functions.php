@@ -22,14 +22,16 @@ function renderPost($username, $avatar, $date, $content)
     ';
 }
 
-function renderFriend($username, $avatar)
+function renderFriend($username, $full_name, $avatar)
 {
     global $BASE_URL;
 
     echo '
         <li>
-            <img src="' . $BASE_URL . $avatar . '" alt="' . htmlspecialchars($username) . '">
-            ' . htmlspecialchars($username) . '
+            <a href="http://localhost:8000/pages/profile.php?u=' . htmlspecialchars($username) . '">
+                <img src="' . $BASE_URL . $avatar . '" alt="' . htmlspecialchars($username) . '">
+                ' . htmlspecialchars($full_name) . '
+            </a>
         </li>
     ';
 }

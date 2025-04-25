@@ -1,12 +1,27 @@
 <?php
 include_once __DIR__ . '/../functions.php';
 
-$friends = [
-    ["username" => "Boris Gee", "avatar" => "/assets/img/user1.jpg"],
-    ["username" => "John Doe", "avatar" => "/assets/img/user2.jpg"],
-    ["username" => "Mika Strong", "avatar" => "/assets/img/user3.jpg"],
-    ["username" => "Ali Sun", "avatar" => "/assets/img/user4.jpg"],
-];
+
+$pdo = getDBConnection();
+$profileId = $user['id'];
+
+
+$stmt = $pdo->prepare(
+    'SELECT 
+                    friends.*, 
+                    users.username, 
+                    users.first_name || " " || users.last_name AS full_name, 
+                    users.avatar
+        FROM friends
+        JOIN users ON friends.friend_id = users.id
+        WHERE friends.user_id = :id AND friends.status = "accepted"
+
+'
+);
+$stmt->execute(['id' => $profileId]);
+$friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 ?>
 
 <div class="sidebar-box">
@@ -14,7 +29,7 @@ $friends = [
     <ul class="friends-list">
         <?php
         foreach ($friends as $friend) {
-            renderFriend($friend["username"], $friend["avatar"]);
+            renderFriend($friend['username'], $friend['full_name'], $friend["avatar"]);
         }
         ?>
     </ul>
