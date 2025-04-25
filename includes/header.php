@@ -36,7 +36,7 @@
                 <div class="avatar">
                     <a href="<?= $BASE_URL ?>/pages/profile.php">
                         <img src="<?= $profilePicUrl ?>" alt="Profile" class="avatar-small">
-                        <span class="username"><?= $username ?></span>
+                        <span class="username"><?= $userFullName ?></span>
                     </a>
                 </div>
             </div>

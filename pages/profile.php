@@ -1,15 +1,30 @@
 <?php
 
 include_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/db.php';
 
 $page_title = "Profile";
 $page = "profile";
 
+if (!isset($_GET['u'])) {
+    die('No user specified.');
+}
+
+$username = $_GET['u'];
+$pdo = getDBConnection();
+
+$stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+$stmt->execute(['username' => $username]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$user) {
+    die('User not found.');
+}
 
 
-$coverImage = $BASE_URL . '/assets/img/mountain.jpg';
-$profilePicUrl = $BASE_URL . '/assets/img/selfie.jpg';
-$username = 'Shaniqua Bee';
+$coverImage = $BASE_URL . $user['cover'];
+$profilePicUrl = $BASE_URL . $user['avatar'];
+$userFullName = $user['first_name'] . ' ' . $user['last_name'];
 
 
 include_once __DIR__ . '/../includes/header.php';
