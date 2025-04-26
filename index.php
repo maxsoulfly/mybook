@@ -1,21 +1,5 @@
 <?php
-// WHEN IN FUTURE THERE'LL BE A LOGIN SYSTEM
-
-session_start(); // when auth is implemented
-
-if (isset($_SESSION['user_id'])) {
-    header('Location: pages/timeline.php');
-    exit;
-} else {
-    header('Location: pages/login.php');
-    exit;
-}
-?>
-
-
-
-
-<?php
+require_once __DIR__ . '/includes/auth.php';
 include_once __DIR__ . '/config.php';
 
 $page_title = "Index";
@@ -24,7 +8,7 @@ $page = "index";
 $profilePicUrl = $BASE_URL . '/assets/img/user1.jpg';
 $username = 'Boris Gee';
 
-include_once __DIR__ . '/includes/header.php';
+include_once __DIR__ . '/includes/header-public.php';
 ?>
 
 <main>
