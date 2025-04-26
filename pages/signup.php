@@ -4,7 +4,15 @@ $page = "signup";
 $fullHeader = true; // flag for big header
 
 include_once __DIR__ . '/../includes/header.php';
+
 ?>
+
+<?php if (isset($_GET['error']) && $_GET['error'] === 'exists'): ?>
+    <div class="error-message">
+        Username or email already exists. Please try another.
+    </div>
+<?php endif; ?>
+
 
 <main>
     <div id="left-container">
@@ -15,7 +23,7 @@ include_once __DIR__ . '/../includes/header.php';
     <div class="main-container">
         <div class="form-section container-centered">
             <h2>Sign up to Mybook</h2>
-            <form action="">
+            <form action="<?= $BASE_URL ?>/pages/signup-process.php" method="POST">
                 <input type="text" name="first_name" placeholder="First Name">
                 <input type="text" name="last_name" placeholder="Last Name">
                 <input type="text" name="username" placeholder="Username">
