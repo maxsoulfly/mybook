@@ -27,11 +27,7 @@ require_once __DIR__ . '/auth.php';
         <div class="wrapper">
             <h1><a href="<?= $BASE_URL ?>/index.php">MyBook</a></h1>
 
-            <form action="<?= $BASE_URL ?>/search.php" method="get" class="search-form">
-                <input type="text" name="q" placeholder="Search for people, places and things" class="input search-input">
-                <i class="mdi mdi-magnify search-icon"></i>
-
-            </form>
+            <?php include_once __DIR__ . '/modules/header-search.php'; ?>
 
             <?php include_once __DIR__ . '/modules/user-avatar.php'; ?>
         </div>
