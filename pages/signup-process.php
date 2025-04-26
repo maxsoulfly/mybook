@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . '/../includes/db.php';
+$pdo = getDBConnection();
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Invalid request.');
 } else {
