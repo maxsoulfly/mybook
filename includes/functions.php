@@ -35,3 +35,9 @@ function renderFriend($username, $full_name, $avatar)
         </li>
     ';
 }
+
+
+function escapeOutput(string $string): string
+{
+    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+}
