@@ -14,13 +14,16 @@ include_once __DIR__ . '/../includes/header.php';
     <div id="main-container">
         <div class="form-section container-centered">
             <h2>Log in to Mybook</h2>
-            <input type="text" name="email" id="email" placeholder="Enter your email">
-            <input type="password" name="password" id="password" placeholder="Password">
-            <button class="primary">Login</button>
+            <form action="<?= $BASE_URL ?>/pages/login-process.php" method="POST">
+                <input type="text" name="email" id="email" placeholder="Enter your email">
+                <input type="password" name="password" id="password" placeholder="Password">
+                <button type="submit" class="primary">Login</button>
+            </form>
             <ul class="links">
                 <li><a href="#">Forgotten Password?</a></li>
                 <li><a href="<?= $BASE_URL ?>/pages/signup.php">Sign Up for Mybook</a></li>
             </ul>
+
         </div>
     </div>
 

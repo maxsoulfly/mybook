@@ -1,16 +1,15 @@
 <?php
 // WHEN IN FUTURE THERE'LL BE A LOGIN SYSTEM
-// include_once __DIR__ . '/config.php';
 
-// session_start(); // when auth is implemented
+session_start(); // when auth is implemented
 
-// if (isset($_SESSION['user_id'])) {
-//     header('Location: timeline.php');
-//     exit;
-// } else {
-//     header('Location: pages/login.php');
-//     exit;
-// }
+if (isset($_SESSION['user_id'])) {
+    header('Location: pages/timeline.php');
+    exit;
+} else {
+    header('Location: pages/login.php');
+    exit;
+}
 ?>
 
 
