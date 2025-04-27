@@ -1,13 +1,21 @@
 <?php
 
 include_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 
 $page_title = "Profile";
 $page = "profile";
 
 if (!isset($_GET['u'])) {
-    die('No user specified.');
+    // if logged in display logged in user
+    if (isset($_SESSION["username"])) {
+        header('Location: /pages/profile.php?u=' . $_SESSION['username']);
+    }
+    // else redirect to login
+    else {
+        header('Location: ../pages/login.php');
+    }
 }
 
 $username = $_GET['u'];
