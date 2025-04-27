@@ -3,7 +3,7 @@ $page_title = "Sign Up";
 $page = "signup";
 $fullHeader = true; // flag for big header
 
-include_once __DIR__ . '/../includes/header.php';
+include_once __DIR__ . '/../includes/header-public.php';
 
 ?>
 
