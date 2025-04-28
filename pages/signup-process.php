@@ -34,6 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         $last_name = trim($_POST['last_name']);
         $gender = trim($_POST['gender']);
 
+        // default avatar & cover
+        $avatar = "/assets/img/default_avatar.png";
+        $cover = "/assets/img/default_cover.png";
+
         $stmt = $pdo->prepare(
             "INSERT INTO users (username, email, password, first_name, last_name, gender)
                     VALUES (:username, :email, :password, :first_name, :last_name, :gender)
@@ -46,7 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
                 'password'   => $hashedPassword,
                 'first_name' => $first_name,
                 'last_name'  => $last_name,
-                'gender'     => $gender
+                'gender'     => $gender,
+                'avatar'     => $avatar,
+                'cover'     => $cover
             ]);
 
             // Success! Redirect to login
