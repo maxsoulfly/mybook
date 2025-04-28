@@ -21,7 +21,7 @@ include_once(__DIR__ . '/../config.php');
 
 <body>
     <header id="header" class="<?= !empty($fullHeader) ? 'header-large' : 'header-compact' ?>">
-        <h1><a href="<?= $BASE_URL ?>/index.php">MyBook</a></h1>
+        <?php include_once __DIR__ . '/modules/header-logo.php'; ?>
         <a href="<?= $BASE_URL ?>/pages/<?= $page === 'login' ? 'signup' : 'login' ?>.php" class="button secondary">
             <?= $page === 'login' ? 'Sign Up' : 'Log In' ?>
         </a>

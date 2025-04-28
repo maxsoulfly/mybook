@@ -25,10 +25,8 @@ include_once(__DIR__ . '/../config.php');
     <header id="header" class="<?= !empty($fullHeader) ? 'header-large' : 'header-compact' ?>">
 
         <div class="wrapper">
-            <h1><a href="<?= $BASE_URL ?>/index.php">MyBook</a></h1>
-
+            <?php include_once __DIR__ . '/modules/header-logo.php'; ?>
             <?php include_once __DIR__ . '/modules/header-search.php'; ?>
-
             <?php include_once __DIR__ . '/modules/user-avatar.php'; ?>
         </div>
     </header>
