@@ -22,5 +22,7 @@ include_once(__DIR__ . '/../config.php');
 <body>
     <header id="header" class="<?= !empty($fullHeader) ? 'header-large' : 'header-compact' ?>">
         <?php include_once __DIR__ . '/modules/header-logo.php'; ?>
-        <?php include_once __DIR__ . '/modules/header-auth-button.php'; ?>
+        <?php if (!isset($_SESSION['user_id'])): ?>
+            <?php include_once __DIR__ . '/modules/header-auth-button.php'; ?>
+        <?php endif; ?>
     </header>
