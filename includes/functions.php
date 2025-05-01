@@ -43,8 +43,7 @@ function escapeOutput(string $string): string
 }
 
 
-
-function getLoggedInUser(): ?array
+function getUserFromSession(): ?array
 {
     if (isset($_SESSION['user_id'])) {
         return [
@@ -55,4 +54,15 @@ function getLoggedInUser(): ?array
         ];
     }
     return null; // Not logged in
+}
+
+
+function getLoggedInUser(PDO $pdo): array|null {
+    if (!isset($_SESSION['username'])) {
+        return null;
+    }
+
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+    $stmt->execute(['username' => $_SESSION['username']]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
