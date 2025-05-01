@@ -10,11 +10,11 @@ $page = "profile";
 if (!isset($_GET['u'])) {
     // if logged in display logged in user
     if (isset($_SESSION["username"])) {
-        header('Location: /pages/profile.php?u=' . $_SESSION['username']);
+        header('Location: '.$BASE_URL.'/pages/profile.php?u=' . $_SESSION['username']);
     }
     // else redirect to login
     else {
-        header('Location: ../pages/login.php');
+        header('Location: ' . $BASE_URL . '/pages/login.php');
     }
 }
 
