@@ -47,16 +47,8 @@ include_once __DIR__ . '/../includes/header.php';
     <div id="main-container">
 
         <?php include_once __DIR__ . '/../includes/profile-cover.php'; ?>
-
         <?php include_once __DIR__ . '/../includes/profile-nav.php'; ?>
 
-
-        <?php if ($user['id'] !== $_SESSION['user_id']): ?>
-            <form method="post" action="<?= $BASE_URL ?>/actions/add-friend.php">
-                <input type="hidden" name="friend_id" value="<?= $user['id'] ?>">
-                <button class="button primary">Add Friend</button>
-            </form>
-        <?php endif; ?>
         <!-- Friends here -->
         <div class="content-container">
 

@@ -56,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             ]);
 
             // Success! Redirect to login
-            header('Location: login.php?signup=success');
+            header('Location: ' . $BASE_URL . '/pages/login.php?signup=success');
             exit;
         } catch (PDOException $e) {
             // TODO: Detect if duplicate is on username or email and show more specific error
 
             // Failure (likely duplicate username/email)
-            header('Location: signup.php?error=exists');
+            header('Location: ' . $BASE_URL . '/pages/signup.php?error=exists');
             exit;
         }
     } else {
