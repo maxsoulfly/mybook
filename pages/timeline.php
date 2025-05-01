@@ -1,15 +1,32 @@
 <?php
 
 include_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/db.php';
 
-$page_title = "Profile";
-$page = "profile";
+$page_title = "Timeline";
+$page = "timeline";
+
+if (!isset($_SESSION["username"])) {
+    header('Location: ' . $BASE_URL . '/pages/login.php');
+}
+
+$username = $_SESSION["username"];
+$pdo = getDBConnection();
+
+$stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+$stmt->execute(['username' => $username]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$user) {
+    die('User not found.');
+}
 
 
+$coverImage = $BASE_URL . $user['cover'];
+$profilePicUrl = $BASE_URL . $user['avatar'];
+$userFullName = $user['first_name'] . ' ' . $user['last_name'];
 
-$coverImage = $BASE_URL . '/assets/img/mountain.jpg';
-$profilePicUrl = $BASE_URL . '/assets/img/selfie.jpg';
-$username = 'Shaniqua Bee';
 
 
 include_once __DIR__ . '/../includes/header.php';
