@@ -1,6 +1,6 @@
 <div class="avatar">
     <a href="<?= $BASE_URL ?>/pages/profile.php?u=<?= $user["username"] ?>">
-        <img src="<?= $profilePicUrl ?>" alt="Profile" class="avatar-small">
+        <img src="<?= $BASE_URL ?><?= $user['avatar'] ?>" alt="Profile" class="avatar-small">
         <span class="username"><?= $user["first_name"] . " " . $user["last_name"] ?></span>
     </a>
 </div>

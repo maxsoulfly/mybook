@@ -8,7 +8,7 @@ require_once __DIR__ . '/../includes/functions.php';
 $page_title = "Profile";
 $page = "profile";
 
-if (!isset($_GET['u'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['u'])) {
     // if logged in display logged in user
     if (isset($_SESSION["username"])) {
         header('Location: '.$BASE_URL.'/pages/profile.php?u=' . $_SESSION['username']);
@@ -22,15 +22,17 @@ if (!isset($_GET['u'])) {
 $username = $_GET['u'];
 $pdo = getDBConnection();
 $user = getLoggedInUser($pdo);
+$profile = getUserByUsername($pdo, $username);
+
 
 if (!$user) {
     header('Location: ' . $BASE_URL . '/pages/login.php');
     exit;
 }
 
-$coverImage = $BASE_URL . $user['cover'];
-$profilePicUrl = $BASE_URL . $user['avatar'];
-$userFullName = $user['first_name'] . ' ' . $user['last_name'];
+$coverImage = $BASE_URL . $profile['cover'];
+$profilePicUrl = $BASE_URL . $profile['avatar'];
+$profileFullName = $profile['first_name'] . ' ' . $profile['last_name'];
 
 
 include_once __DIR__ . '/../includes/header.php';
@@ -45,8 +47,16 @@ include_once __DIR__ . '/../includes/header.php';
     <div id="main-container">
 
         <?php include_once __DIR__ . '/../includes/profile-cover.php'; ?>
+
         <?php include_once __DIR__ . '/../includes/profile-nav.php'; ?>
 
+
+        <?php if ($user['id'] !== $_SESSION['user_id']): ?>
+            <form method="post" action="<?= $BASE_URL ?>/actions/add-friend.php">
+                <input type="hidden" name="friend_id" value="<?= $user['id'] ?>">
+                <button class="button primary">Add Friend</button>
+            </form>
+        <?php endif; ?>
         <!-- Friends here -->
         <div class="content-container">
 

@@ -66,3 +66,10 @@ function getLoggedInUser(PDO $pdo): array|null {
     $stmt->execute(['username' => $_SESSION['username']]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+function getUserByUsername(PDO $pdo, string $username): ?array {
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+    $stmt->execute(['username' => $username]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $user ?: null;
+}
