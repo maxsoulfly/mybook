@@ -84,7 +84,7 @@ function areFriends(PDO $pdo, int $userId, int $friendId): bool
                                         (user_id = :user AND friend_id = :friend) 
                                         OR (user_id = :friend AND friend_id = :user)
                                     )
-                                    AND status = 'accepted'";
+                                    AND status = 'accepted')");
     $stmt->execute(['user'=> $userId,
                             'friend'=> $friendId]);
     return (bool) $stmt->fetch();
