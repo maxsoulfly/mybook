@@ -10,7 +10,6 @@ const FRIEND_STATUS = [
     'BLOCKED' => 'blocked',
     'STALKER'=> 'stalker',
     'UNFRIENDED'=> 'unfriended',
-
 ];
 
 // Validate the request

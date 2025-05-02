@@ -32,6 +32,26 @@ a.secondary {
     }
 }
 
+button.alert,
+a.alert {
+    background-color: var(--alert-color);
+    color: var(--secondary-text-color);
+    &:hover {
+        background-color: var(--alert-hover-color);
+        text-decoration: none;
+    }
+}
+
+button.info,
+a.info {
+    background-color: var(--info-color);
+    color: var(--primary-text-color);
+    &:hover {
+        background-color: var(--info-hover-color);
+        text-decoration: none;
+    }
+}
+
 /* Search Form */
 .search-form {
     position: relative;
@@ -108,6 +128,12 @@ a.secondary {
     position: absolute;
     right: -0.75em;
     color: var(--lighter-text-color);
+}
+
+.button-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 /* Utility Classes */

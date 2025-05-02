@@ -89,3 +89,28 @@ function areFriends(PDO $pdo, int $userId, int $friendId): bool
                             'friend'=> $friendId]);
     return (bool) $stmt->fetch();
 }
+
+function getFriendStatus(PDO $pdo, int $userId, int $profileId): string {
+    $stmt = $pdo->prepare("
+        SELECT user_id, friend_id, status FROM friends 
+        WHERE 
+            (user_id = :user AND friend_id = :profile)
+         OR (user_id = :profile AND friend_id = :user)
+    ");
+    $stmt->execute(['user' => $userId, 'profile' => $profileId]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row) return 'none';
+
+    if ($row['status'] === 'accepted') return 'accepted';
+
+    if ($row['status'] === 'pending') {
+        if ((int)$row['user_id'] === $userId) {
+            return 'pending_sent';     // we sent the request
+        } else {
+            return 'pending_received'; // they sent it to us
+        }
+    }
+
+    return 'none'; // fallback
+}

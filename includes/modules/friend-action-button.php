@@ -1,6 +1,35 @@
-<?php if ($profile['id'] !== $_SESSION['user_id']): ?>
+<?php
+$status = getFriendStatus($pdo, $user['id'], $profile['id']);
+?>
+
+<?php if ($status === 'none' && ($profile['id'] !== $_SESSION['user_id'])): ?>
     <form method="post" action="<?= $BASE_URL ?>/actions/add-friend.php">
         <input type="hidden" name="friend_id" value="<?= $profile['id'] ?>">
         <button class="button primary">Add Friend</button>
     </form>
+<?php elseif ($status === 'pending_sent'): ?>
+    <form method="post" action="<?= $BASE_URL ?>/actions/cancel-friend.php">
+        <input type="hidden" name="friend_id" value="<?= $profile['id'] ?>">
+        <button class="button info">Cancel Request</button>
+    </form>
+
+<?php elseif ($status === 'pending_received'): ?>
+    <div class="button-group">
+        <form method="post" action="<?= $BASE_URL ?>/actions/accept-friend.php" style="display: inline-block;">
+            <input type="hidden" name="friend_id" value="<?= $profile['id'] ?>">
+            <button class="button secondary">Accept</button>
+        </form>
+        <form method="post" action="<?= $BASE_URL ?>/actions/deny-friend.php" style="display: inline-block;">
+            <input type="hidden" name="friend_id" value="<?= $profile['id'] ?>">
+            <button class="button alert">Reject</button>
+        </form>
+    </div>
+
+<?php elseif ($status === 'accepted'): ?>
+    <!-- Already friends: no button for now -->
+
+<?php elseif ($status === 'stalker'): ?>
+    <!-- Follower mode: show Unfollow button (like cancel request) -->
+     
 <?php endif; ?>
+
