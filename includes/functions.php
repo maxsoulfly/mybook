@@ -57,7 +57,8 @@ function getUserFromSession(): ?array
 }
 
 
-function getLoggedInUser(PDO $pdo): array|null {
+function getLoggedInUser(PDO $pdo): array|null 
+{
     if (!isset($_SESSION['username'])) {
         return null;
     }
@@ -67,9 +68,24 @@ function getLoggedInUser(PDO $pdo): array|null {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function getUserByUsername(PDO $pdo, string $username): ?array {
+function getUserByUsername(PDO $pdo, string $username): ?array 
+{
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
     $stmt->execute(['username' => $username]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     return $user ?: null;
+}
+
+function areFriends(PDO $pdo, int $userId, int $friendId): bool 
+{
+    $stmt = $pdo->prepare("  SELECT 1 FROM friends 
+                                    WHERE 
+                                    (
+                                        (user_id = :user AND friend_id = :friend) 
+                                        OR (user_id = :friend AND friend_id = :user)
+                                    )
+                                    AND status = 'accepted'";
+    $stmt->execute(['user'=> $userId,
+                            'friend'=> $friendId]);
+    return (bool) $stmt->fetch();
 }
