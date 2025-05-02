@@ -1,4 +1,9 @@
 <?php
+
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/db.php';
+$pdo = getDBConnection();
+
 const FRIEND_STATUS = [
     'PENDING' => 'pending',
     'ACCEPTED' => 'accepted',
@@ -24,7 +29,7 @@ if ($userId == $friendId){
 $stmt = $pdo->prepare("  SELECT 1 FROM friends 
                                 WHERE (user_id = :user AND friend_id = :friend)
                                 OR (user_id = :friend AND friend_id = :user)");
-$stmt->execute(params: ['user' => $userId,'friend'=> $friendId]);
+$stmt->execute(['user' => $userId,'friend'=> $friendId]);
 if ($stmt->fetch()) {
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit;
@@ -33,12 +38,12 @@ if ($stmt->fetch()) {
 // Send a friend request
 $stmt = $pdo->prepare('INSERT INTO friends (user_id, friend_id, status) 
                                 VALUES (:user, :friend, :status)');
-$stmt->execute(params: [
+$stmt->execute([
     'user'=> $userId,
     'friend'=> $friendId,
-    'status'=> FRIEND_STATUS['PENDING'],
+    'status'=> FRIEND_STATUS['PENDING']]
 );
 
-header('Location: ' . $_SERVER['HTTP_REFERER']);
+header('Location: ' . $_SERVER['HTTP_REFERER'] . '?request=sent');
 exit;
 ?>

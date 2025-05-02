@@ -1,3 +1,7 @@
+<?php if (isset($_GET['request']) && $_GET['request'] === 'sent'): ?>
+    <p class="notice">Friend request sent!</p>
+<?php endif; ?>
+
 <?php
 
 include_once __DIR__ . '/../config.php';
@@ -7,6 +11,7 @@ require_once __DIR__ . '/../includes/functions.php';
 
 $page_title = "Profile";
 $page = "profile";
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['u'])) {
     // if logged in display logged in user
@@ -38,6 +43,8 @@ $profileFullName = $profile['first_name'] . ' ' . $profile['last_name'];
 include_once __DIR__ . '/../includes/header.php';
 
 ?>
+
+
 
 <main>
     <div id="left-container">
