@@ -29,7 +29,6 @@ $pdo = getDBConnection();
 $user = getLoggedInUser($pdo);
 $profile = getUserByUsername($pdo, $username);
 
-
 if (!$user) {
     header('Location: ' . $BASE_URL . '/pages/login.php');
     exit;
@@ -38,7 +37,7 @@ if (!$user) {
 $coverImage = $BASE_URL . $profile['cover'];
 $profilePicUrl = $BASE_URL . $profile['avatar'];
 $profileFullName = $profile['first_name'] . ' ' . $profile['last_name'];
-
+$friendStatus = getFriendStatus($pdo, $user["id"], $profile["id"]);
 
 include_once __DIR__ . '/../includes/header.php';
 
