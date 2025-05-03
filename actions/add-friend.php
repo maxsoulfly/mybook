@@ -1,5 +1,6 @@
 <?php
 
+include_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 $pdo = getDBConnection();
@@ -43,7 +44,6 @@ $stmt->execute([
     'status'=> FRIEND_STATUS['PENDING']]
 );
 
-$referer = $_SERVER['HTTP_REFERER'];
-$separator = str_contains($referer, '?') ? '&' : '?';
-header('Location: ' . $referer . $separator .  '?request=sent');
+$finalUrl = redirectBackWithParam('request', 'sent');
+header('Location: ' . $finalUrl);
 exit;

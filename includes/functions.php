@@ -122,3 +122,20 @@ function getFriendStatus(PDO $pdo, int $userId, int $profileId): string {
 
     return 'none'; // fallback
 }
+
+function redirectBackWithParam($key, $value) {
+    $referer = $_SERVER['HTTP_REFERER'];
+    $urlParts = parse_url($referer);
+    
+    // Keep path + query separately
+    $baseUrl = $urlParts['path'];
+    parse_str($urlParts['query'] ?? '', $queryParams);
+    
+    // Replace or add `request`
+    $queryParams[$key] = $value;
+    
+    // Build final redirect
+    $finalUrl = $baseUrl . '?' . http_build_query($queryParams);
+
+    return $finalUrl;
+}

@@ -1,5 +1,6 @@
 <?php
 
+include_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 $pdo = getDBConnection();
@@ -28,8 +29,9 @@ if ($userId === $friendId) {
 $stmt = $pdo->prepare("DELETE FROM friends WHERE user_id = :user AND friend_id = :friend");
 $stmt->execute(['user' => $userId, 'friend' => $friendId]);
 
-// Redirect back
-$referer = $_SERVER['HTTP_REFERER'];
-$separator = str_contains($referer, '?') ? '&' : '?';
-header('Location: ' . $referer . $separator . 'request=cancelled');
+
+$finalUrl = redirectBackWithParam('request', 'cancelled');
+header('Location: ' . $finalUrl);
 exit;
+
+
