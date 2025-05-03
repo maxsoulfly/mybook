@@ -39,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         $cover = "/assets/img/default_cover.png";
 
         $stmt = $pdo->prepare(
-            "INSERT INTO users (username, email, password, first_name, last_name, gender)
-                    VALUES (:username, :email, :password, :first_name, :last_name, :gender)
+            "INSERT INTO users (username, email, password, first_name, last_name, gender, avatar, cover)
+                    VALUES (:username, :email, :password, :first_name, :last_name, :gender, :avatar, :cover)
         "
         );
         try {
