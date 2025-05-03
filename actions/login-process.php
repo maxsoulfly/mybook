@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+include_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../includes/db.php';
 $pdo = getDBConnection();
 
@@ -38,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         $_SESSION['avatar'] = $user['avatar'];
         $_SESSION['username'] = $user['username'];
 
-        header('Location: ../index.php');
+        header('Location: ' . $BASE_URL . ' /index.php');
         exit;
     } else {
         die('Please fill in all required fields.');
