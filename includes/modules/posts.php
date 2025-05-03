@@ -2,7 +2,7 @@
 
 <?php
 $pdo = getDBConnection();
-$profileId = $user['id'];
+$profileId = $profile['id'];
 
 
 $stmt = $pdo->prepare(
