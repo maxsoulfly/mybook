@@ -51,6 +51,7 @@ $stmt->execute([
     'pending' => FRIEND_STATUS['PENDING']
 ]);
 
-
-header('Location: ' . $_SERVER['HTTP_REFERER'] . '?request=accepted');
+$referer = $_SERVER['HTTP_REFERER'];
+$separator = str_contains($referer, '?') ? '&' : '?';
+header('Location: ' . $referer . $separator . 'request=accepted');
 exit;

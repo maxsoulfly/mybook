@@ -43,6 +43,7 @@ $stmt->execute([
     'status'=> FRIEND_STATUS['PENDING']]
 );
 
-header('Location: ' . $_SERVER['HTTP_REFERER'] . '?request=sent');
+$referer = $_SERVER['HTTP_REFERER'];
+$separator = str_contains($referer, '?') ? '&' : '?';
+header('Location: ' . $referer . $separator .  '?request=sent');
 exit;
-?>
