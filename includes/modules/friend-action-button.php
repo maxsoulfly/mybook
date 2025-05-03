@@ -29,7 +29,12 @@ $status = getFriendStatus($pdo, $user['id'], $profile['id']);
     <!-- Already friends: no button for now -->
 
 <?php elseif ($status === 'stalker'): ?>
-    <!-- Follower mode: show Unfollow button (like cancel request) -->
-     
+    <!-- If I'm the stalker (i.e., I initiated and was denied) -->
+    <form method="post" action="<?= $BASE_URL ?>/actions/cancel-friend.php">
+        <input type="hidden" name="friend_id" value="<?= $profile['id'] ?>">
+        <button class="button info">Unfollow</button>
+    </form>
+<?php elseif ($status === 'followed_by'): ?>      
+    <span class='badge muted'>They’re stalking you</span>
 <?php endif; ?>
 

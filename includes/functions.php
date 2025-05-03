@@ -111,6 +111,14 @@ function getFriendStatus(PDO $pdo, int $userId, int $profileId): string {
             return 'pending_received'; // they sent it to us
         }
     }
+    
+    if ($row['status'] === 'stalker') {
+        if ($row['user_id'] == $_SESSION['user_id']) {
+            return 'stalker'; // I’m the stalker
+        } else {
+            return 'followed_by'; // You denied them, they follow you
+        }
+    }
 
     return 'none'; // fallback
 }
