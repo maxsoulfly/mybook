@@ -165,6 +165,10 @@ img.avatar-large {
     border-radius: var(--border-radius-medium);
     box-shadow: var(--shadow-default);
     margin-bottom: var(--padding-small);
+}
+
+.status-box form {
+    all: unset;
     display: flex;
     flex-direction: column;
     gap: var(--padding-small);

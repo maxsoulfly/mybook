@@ -34,6 +34,8 @@ if (!$user) {
     exit;
 }
 
+echo "user id:".$user["id"]. " | profile id:" .$profile["id"];
+
 $coverImage = $BASE_URL . $profile['cover'];
 $profilePicUrl = $BASE_URL . $profile['avatar'];
 $profileFullName = $profile['first_name'] . ' ' . $profile['last_name'];
