@@ -1,19 +1,27 @@
 <?php
 
-function renderPost($username, $avatar, $date, $content)
+function renderPost($fullname, $username, $avatar, $date, $content)
 {
     global $BASE_URL;
-
+    $username = htmlspecialchars($username);
+    $fullname = htmlspecialchars($fullname);
     echo '
         <div class="post">
             <div class="post-header">
-                <img src="' . $BASE_URL . $avatar . '" alt="' . htmlspecialchars($username) . '">
+                <a href="'.$BASE_URL.'/pages/profile.php?u=' . $username . '">
+                    <img src="' . $BASE_URL . $avatar . '" alt="' . $username . '">
+                </a>
                 <div class="post-user-info">
-                <strong>' . htmlspecialchars($username) . '</strong>
-                <span class="post-date">' . htmlspecialchars($date) . '</span>
+                    <strong>
+                        <a href="'.$BASE_URL.'/pages/profile.php?u=' . $username . '">
+                            ' . $fullname . '</strong>
+                        </a>
+                    <span class="post-date">' . htmlspecialchars($date) . '</span>
                 </div>
             </div>
-            <p class="post-content">' . nl2br($content) . '</p>
+            <p class="post-content">
+                ' . nl2br(htmlspecialchars($content, ENT_QUOTES, 'UTF-8')) . '
+            </p>
             <div class="post-actions">
                 <a href="#">Like</a>
                 <a href="#">Comment</a>
@@ -28,7 +36,7 @@ function renderFriend($username, $full_name, $avatar)
 
     echo '
         <li>
-            <a href="http://localhost'.$BASE_URL.'/pages/profile.php?u=' . htmlspecialchars($username) . '">
+            <a href="'.$BASE_URL.'/pages/profile.php?u=' . htmlspecialchars($username) . '">
                 <img src="' . $BASE_URL . $avatar . '" alt="' . htmlspecialchars($username) . '">
                 <div class="friend-name">
                     ' . htmlspecialchars($full_name) . '

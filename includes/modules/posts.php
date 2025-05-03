@@ -6,7 +6,7 @@ $profileId = $profile['id'];
 
 
 $stmt = $pdo->prepare(
-    'SELECT posts.*, users.first_name, users.last_name, users.avatar
+    'SELECT posts.*, users.first_name, users.last_name, users.username, users.avatar
             FROM posts
             JOIN users ON posts.user_id = users.id
             WHERE recipient_id = :id OR (recipient_id IS NULL AND user_id = :id)
@@ -17,7 +17,7 @@ $stmt->execute(['id' => $profileId]);
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($posts as $post) {
-    renderPost($post['first_name'] . ' ' . $post['last_name'], $post['avatar'], $post['created_at'], $post['content']);
+    renderPost($post['first_name'] . ' ' . $post['last_name'], $post['username'], $post['avatar'], $post['created_at'], $post['content']);
 }
 
 ?>
