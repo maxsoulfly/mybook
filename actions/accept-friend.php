@@ -26,12 +26,15 @@ if ($userId == $friendId){
     die('You cannot add yourself as a friend.');
 }
 
-// Check they’re not already friends
-$stmt = $pdo->prepare("  SELECT 1 FROM friends 
-                                WHERE (user_id = :user AND friend_id = :friend)
-                                OR (user_id = :friend AND friend_id = :user)");
-$stmt->execute(['user' => $userId,'friend'=> $friendId]);
-if ($stmt->fetch()) {
+// Check if they are already friends (not just a pending request)
+$stmt = $pdo->prepare("SELECT status FROM friends 
+    WHERE (user_id = :user AND friend_id = :friend)
+       OR (user_id = :friend AND friend_id = :user)");
+$stmt->execute(['user' => $userId, 'friend' => $friendId]);
+
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($row && $row['status'] === FRIEND_STATUS['ACCEPTED']) {
     header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit;
 }
