@@ -14,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         !empty($_POST['content'])
     ) {
         $user_id = filter_input(INPUT_POST,'user_id', FILTER_SANITIZE_NUMBER_INT);
-        $content = filter_input(INPUT_POST,'content');
+        $content = htmlspecialchars(trim($_POST['content']), ENT_QUOTES, 'UTF-8');
+
         
         if (!empty($_POST['recipient_id'])){
             $recipient_id = filter_input(INPUT_POST, 'recipient_id', FILTER_SANITIZE_NUMBER_INT);

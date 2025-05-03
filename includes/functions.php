@@ -13,7 +13,7 @@ function renderPost($username, $avatar, $date, $content)
                 <span class="post-date">' . htmlspecialchars($date) . '</span>
                 </div>
             </div>
-            <p class="post-content">' . htmlspecialchars($content) . '</p>
+            <p class="post-content">' . nl2br($content) . '</p>
             <div class="post-actions">
                 <a href="#">Like</a>
                 <a href="#">Comment</a>
