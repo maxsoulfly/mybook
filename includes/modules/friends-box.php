@@ -3,20 +3,20 @@ include_once __DIR__ . '/../functions.php';
 
 
 $pdo = getDBConnection();
-$profileId = $user['id'];
+$profileId = $profile['id'];
 
 
 $stmt = $pdo->prepare(
     'SELECT 
-                    friends.*, 
-                    users.username, 
-                    users.first_name || " " || users.last_name AS full_name, 
-                    users.avatar
-        FROM friends
-        JOIN users ON friends.friend_id = users.id
-        WHERE friends.user_id = :id AND friends.status = "accepted"
-
-'
+        users.username, 
+        users.id AS user_id, 
+        users.first_name || " " || users.last_name AS full_name, 
+        users.avatar
+     FROM friends
+     JOIN users 
+       ON (users.id = friends.friend_id AND friends.user_id = :id)
+       OR (users.id = friends.user_id AND friends.friend_id = :id)
+     WHERE friends.status = "accepted"'
 );
 $stmt->execute(['id' => $profileId]);
 $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -29,8 +29,14 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <ul class="friends-list">
         <?php
         foreach ($friends as $friend) {
-            renderFriend($friend['username'], $friend['full_name'], $friend["avatar"]);
+            $isInitiator = $friend['user_id'] == $profileId;
+            $friendUsername = $friend['username'];
+            $friendName = $friend['full_name'];
+            $friendAvatar = $friend['avatar'];
+        
+            renderFriend($friendUsername, $friendName, $friendAvatar);
         }
+        
         ?>
     </ul>
 </div>
