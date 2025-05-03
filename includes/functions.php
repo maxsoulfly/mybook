@@ -30,7 +30,9 @@ function renderFriend($username, $full_name, $avatar)
         <li>
             <a href="http://localhost'.$BASE_URL.'/pages/profile.php?u=' . htmlspecialchars($username) . '">
                 <img src="' . $BASE_URL . $avatar . '" alt="' . htmlspecialchars($username) . '">
-                ' . htmlspecialchars($full_name) . '
+                <div class="friend-name">
+                    ' . htmlspecialchars($full_name) . '
+                </div>
             </a>
         </li>
     ';

@@ -223,3 +223,13 @@ img.avatar-large {
     object-fit: cover;
     box-shadow: var(--shadow-default);
 }
+
+.friends-list a {
+    display: flex;
+    align-items: center;
+}
+
+.friends-list .friend-name {
+    display: inline-block;
+    margin-left: var(--padding-small);
+}
