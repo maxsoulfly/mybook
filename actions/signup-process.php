@@ -8,6 +8,7 @@ $pdo = getDBConnection();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Invalid request.');
 }
+
 $errorMsg = validateFields($_POST);
 if ($errorMsg !== '') {
     die($errorMsg);
