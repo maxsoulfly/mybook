@@ -7,66 +7,60 @@ $pdo = getDBConnection();
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Invalid request.');
 } else {
-    if (
-        !empty($_POST['username']) &&
-        !empty($_POST['email']) &&
-        !empty($_POST['password']) &&
-        !empty($_POST['retype_password']) &&
-        !empty($_POST['first_name']) &&
-        !empty($_POST['last_name']) &&
-        !empty($_POST['gender'])
-    ) {
-        // All good, move forward 🚀
-        if ($_POST['password'] !== $_POST['retype_password']) {
-            die('Passwords do not match.');
-        }
 
-        $username = trim($_POST['username']);
+    $errorMsg = validateFields($_POST);
+    if ($errorMsg !== '') {
+        die($errorMsg);
+    }
 
-        $email = trim($_POST['email']);
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            die('Invalid email format.');
-        }
+    // All good, move forward 🚀
+    if ($_POST['password'] !== $_POST['retype_password']) {
+        die('Passwords do not match.');
+    }
 
-        $password = trim($_POST['password']);
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $username = trim($_POST['username']);
 
-        $first_name = trim($_POST['first_name']);
-        $last_name = trim($_POST['last_name']);
-        $gender = trim($_POST['gender']);
+    $email = trim($_POST['email']);
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die('Invalid email format.');
+    }
 
-        // default avatar & cover
-        $avatar = "/assets/img/default_avatar.png";
-        $cover = "/assets/img/default_cover.png";
+    $password = trim($_POST['password']);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $pdo->prepare(
-            "INSERT INTO users (username, email, password, first_name, last_name, gender, avatar, cover)
-                    VALUES (:username, :email, :password, :first_name, :last_name, :gender, :avatar, :cover)
-        "
-        );
-        try {
-            $stmt->execute([
-                'username'   => $username,
-                'email'      => $email,
-                'password'   => $hashedPassword,
-                'first_name' => $first_name,
-                'last_name'  => $last_name,
-                'gender'     => $gender,
-                'avatar'     => $avatar,
-                'cover'     => $cover
-            ]);
+    $first_name = trim($_POST['first_name']);
+    $last_name = trim($_POST['last_name']);
+    $gender = trim($_POST['gender']);
 
-            // Success! Redirect to login
-            header('Location: ' . $BASE_URL . '/pages/login.php?signup=success');
-            exit;
-        } catch (PDOException $e) {
-            // TODO: Detect if duplicate is on username or email and show more specific error
+    // default avatar & cover
+    $avatar = "/assets/img/default_avatar.png";
+    $cover = "/assets/img/default_cover.png";
 
-            // Failure (likely duplicate username/email)
-            header('Location: ' . $BASE_URL . '/pages/signup.php?error=exists');
-            exit;
-        }
-    } else {
-        die('Please fill in all required fields.');
+    $stmt = $pdo->prepare(
+        "INSERT INTO users (username, email, password, first_name, last_name, gender, avatar, cover)
+                VALUES (:username, :email, :password, :first_name, :last_name, :gender, :avatar, :cover)
+    "
+    );
+    try {
+        $stmt->execute([
+            'username'   => $username,
+            'email'      => $email,
+            'password'   => $hashedPassword,
+            'first_name' => $first_name,
+            'last_name'  => $last_name,
+            'gender'     => $gender,
+            'avatar'     => $avatar,
+            'cover'     => $cover
+        ]);
+
+        // Success! Redirect to login
+        header('Location: ' . $BASE_URL . '/pages/login.php?signup=success');
+        exit;
+    } catch (PDOException $e) {
+        // TODO: Detect if duplicate is on username or email and show more specific error
+
+        // Failure (likely duplicate username/email)
+        header('Location: ' . $BASE_URL . '/pages/signup.php?error=exists');
+        exit;
     }
 }

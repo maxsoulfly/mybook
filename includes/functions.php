@@ -8,12 +8,12 @@ function renderPost($fullname, $username, $avatar, $date, $content)
     echo '
         <div class="post">
             <div class="post-header">
-                <a href="'.$BASE_URL.'/pages/profile.php?u=' . $username . '">
+                <a href="' . $BASE_URL . '/pages/profile.php?u=' . $username . '">
                     <img src="' . $BASE_URL . $avatar . '" alt="' . $username . '">
                 </a>
                 <div class="post-user-info">
                     <strong>
-                        <a href="'.$BASE_URL.'/pages/profile.php?u=' . $username . '">
+                        <a href="' . $BASE_URL . '/pages/profile.php?u=' . $username . '">
                             ' . $fullname . '</strong>
                         </a>
                     <span class="post-date">' . htmlspecialchars($date) . '</span>
@@ -36,7 +36,7 @@ function renderFriend($username, $full_name, $avatar)
 
     echo '
         <li>
-            <a href="'.$BASE_URL.'/pages/profile.php?u=' . htmlspecialchars($username) . '">
+            <a href="' . $BASE_URL . '/pages/profile.php?u=' . htmlspecialchars($username) . '">
                 <img src="' . $BASE_URL . $avatar . '" alt="' . htmlspecialchars($username) . '">
                 <div class="friend-name">
                     ' . htmlspecialchars($full_name) . '
@@ -67,7 +67,7 @@ function getUserFromSession(): ?array
 }
 
 
-function getLoggedInUser(PDO $pdo): array|null 
+function getLoggedInUser(PDO $pdo): array|null
 {
     if (!isset($_SESSION['username'])) {
         return null;
@@ -78,7 +78,7 @@ function getLoggedInUser(PDO $pdo): array|null
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function getUserByUsername(PDO $pdo, string $username): ?array 
+function getUserByUsername(PDO $pdo, string $username): ?array
 {
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
     $stmt->execute(['username' => $username]);
@@ -86,7 +86,7 @@ function getUserByUsername(PDO $pdo, string $username): ?array
     return $user ?: null;
 }
 
-function areFriends(PDO $pdo, int $userId, int $friendId): bool 
+function areFriends(PDO $pdo, int $userId, int $friendId): bool
 {
     $stmt = $pdo->prepare("  SELECT 1 FROM friends 
                                     WHERE 
@@ -95,12 +95,15 @@ function areFriends(PDO $pdo, int $userId, int $friendId): bool
                                         OR (user_id = :friend AND friend_id = :user)
                                     )
                                     AND status = 'accepted')");
-    $stmt->execute(['user'=> $userId,
-                            'friend'=> $friendId]);
+    $stmt->execute([
+        'user' => $userId,
+        'friend' => $friendId
+    ]);
     return (bool) $stmt->fetch();
 }
 
-function getFriendStatus(PDO $pdo, int $userId, int $profileId): string {
+function getFriendStatus(PDO $pdo, int $userId, int $profileId): string
+{
     $stmt = $pdo->prepare("
         SELECT user_id, friend_id, status FROM friends 
         WHERE 
@@ -121,7 +124,7 @@ function getFriendStatus(PDO $pdo, int $userId, int $profileId): string {
             return 'pending_received'; // they sent it to us
         }
     }
-    
+
     if ($row['status'] === 'stalker') {
         if ($row['user_id'] == $_SESSION['user_id']) {
             return 'stalker'; // I’m the stalker
@@ -133,19 +136,33 @@ function getFriendStatus(PDO $pdo, int $userId, int $profileId): string {
     return 'none'; // fallback
 }
 
-function redirectBackWithParam($key, $value) {
+function redirectBackWithParam($key, $value)
+{
     $referer = $_SERVER['HTTP_REFERER'];
     $urlParts = parse_url($referer);
-    
+
     // Keep path + query separately
     $baseUrl = $urlParts['path'];
     parse_str($urlParts['query'] ?? '', $queryParams);
-    
+
     // Replace or add `request`
     $queryParams[$key] = $value;
-    
+
     // Build final redirect
     $finalUrl = $baseUrl . '?' . http_build_query($queryParams);
 
     return $finalUrl;
+}
+
+
+function validateFields($data)
+{
+    $error = '';
+    foreach ($data as $key => $value) {
+        if (empty($value)) {
+            $error .= "$key is empty!<br>";
+        }
+    }
+
+    return $error ?: "";
 }
