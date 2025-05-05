@@ -16,7 +16,7 @@ $page = "profile";
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['u'])) {
     // if logged in display logged in user
     if (isset($_SESSION["username"])) {
-        header('Location: '.$BASE_URL.'/pages/profile.php?u=' . $_SESSION['username']);
+        header('Location: ' . $BASE_URL . '/pages/profile.php?u=' . $_SESSION['username']);
     }
     // else redirect to login
     else {
@@ -34,7 +34,7 @@ if (!$user) {
     exit;
 }
 
-echo "user id:".$user["id"]. " | profile id:" .$profile["id"];
+// echo "user id:".$user["id"]. " | profile id:" .$profile["id"];
 
 $coverImage = $BASE_URL . $profile['cover'];
 $profilePicUrl = $BASE_URL . $profile['avatar'];
