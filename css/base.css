@@ -20,12 +20,13 @@
     --container-bg-color: #fff;
     --primary-bg-color: #eeeeee;
     --default-border: 1px solid #ccc;
+    --light-border: 1px solid #e6e6e6;
 
     --padding-smaller: 0.5em;
     --padding-small: 1em;
     --padding-default: 2em;
     --padding-bigger: 4em;
-    --biggest-padding: 8em;
+    --padding-biggest: 8em;
 
     --profile-top-height: 300px;
     --container-width: 1000px;

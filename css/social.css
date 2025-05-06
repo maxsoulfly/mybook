@@ -146,12 +146,20 @@ img.avatar-large {
     margin-bottom: var(--padding-small);
 }
 
+.post-content .shared {
+    border: var(--light-border);
+    border-radius: var(--border-radius-large);
+    padding: var(--padding-smaller);
+}
+
 .post-actions {
     display: flex;
-    gap: var(--padding-default);
+    padding-top: var(--padding-small);
+    gap: var(--padding-small);
 }
 
 .post-actions a {
+    /* margin-right: 12px; */
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 500;
@@ -220,8 +228,8 @@ img.avatar-large {
 .status-box textarea {
     width: 100%;
     resize: vertical;
-    border: var(--default-border);
-    border-radius: var(--border-radius);
+    border: var(--light-border);
+    border-radius: var(--border-radius-medium);
     padding: var(--padding-small);
     font-size: var(--font-size-medium);
     font-family: inherit;

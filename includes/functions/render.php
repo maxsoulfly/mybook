@@ -25,9 +25,23 @@ function renderPost($fullname, $username, $avatar, $date, $content, $latestComme
             </p>
             <div class="post-actions">
                 <a href="#">Like</a>
-                <a href="#">Comment</a>
+                <a href="#" class="comment-toggle">Comment</a>
             </div>
     ';
+
+    // comment-form
+    echo
+    '
+        <div class="comment-form" style="display: none;">
+            <form method="post" action="<?= $BASE_URL ?>/actions/comment-process.php">
+                <input type="hidden" name="post_id" value="<?= $postId ?>">
+                <textarea name="content" rows="2" placeholder="Write a comment..."></textarea>
+                <button type="submit">Comment</button>
+            </form>
+        </div>
+        
+    ';
+    
 
     // One latest comment (optional)
     if ($latestComment) {
