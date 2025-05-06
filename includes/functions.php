@@ -1,6 +1,6 @@
 <?php
 
-function renderPost($fullname, $username, $avatar, $date, $content)
+function renderPost($fullname, $username, $avatar, $date, $content, $latestComment = null)
 {
     global $BASE_URL;
     $username = htmlspecialchars($username);
@@ -27,8 +27,22 @@ function renderPost($fullname, $username, $avatar, $date, $content)
                 <a href="#">Like</a>
                 <a href="#">Comment</a>
             </div>
-        </div>
     ';
+
+    // One latest comment (optional)
+    if ($latestComment) {
+        renderComment(
+            $latestComment['fullname'],
+            $latestComment['username'],
+            $latestComment['avatar'],
+            $latestComment['created_at'],
+            $latestComment['content']
+        );
+        echo '<a href="#">View all comments</a>';
+    }
+
+    echo '</div>'; // close .post
+
 }
 
 function renderComment($fullname, $username, $avatar, $date, $content)
