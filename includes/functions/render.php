@@ -32,14 +32,16 @@ function renderPost($fullname, $username, $avatar, $date, $content, $latestComme
     // comment-form
     echo
     '
-        <div class="comment-form" style="display: none;">
+        
+        <div class="comment-form">
             <form method="post" action="<?= $BASE_URL ?>/actions/comment-process.php">
                 <input type="hidden" name="post_id" value="<?= $postId ?>">
-                <textarea name="content" rows="2" placeholder="Write a comment..."></textarea>
-                <button type="submit">Comment</button>
+                <div class="comment-input-row">
+                    <textarea name="content" placeholder="Write a comment..." rows="3"></textarea>
+                    <button class="info" type="submit">Comment</button>
+                </div>
             </form>
         </div>
-        
     ';
     
 

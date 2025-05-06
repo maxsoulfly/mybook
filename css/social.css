@@ -170,10 +170,43 @@ img.avatar-large {
 }
 
 /* comments */
+.comment-form {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.comment-form.show {
+    max-height: 20rem; /* adjust as needed */
+}
+.comment-input-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-small);
+    margin-top: var(--padding-small);
+    align-items: flex-end;
+
+    & textarea {
+        flex: 1; /* grow */
+        width: 100%;
+        resize: vertical;
+        border: var(--light-border);
+        border-radius: var(--border-radius-medium);
+        padding: var(--padding-small);
+        font-size: var(--font-size-medium);
+        font-family: inherit;
+        box-sizing: border-box;
+    }
+
+    & button {
+        align-self: flex-end; /* 👈 This sticks the button to the right */
+    }
+}
+
 .comment {
     display: flex;
     gap: var(--padding-small);
-    margin-top: 8px;
+    margin-top: var(--padding-small);
 }
 
 .comment-body {

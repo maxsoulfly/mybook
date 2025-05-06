@@ -2,7 +2,7 @@
 
 </footer>
 
-    <script src="<?= $BASE_URL ?>/assets/js/script.js"></script>
+    <script src="<?= $BASE_URL ?>/assets/js/main.js"></script>
 
 </body>
 

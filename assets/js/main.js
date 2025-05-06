@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     document
         .querySelectorAll('.post-actions a.comment-toggle')
         .forEach((link) => {
@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const parent = this.closest('.post');
                 const form = parent.querySelector('.comment-form');
                 if (form) {
-                    form.style.display =
-                        form.style.display === 'none' ? 'block' : 'none';
+                    form.classList.toggle('show');
                 }
             });
         });

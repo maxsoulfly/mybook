@@ -29,4 +29,3 @@ foreach ($posts as $post) {
     renderPost($fullname, $username, $avatar, $createdAt, $content, $latestComment);
 }
 ?>
-</div>
