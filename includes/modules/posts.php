@@ -16,25 +16,17 @@ $stmt = $pdo->prepare(
 $stmt->execute(['id' => $profileId]);
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$latestComment = [
-    'fullname' => 'Yana',
-    'username' => 'yana_blast',
-    'avatar'   => '/assets/img/default_avatar.png',
-    'created_at' => '2025-05-06 12:45',
-    'content' => 'Same here! This post is 🔥'
-];
-
 foreach ($posts as $post) {
+
     $fullname = $post['first_name'] . ' ' . $post['last_name'];
     $username = $post['username'];
     $avatar = $post['avatar'];
     $createdAt = $post['created_at'];
     $content = $post['content'];
 
+    $latestComment = fetchLatestComment($pdo, $post['id']);
+
     renderPost($fullname, $username, $avatar, $createdAt, $content, $latestComment);
 }
-
 ?>
-
-
 </div>
