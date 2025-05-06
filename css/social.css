@@ -106,6 +106,8 @@ img.avatar-large {
     min-width: 300px;
 }
 
+/* posts */
+
 .post {
     margin-bottom: var(--padding-small);
     padding: var(--padding-default);
@@ -157,6 +159,47 @@ img.avatar-large {
 
 .post-actions a:hover {
     text-decoration: underline;
+}
+
+/* comments */
+.comment {
+    display: flex;
+    gap: var(--padding-small);
+    margin-top: 8px;
+}
+
+.comment-body {
+    flex: 1;
+}
+
+.comment-wrapper {
+    background-color: var(--primary-bg-color);
+    padding: var(--padding-smaller);
+    border-radius: var(--border-radius-large);
+}
+
+.comment-header {
+    font-size: 0.9em;
+    color: var(--primary-text-color);
+}
+
+.comment-text {
+    margin: 4px 0;
+}
+
+.comment-actions,
+.comment-time {
+    font-size: 0.8em;
+    color: var(--lighter-text-color);
+    padding: var(--padding-smaller);
+}
+
+.comment img.avatar {
+    margin-top: var(--padding-smaller);
+    border-radius: 50%;
+    width: var(--avatar-size-medium-small);
+    height: var(--avatar-size-medium-small);
+    object-fit: cover;
 }
 
 .status-box {
