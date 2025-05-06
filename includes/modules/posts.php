@@ -49,23 +49,6 @@ foreach ($posts as $post) {
         <a href="#">Comment</a>
     </div>
 
-    <div class="comment">
-        <a href=""><img class="avatar" src="/assets/img/user2.jpg" alt="username"></a>
-        <div class="comment-body">
-            <div class="comment-wrapper">
-
-                <div class="comment-header">
-                    <a href=""><strong class="username">maxxdee</strong></a>
-                    <span class="comment-time">2025-05-06 12:34</span>
-                </div>
-                <p class="comment-text">This is a test comment 🎸</p>
-
-            </div>
-            <div class="comment-actions">
-                <a href="#">Like</a> · <a href="#">Reply</a>
-            </div>
-        </div>
-    </div>
 
 
     <div class="comment">
