@@ -2,6 +2,7 @@
 session_start();
 
 include_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/db.php';
 $pdo = getDBConnection();
 
@@ -9,13 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Invalid request.');
 }
 
-if (
-    empty($_POST['email']) &&
-    empty($_POST['password'])
-) {
-
-    die('Please fill in all required fields.');
+$errorMsg = validateFields($_POST);
+if ($errorMsg !== '') {
+    die($errorMsg);
 }
+
 // all good
 
 $email = trim($_POST['email']);
