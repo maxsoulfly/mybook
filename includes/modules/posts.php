@@ -18,15 +18,22 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($posts as $post) {
 
-    $fullname = $post['first_name'] . ' ' . $post['last_name'];
-    $username = $post['username'];
-    $avatar = $post['avatar'];
-    $createdAt = $post['created_at'];
-    $content = $post['content'];
-    $post_id = $post['id'];
-
+    // Fetch the latest comment for this post
     $latestComment = fetchLatestComment($pdo, $post['id']);
 
-    renderPost($post_id, $fullname, $username, $avatar, $createdAt, $content, $latestComment);
+    // Create an instance of PostRenderer
+    $postRenderer = new PostRenderer(
+        $post['id'],
+        $post['first_name'] . ' ' . $post['last_name'],
+        $post['username'],
+        $post['avatar'],
+        $post['created_at'],
+        $post['content'],
+        $latestComment,
+        $BASE_URL
+    );
+
+    // Render the post
+    $postRenderer->render();
 }
 ?>
