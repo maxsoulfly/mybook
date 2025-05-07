@@ -37,13 +37,13 @@ function renderPost($fullname, $username, $avatar, $date, $content, $latestComme
             <form method="post" action="<?= $BASE_URL ?>/actions/comment-process.php">
                 <input type="hidden" name="post_id" value="<?= $postId ?>">
                 <div class="comment-input-row">
-                    <textarea name="content" placeholder="Write a comment..." rows="3"></textarea>
+                    <textarea name="content" placeholder="Write a comment..." ></textarea>
                     <button class="info" type="submit">Comment</button>
                 </div>
             </form>
         </div>
     ';
-    
+
 
     // One latest comment (optional)
     if ($latestComment) {
