@@ -23,9 +23,10 @@ foreach ($posts as $post) {
     $avatar = $post['avatar'];
     $createdAt = $post['created_at'];
     $content = $post['content'];
+    $post_id = $post['id'];
 
     $latestComment = fetchLatestComment($pdo, $post['id']);
 
-    renderPost($fullname, $username, $avatar, $createdAt, $content, $latestComment);
+    renderPost($post_id, $fullname, $username, $avatar, $createdAt, $content, $latestComment);
 }
 ?>

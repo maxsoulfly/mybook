@@ -1,6 +1,6 @@
 <?php
 
-function renderPost($fullname, $username, $avatar, $date, $content, $latestComment = null)
+function renderPost($post_id, $fullname, $username, $avatar, $date, $content, $latestComment = null)
 {
     global $BASE_URL;
     $username = htmlspecialchars($username);
@@ -32,10 +32,9 @@ function renderPost($fullname, $username, $avatar, $date, $content, $latestComme
     // comment-form
     echo
     '
-        
         <div class="comment-form">
-            <form method="post" action="<?= $BASE_URL ?>/actions/comment-process.php">
-                <input type="hidden" name="post_id" value="<?= $postId ?>">
+            <form method="post" action="' . $BASE_URL . '/actions/comment-process.php">
+                <input type="hidden" name="post_id" value="' . $post_id . '">
                 <div class="comment-input-row">
                     <textarea name="content" placeholder="Write a comment..." ></textarea>
                     <button class="info" type="submit">Comment</button>
