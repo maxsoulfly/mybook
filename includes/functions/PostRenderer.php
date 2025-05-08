@@ -11,7 +11,7 @@ class PostRenderer
     private $latestComment;
     private $baseUrl;
 
-    public function __construct($postId, $fullname, $username, $avatar, $date, $content, $latestComment = null, $baseUrl)
+    public function __construct($postId, $fullname, $username, $avatar, $date, $content, $baseUrl, $latestComment = null)
     {
         $this->postId = $postId;
         $this->fullname = htmlspecialchars($fullname);
@@ -61,11 +61,20 @@ class PostRenderer
 
     private function renderCommentForm()
     {
+        // Make sure you have a session started
+        if (!isset($_SESSION['user_id'])) {
+            echo '<p>You must be logged in to comment.</p>';
+            return;
+        }
+
+        $loggedInUserId = $_SESSION['user_id'];
+
         echo
         '
             <div class="comment-form">
                 <form method="post" action="' . $this->baseUrl . '/actions/comment-process.php">
                     <input type="hidden" name="post_id" value="' . $this->postId . '">
+                    <input type="hidden" name="user_id" value="' . $loggedInUserId . '">
                     <div class="comment-input-row">
                         <textarea name="content" placeholder="Write a comment..." ></textarea>
                         <button class="info" type="submit">Comment</button>

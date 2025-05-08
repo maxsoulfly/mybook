@@ -31,6 +31,11 @@ function validateFields($data)
         if (empty($value)) {
             $error .= "$key is empty!<br>";
         }
+
+        // Automatically validate any field ending with "_id" as an integer
+        if (str_ends_with($key, '_id') && !filter_var($value, FILTER_VALIDATE_INT)) {
+            $error .= "$key must be a valid number!<br>";
+        }
     }
 
     return $error ?: "";

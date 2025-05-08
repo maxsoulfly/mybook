@@ -29,8 +29,8 @@ foreach ($posts as $post) {
         $post['avatar'],
         $post['created_at'],
         $post['content'],
-        $latestComment,
-        $BASE_URL
+        $BASE_URL,
+        $latestComment
     );
 
     // Render the post
