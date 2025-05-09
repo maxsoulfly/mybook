@@ -52,7 +52,7 @@ class PostRenderer
             </p>
         ';
     }
-    private function renderActions()
+    private function renderCommentActions()
     {
         echo '
             <div class="post-actions">
@@ -61,8 +61,16 @@ class PostRenderer
             </div>
         ';
     }
+    private function renderReplyActions()
+    {
+        echo '
+            <div class="comment-actions">
+                <a href="#">Like</a> · <a href="#" class="comment-toggle">Reply</a>
+            </div>
+        ';
+    }
 
-    private function renderCommentForm()
+    private function renderCommentForm($parentId = null)
     {
         // Make sure you have a session started
         if (!isset($_SESSION['user_id'])) {
@@ -72,19 +80,25 @@ class PostRenderer
 
         $loggedInUserId = $_SESSION['user_id'];
 
-        echo
-        '
-            <div class="comment-form">
-                <form method="post" action="' . $this->baseUrl . '/actions/comment-process.php">
-                    <input type="hidden" name="post_id" value="' . $this->postId . '">
-                    <input type="hidden" name="user_id" value="' . $loggedInUserId . '">
-                    <div class="comment-input-row">
-                        <textarea name="content" placeholder="Write a comment..." ></textarea>
-                        <button class="info" type="submit">Comment</button>
-                    </div>
-                </form>
-            </div>
-        ';
+        echo '
+        <div class="comment-form">
+            <form method="post" action="' . $this->baseUrl . '/actions/comment-process.php">
+                <input type="hidden" name="post_id" value="' . $this->postId . '">
+                <input type="hidden" name="user_id" value="' . $loggedInUserId . '">';
+
+        // Include parent_id only if it's a reply
+        if ($parentId) {
+            echo '<input type="hidden" name="parent_id" value="' . $parentId . '">';
+        }
+
+        echo '
+                <div class="comment-input-row">
+                    <textarea name="content" placeholder="Write a comment..." ></textarea>
+                    <button class="info" type="submit">Comment</button>
+                </div>
+            </form>
+        </div>
+    ';
     }
 
     private function renderComment($comment)
@@ -106,7 +120,7 @@ class PostRenderer
                     <p class="comment-text">
                         ' . escapeOutput($comment['content'])  . '
                     </p>
-
+                    ' . $this->renderCommentForm($comment['id']) . '
                 </div>
                 <div class="comment-actions">
                     <a href="#">Like</a> · <a href="#">Reply</a>
@@ -153,7 +167,7 @@ class PostRenderer
         echo '<div class="post">';
         $this->renderHeader();
         $this->renderContent();
-        $this->renderActions();
+        $this->renderCommentActions();
         $this->renderComments();
         $this->renderCommentForm();
         echo '</div>';
