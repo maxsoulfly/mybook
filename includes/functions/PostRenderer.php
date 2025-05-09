@@ -86,6 +86,7 @@ class PostRenderer
 
     private function renderComment($comment)
     {
+        $fullname = $comment['first_name'] . ' ' .  '' . $comment['last_name'];
         echo '
         <div class="comment">
             <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $comment['username'] . '">
@@ -96,7 +97,7 @@ class PostRenderer
 
                     <div class="comment-header">
                         <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $comment['username'] . '">
-                            <strong class="username">' . $comment['fullname'] . '</strong>
+                            <strong class="username">' . $fullname . '</strong>
                         </a>
                         <span class="comment-time">' . $comment['created_at'] . '</span>
                     </div>
