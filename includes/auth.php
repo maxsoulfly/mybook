@@ -13,7 +13,6 @@ if (!isset($_SESSION['user_id'])) {
 // Expose $user variable for use in headers/layouts
 $user = [
     'id' => $_SESSION['user_id'],
-    'first_name' => $_SESSION['first_name'] ?? '',
-    'last_name' => $_SESSION['last_name'] ?? '',
+    'display_name' => $_SESSION['display_name'] ?? '',
     'avatar' => $_SESSION['avatar'] ?? ''
 ];

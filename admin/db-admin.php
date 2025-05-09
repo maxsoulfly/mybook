@@ -28,6 +28,28 @@ if ($query === 'add_gender_column') {
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
+} else if ($query === 'add_display_name') {
+    try {
+        // Step 1: Add display_name column (only if it doesn't exist)
+        $pdo->exec("ALTER TABLE users ADD COLUMN display_name TEXT");
+
+        // Step 2: Populate display_name with first_name + last_name
+        $pdo->exec("
+            UPDATE users 
+            SET display_name = TRIM(COALESCE(first_name, '') || ' ' || COALESCE(last_name, ''))
+        ");
+        echo "Display name column added and populated successfully!";
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+} else if ($query === 'remove_first_last_names') {
+    try {
+        $pdo->exec("ALTER TABLE users DROP COLUMN first_name");
+        $pdo->exec("ALTER TABLE users DROP COLUMN last_name");
+        echo "First name and last name columns removed successfully!";
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 } else {
     echo "Unknown query.";
 }

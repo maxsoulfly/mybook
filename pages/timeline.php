@@ -24,7 +24,7 @@ if (!$user) {
 
 $coverImage = $BASE_URL . $user['cover'];
 $profilePicUrl = $BASE_URL . $user['avatar'];
-$userFullName = $user['first_name'] . ' ' . $user['last_name'];
+$display_name = $user['display_name'];
 
 
 

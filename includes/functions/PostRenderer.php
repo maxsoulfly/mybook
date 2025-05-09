@@ -3,7 +3,7 @@
 class PostRenderer
 {
     private $postId;
-    private $fullname;
+    private $display_name;
     private $username;
     private $avatar;
     private $date;
@@ -11,10 +11,10 @@ class PostRenderer
     private $latestComment;
     private $baseUrl;
 
-    public function __construct($postId, $fullname, $username, $avatar, $date, $content, $baseUrl, $latestComment = null)
+    public function __construct($postId, $display_name, $username, $avatar, $date, $content, $baseUrl, $latestComment = null)
     {
         $this->postId = $postId;
-        $this->fullname = htmlspecialchars($fullname);
+        $this->display_name = htmlspecialchars($display_name);
         $this->username = htmlspecialchars($username);
         $this->avatar = $avatar;
         $this->date = $date;
@@ -33,7 +33,7 @@ class PostRenderer
                 <div class="post-user-info">
                     <strong>
                         <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->username . '">
-                            ' . $this->fullname . '</strong>
+                            ' . $this->display_name . '</strong>
                         </a>
                     <span class="post-date">' . $this->date . '</span>
                 </div>
@@ -86,7 +86,6 @@ class PostRenderer
 
     private function renderComment($comment)
     {
-        $fullname = $comment['first_name'] . ' ' .  '' . $comment['last_name'];
         echo '
         <div class="comment">
             <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $comment['username'] . '">
@@ -97,7 +96,7 @@ class PostRenderer
 
                     <div class="comment-header">
                         <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $comment['username'] . '">
-                            <strong class="username">' . $fullname . '</strong>
+                            <strong class="username">' . $comment['display_name'] . '</strong>
                         </a>
                         <span class="comment-time">' . $comment['created_at'] . '</span>
                     </div>

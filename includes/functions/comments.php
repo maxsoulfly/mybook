@@ -3,7 +3,7 @@
 function fetchLatestComment(PDO $pdo, int $postId)
 {
     $stmt = $pdo->prepare(
-        "SELECT c.*, u.username, u.first_name, u.last_name, u.avatar
+        "SELECT c.*, u.username, u.display_name, u.avatar
             FROM comments c
             JOIN users u ON c.user_id = u.id
             WHERE c.post_id = :post_id

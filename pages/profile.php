@@ -38,7 +38,7 @@ if (!$user) {
 
 $coverImage = $BASE_URL . $profile['cover'];
 $profilePicUrl = $BASE_URL . $profile['avatar'];
-$profileFullName = $profile['first_name'] . ' ' . $profile['last_name'];
+$profileFullName = $profile['display_name'];
 $friendStatus = getFriendStatus($pdo, $user["id"], $profile["id"]);
 
 include_once __DIR__ . '/../includes/header.php';

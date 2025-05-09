@@ -10,7 +10,7 @@ $stmt = $pdo->prepare(
     'SELECT 
         users.username, 
         users.id AS user_id, 
-        users.first_name || " " || users.last_name AS full_name, 
+        users.display_name, 
         users.avatar
      FROM friends
      JOIN users 
@@ -31,12 +31,12 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($friends as $friend) {
             $isInitiator = $friend['user_id'] == $profileId;
             $friendUsername = $friend['username'];
-            $friendName = $friend['full_name'];
+            $friendName = $friend['display_name'];
             $friendAvatar = $friend['avatar'];
-        
+
             renderFriend($friendUsername, $friendName, $friendAvatar);
         }
-        
+
         ?>
     </ul>
 </div>

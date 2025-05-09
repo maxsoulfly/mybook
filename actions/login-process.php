@@ -37,8 +37,7 @@ if (!$user || !password_verify($password, $user['password'])) {
 
 // 5. If everything is good → (we'll build session/login later)
 $_SESSION['user_id'] = $user['id'];
-$_SESSION['first_name'] = $user['first_name'];
-$_SESSION['last_name'] = $user['last_name'];
+$_SESSION['display_name'] = $user['display_name'];
 $_SESSION['avatar'] = $user['avatar'];
 $_SESSION['username'] = $user['username'];
 

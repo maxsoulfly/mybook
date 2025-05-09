@@ -24,8 +24,7 @@ include_once __DIR__ . '/../includes/header-public.php';
         <div class="form-section container-centered">
             <h2>Sign up to Mybook</h2>
             <form action="<?= $BASE_URL ?>/actions/signup-process.php" method="POST">
-                <input type="text" name="first_name" placeholder="First Name">
-                <input type="text" name="last_name" placeholder="Last Name">
+                <input type="text" name="display_name" placeholder="Full Name">
                 <input type="text" name="username" placeholder="Username">
 
                 <select name="gender">

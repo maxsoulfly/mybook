@@ -29,8 +29,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 $password = trim($_POST['password']);
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-$first_name = trim($_POST['first_name']);
-$last_name = trim($_POST['last_name']);
+$display_name = trim($_POST['display_name']);
 $gender = trim($_POST['gender']);
 
 // default avatar & cover
@@ -38,8 +37,8 @@ $avatar = "/assets/img/default_avatar.png";
 $cover = "/assets/img/default_cover.png";
 
 $stmt = $pdo->prepare(
-    "INSERT INTO users (username, email, password, first_name, last_name, gender, avatar, cover)
-                VALUES (:username, :email, :password, :first_name, :last_name, :gender, :avatar, :cover)
+    "INSERT INTO users (username, email, password, display_name, gender, avatar, cover)
+                VALUES (:username, :email, :password, :display_name, :gender, :avatar, :cover)
     "
 );
 try {
@@ -47,8 +46,7 @@ try {
         'username'   => $username,
         'email'      => $email,
         'password'   => $hashedPassword,
-        'first_name' => $first_name,
-        'last_name'  => $last_name,
+        'display_name' => $display_name,
         'gender'     => $gender,
         'avatar'     => $avatar,
         'cover'     => $cover
