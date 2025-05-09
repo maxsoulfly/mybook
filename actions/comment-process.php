@@ -17,7 +17,7 @@ if ($errorMsg !== '') {
 
 $post_id = filter_input(INPUT_POST, 'post_id', FILTER_SANITIZE_NUMBER_INT);
 $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
-$content = htmlspecialchars(trim($_POST['content']), ENT_QUOTES, 'UTF-8');
+$content = trim($_POST['content']);
 
 
 $stmt = $pdo->prepare(

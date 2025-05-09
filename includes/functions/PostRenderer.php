@@ -45,7 +45,7 @@ class PostRenderer
     {
         echo '
             <p class="post-content">
-                ' . nl2br(htmlspecialchars($this->content, ENT_QUOTES, 'UTF-8')) . '
+            ' . escapeOutput($this->content) . '
             </p>
         ';
     }
@@ -101,7 +101,7 @@ class PostRenderer
                         <span class="comment-time">' . $comment['created_at'] . '</span>
                     </div>
                     <p class="comment-text">
-                        ' . nl2br(htmlspecialchars($comment['content'], ENT_QUOTES, 'UTF-8')) . '
+                        ' . escapeOutput($comment['content'])  . '
                     </p>
 
                 </div>

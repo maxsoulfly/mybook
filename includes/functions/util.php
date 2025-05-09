@@ -2,7 +2,8 @@
 
 function escapeOutput(string $string): string
 {
-    return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    $safeString = str_replace(['<', '>', '&'], ['&lt;', '&gt;', '&amp;'], $string);
+    return nl2br($safeString);
 }
 
 function redirectBackWithParam($key, $value)
