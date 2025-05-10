@@ -14,11 +14,11 @@
     }
 
     // Fetch all comments for the post
-    $comments = $postManager->fetchComments($pdo, $post_id);
+    $comments = $postManager->fetchComments($post_id);
 
     // Fetch replies for each comment
     foreach ($comments as &$comment) {
-        $comment['replies'] = $postManager->fetchReplies($pdo, $comment['id']);
+        $comment['replies'] = $postManager->fetchReplies($comment['id']);
     }
 
     // Create an instance of PostRenderer
