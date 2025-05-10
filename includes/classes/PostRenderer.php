@@ -144,13 +144,33 @@ class PostRenderer
 
         $this->renderCommentHeader($comment);
         $this->renderCommentText($comment);
-
-
         echo '</div>';
         $this->renderReplyActions();
+        $this->renderAllReplies($comment);
+
         $this->renderCommentForm($comment['id']);
         echo '</div>';
         echo '</div>';
+    }
+    private function renderReply($reply)
+    {
+        echo '<div class="reply">';
+        $this->renderCommentAvatar($reply);
+        echo '<div class="comment-body"><div class="comment-wrapper">';
+
+        $this->renderCommentHeader($reply);
+        $this->renderCommentText($reply);
+        echo '</div>';
+        $this->renderReplyActions();
+        echo '</div>';
+        echo '</div>';
+    }
+
+    public function renderAllReplies(array $comment)
+    {
+        foreach ($comment['replies'] as $reply) {
+            $this->renderReply($reply);
+        }
     }
 
     private function renderViewAllCommentsLink()

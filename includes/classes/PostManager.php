@@ -39,8 +39,9 @@ class PostManager
     public function fetchReplies($parent_id)
     {
         $stmt = $this->pdo->prepare(
-            'SELECT id, post_id, user_id, content, created_at
-             FROM comments
+            'SELECT c.*, users.display_name, users.username, users.avatar 
+             FROM comments AS c
+             JOIN users ON c.user_id = users.id 
              WHERE parent_id = :parent_id
              ORDER BY created_at ASC'
         );
