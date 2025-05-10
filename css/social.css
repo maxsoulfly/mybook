@@ -170,24 +170,36 @@ img.avatar-large {
 }
 
 /* comments */
-.comment-form {
+/* Main Comment Form (Hidden by default) */
+.comment-form.hidden {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
 }
 
 .comment-form.show {
-    max-height: 40rem; /* adjust as needed */
+    max-height: 40rem;
+}
+
+/* Reply Form (Hidden by default) */
+.reply-form.hidden {
+    display: none;
+}
+
+.reply-form.show {
+    display: block;
+    margin-left: 2rem; /* Indented for replies */
 }
 
 .comment-input-row {
     display: flex;
     flex-direction: column;
     gap: var(--padding-small);
-    margin-top: var(--padding-small);
+    margin-top: var(--padding-smaller);
     align-items: flex-end;
 }
-.comment-form textarea {
+.comment-form textarea,
+.reply-form textarea {
     width: 100%;
     overflow-y: hidden; /* Prevent scrollbars */
     resize: none; /* Prevent manual resizing */
@@ -206,7 +218,8 @@ img.avatar-large {
     color: var(--primary-text-color);
 }
 
-.comment-form textarea:focus {
+.comment-form textarea:focus,
+.reply-form textarea:focus {
     min-height: 4.5em; /* Expands to 3 rows */
 }
 

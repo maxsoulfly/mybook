@@ -73,8 +73,12 @@ class PostRenderer
 
         $loggedInUserId = $_SESSION['user_id'];
 
+        if (!$parentId) {
+            echo '<div class="comment-form hidden">';
+        } else {
+            echo '<div class="reply-form hidden">';
+        }
         echo '
-        <div class="comment-form">
             <form method="post" action="' . $this->baseUrl . '/actions/comment-process.php">
                 <input type="hidden" name="post_id" value="' . $this->postId . '">
                 <input type="hidden" name="user_id" value="' . $loggedInUserId . '">';
@@ -127,7 +131,7 @@ class PostRenderer
     {
         echo '
             <div class="comment-actions">
-                <a href="#">Like</a> · <a href="#" class="comment-toggle">Reply</a>
+                <a href="#">Like</a> · <a href="#" class="reply-toggle">Reply</a>
             </div>
         ';
     }
@@ -141,11 +145,12 @@ class PostRenderer
         $this->renderCommentHeader($comment);
         $this->renderCommentText($comment);
 
-        $this->renderCommentForm($comment['id']);
 
         echo '</div>';
         $this->renderReplyActions();
-        echo '</div></div>';
+        $this->renderCommentForm($comment['id']);
+        echo '</div>';
+        echo '</div>';
     }
 
     private function renderViewAllCommentsLink()
@@ -186,8 +191,8 @@ class PostRenderer
         $this->renderHeader();
         $this->renderContent();
         $this->renderCommentActions();
-        $this->renderComments();
         $this->renderCommentForm();
+        $this->renderComments();
         echo '</div>';
     }
 }

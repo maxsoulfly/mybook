@@ -1,39 +1,67 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document
-        .querySelectorAll('.post-actions a.comment-toggle')
-        .forEach((link) => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                const parent = this.closest('.post');
-                const form = parent.querySelector('.comment-form');
-                const textarea = form.querySelector('textarea');
-                if (form) {
-                    form.classList.add('show'); // Always show the form
-                    textarea.focus(); // Focus on the textarea
-                    form.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                    });
-                }
-
-                // Auto-resize textarea on input
-                textarea.addEventListener('input', function () {
-                    this.style.height = 'auto'; // Reset height
-                    this.style.height = `${Math.min(this.scrollHeight, 150)}px`; // Limit to 150px (approx. 3 rows)
-                });
-
-                // Set initial height
-                textarea.style.height = '1.5em';
-                textarea.addEventListener('focus', function () {
-                    this.style.height = 'auto';
-                    this.style.height = `${Math.min(this.scrollHeight, 150)}px`;
-                });
-
-                textarea.addEventListener('blur', function () {
-                    if (this.value.trim() === '') {
-                        this.style.height = '3em';
-                    }
-                });
-            });
-        });
+    setupCommentToggle();
+    setupAutoResizeTextareas();
 });
+
+// Function to handle comment toggle (Main and Reply)
+function setupCommentToggle() {
+    // Main Comment Form Toggle
+    document.querySelectorAll('.comment-toggle').forEach((link) => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            toggleMainCommentForm();
+        });
+    });
+
+    // Reply Form Toggle
+    document.querySelectorAll('.reply-toggle').forEach((link) => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            toggleReplyForm(this);
+        });
+    });
+}
+
+// Function to toggle the main comment form
+function toggleMainCommentForm() {
+    const form = document.querySelector('.comment-form');
+    if (form) {
+        form.classList.toggle('show');
+        const textarea = form.querySelector('textarea');
+        if (textarea) textarea.focus();
+    }
+}
+
+// Function to toggle the reply form
+function toggleReplyForm(link) {
+    const parent = link.closest('.comment');
+    const form = parent.querySelector('.reply-form');
+    if (form) {
+        form.classList.toggle('show');
+        const textarea = form.querySelector('textarea');
+        if (textarea) textarea.focus();
+    }
+}
+
+// Function to set up auto-resizing textareas
+function setupAutoResizeTextareas() {
+    document.querySelectorAll('textarea').forEach((textarea) => {
+        textarea.addEventListener('input', autoResizeTextarea);
+        textarea.addEventListener('focus', autoResizeTextarea);
+        textarea.addEventListener('blur', resetTextarea);
+        textarea.style.height = '1.5em';
+    });
+}
+
+// Function to auto-resize textareas
+function autoResizeTextarea() {
+    this.style.height = 'auto';
+    this.style.height = `${Math.min(this.scrollHeight, 150)}px`;
+}
+
+// Function to reset textarea height on blur
+function resetTextarea() {
+    if (this.value.trim() === '') {
+        this.style.height = '3em';
+    }
+}
