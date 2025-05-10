@@ -61,14 +61,7 @@ class PostRenderer
             </div>
         ';
     }
-    private function renderReplyActions()
-    {
-        echo '
-            <div class="comment-actions">
-                <a href="#">Like</a> · <a href="#" class="comment-toggle">Reply</a>
-            </div>
-        ';
-    }
+
 
     private function renderCommentForm($parentId = null)
     {
@@ -101,33 +94,58 @@ class PostRenderer
     ';
     }
 
-    private function renderComment($comment)
+    private function renderCommentAvatar($comment)
     {
         echo '
-        <div class="comment">
-            <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $comment['username'] . '">
-                <img class="avatar" src="' . $this->baseUrl . $comment['avatar'] . '" alt="' . $comment['username'] . '">
-            </a>
-            <div class="comment-body">
-                <div class="comment-wrapper">
-
-                    <div class="comment-header">
-                        <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $comment['username'] . '">
-                            <strong class="username">' . $comment['display_name'] . '</strong>
-                        </a>
-                        <span class="comment-time">' . $comment['created_at'] . '</span>
-                    </div>
-                    <p class="comment-text">
-                        ' . escapeOutput($comment['content'])  . '
-                    </p>
-                    ' . $this->renderCommentForm($comment['id']) . '
-                </div>
-                <div class="comment-actions">
-                    <a href="#">Like</a> · <a href="#">Reply</a>
-                </div>
+            <div class="comment-avatar">
+                <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $comment['username'] . '">
+                    <img class="avatar" src="' . $this->baseUrl . $comment['avatar'] . '" alt="' . $comment['username'] . '">
+                </a>
             </div>
-        </div>
         ';
+    }
+    private function renderCommentHeader($comment)
+    {
+        echo '
+            <div class="comment-header">
+                <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $comment['username'] . '">
+                    <strong class="username">' . $comment['display_name'] . '</strong>
+                </a>
+                <span class="comment-time">' . $comment['created_at'] . '</span>
+            </div>
+        ';
+    }
+    private function renderCommentText($comment)
+    {
+        echo '
+            <p class="comment-text">
+                ' . escapeOutput($comment['content'])  . '
+            </p>
+        ';
+    }
+    private function renderReplyActions()
+    {
+        echo '
+            <div class="comment-actions">
+                <a href="#">Like</a> · <a href="#" class="comment-toggle">Reply</a>
+            </div>
+        ';
+    }
+
+    private function renderComment($comment)
+    {
+        echo '<div class="comment">';
+        $this->renderCommentAvatar($comment);
+        echo '<div class="comment-body"><div class="comment-wrapper">';
+
+        $this->renderCommentHeader($comment);
+        $this->renderCommentText($comment);
+
+        $this->renderCommentForm($comment['id']);
+
+        echo '</div>';
+        $this->renderReplyActions();
+        echo '</div></div>';
     }
 
     private function renderViewAllCommentsLink()
