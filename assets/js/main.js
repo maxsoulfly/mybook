@@ -45,12 +45,14 @@ function toggleReplyForm(link) {
 
 // Function to set up auto-resizing textareas
 function setupAutoResizeTextareas() {
-    document.querySelectorAll('textarea').forEach((textarea) => {
-        textarea.addEventListener('input', autoResizeTextarea);
-        textarea.addEventListener('focus', autoResizeTextarea);
-        textarea.addEventListener('blur', resetTextarea);
-        textarea.style.height = '1.5em';
-    });
+    document
+        .querySelectorAll('.comment-form textarea, .reply-form textarea')
+        .forEach((textarea) => {
+            textarea.addEventListener('input', autoResizeTextarea);
+            textarea.addEventListener('focus', autoResizeTextarea);
+            textarea.addEventListener('blur', resetTextarea);
+            textarea.style.height = '1.5em';
+        });
 }
 
 // Function to auto-resize textareas
