@@ -16,18 +16,20 @@ if ($errorMsg !== '') {
 }
 
 $post_id = filter_input(INPUT_POST, 'post_id', FILTER_SANITIZE_NUMBER_INT);
+$parent_id = filter_input(INPUT_POST, 'parent_id', FILTER_SANITIZE_NUMBER_INT);
 $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
 $content = trim($_POST['content']);
 
 
 $stmt = $pdo->prepare(
-    "INSERT INTO comments (post_id, user_id, content)
-                VALUES (:post_id, :user_id, :content)
+    "INSERT INTO comments (post_id, parent_id, user_id, content)
+                VALUES (:post_id, :parent_id, :user_id, :content)
         "
 );
 try {
     $stmt->execute([
         'post_id'   => $post_id,
+        'parent_id'   => $parent_id,
         'user_id'   => $user_id,
         'content'      => $content,
     ]);
