@@ -17,9 +17,11 @@ $stmt->execute(['id' => $profileId]);
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($posts as $post) {
+    // Initialize PostManager
+    $postManager = new PostManager($pdo);
 
     // Fetch the latest comment for this post
-    $latestComment = fetchLatestComment($pdo, $post['id']);
+    $latestComment = $postManager->fetchLatestComment($pdo, $post['id']);
 
     // Create an instance of PostRenderer
     $postRenderer = new PostRenderer(
