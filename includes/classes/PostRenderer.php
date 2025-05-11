@@ -136,7 +136,7 @@ class PostRenderer
         ';
     }
 
-    private function renderComment($comment)
+    private function renderComment($comment, $showReplies)
     {
         echo '<div class="comment">';
         $this->renderCommentAvatar($comment);
@@ -146,7 +146,9 @@ class PostRenderer
         $this->renderCommentText($comment);
         echo '</div>';
         $this->renderReplyActions();
-        $this->renderAllReplies($comment);
+        if ($showReplies) {
+            $this->renderAllReplies($comment);
+        }
 
         $this->renderCommentForm($comment['id']);
         echo '</div>';
@@ -185,34 +187,34 @@ class PostRenderer
     public function renderAllComments(array $comments)
     {
         foreach ($comments as $comment) {
-            $this->renderComment($comment);
+            $this->renderComment($comment, showReplies: true);
         }
     }
 
-    private function renderComments(): void
+    private function renderComments($showReplies): void
     {
         if (!empty($this->comments)) {
             // Render all comments if provided
             foreach ($this->comments as $comment) {
-                $this->renderComment($comment);
+                $this->renderComment($comment, $showReplies);
             }
         } elseif ($this->latestComment) {
             // Render only the latest comment and the "View All" link
-            $this->renderComment($this->latestComment);
+            $this->renderComment($this->latestComment, false);
             $this->renderViewAllCommentsLink();
         }
     }
 
 
 
-    public function render()
+    public function render($showReplies = true)
     {
         echo '<div class="post">';
         $this->renderHeader();
         $this->renderContent();
         $this->renderCommentActions();
         $this->renderCommentForm();
-        $this->renderComments();
+        $this->renderComments($showReplies);
         echo '</div>';
     }
 }
