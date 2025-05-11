@@ -200,7 +200,7 @@ class PostRenderer
             }
         } elseif ($this->latestComment) {
             // Render only the latest comment and the "View All" link
-            $this->renderComment($this->latestComment, false);
+            $this->renderComment($this->latestComment, showReplies: false);
             $this->renderViewAllCommentsLink();
         }
     }
