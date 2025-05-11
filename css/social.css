@@ -228,7 +228,8 @@ img.avatar-large {
     border-radius: var(--border-radius-large);
 }
 
-.comment {
+.comment,
+.reply {
     display: flex;
     gap: var(--padding-small);
     margin-top: var(--padding-small);
