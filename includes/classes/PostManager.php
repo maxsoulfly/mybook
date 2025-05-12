@@ -36,6 +36,18 @@ class PostManager
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function countComments($post_id)
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT COUNT(*) AS comment_count 
+             FROM comments 
+             WHERE post_id = :post_id'
+        );
+        $stmt->execute(['post_id' => $post_id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['comment_count'] ?? 0;
+    }
+
     public function fetchReplies($parent_id)
     {
         $stmt = $this->pdo->prepare(
