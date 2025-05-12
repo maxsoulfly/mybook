@@ -9,7 +9,7 @@ function setupCommentToggle() {
     document.querySelectorAll('.comment-toggle').forEach((link) => {
         link.addEventListener('click', function (e) {
             e.preventDefault();
-            toggleMainCommentForm();
+            toggleMainCommentForm(this); // Pass the clicked link
         });
     });
 
@@ -23,8 +23,9 @@ function setupCommentToggle() {
 }
 
 // Function to toggle the main comment form
-function toggleMainCommentForm() {
-    const form = document.querySelector('.comment-form');
+function toggleMainCommentForm(link) {
+    const parent = link.closest('.post'); // Scope to the specific post
+    const form = parent.querySelector('.comment-form');
     if (form) {
         form.classList.toggle('show');
         const textarea = form.querySelector('textarea');
