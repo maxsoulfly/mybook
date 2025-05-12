@@ -49,6 +49,24 @@ class PostManager
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function fetchRecentComments(PDO $pdo, int $postId, int $numComments)
+    {
+        $stmt = $pdo->prepare(
+            "SELECT c.*, u.username, u.display_name, u.avatar
+                    FROM comments c
+                    JOIN users u ON c.user_id = u.id
+                    WHERE c.post_id = :post_id
+                        AND c.parent_id IS NULL
+                    ORDER BY c.created_at DESC
+                    LIMIT :numComments
+            "
+        );
+
+        $stmt->execute(['post_id' => $postId, 'numComments' => $numComments]);
+        $latestComments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $latestComments ?: null;
+    }
+
     public function fetchLatestComment(PDO $pdo, int $postId)
     {
         $stmt = $pdo->prepare(

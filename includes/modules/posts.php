@@ -21,7 +21,7 @@ foreach ($posts as $post) {
     $postManager = new PostManager($pdo);
 
     // Fetch the latest comment for this post
-    $latestComment = $postManager->fetchLatestComment($pdo, $post['id']);
+    $latestComments = $postManager->fetchRecentComments($pdo, $post['id'], numComments: 2);
 
     // Create an instance of PostRenderer
     $postRenderer = new PostRenderer(
@@ -32,7 +32,7 @@ foreach ($posts as $post) {
         $post['created_at'],
         $post['content'],
         $BASE_URL,
-        $latestComment
+        $latestComments
     );
 
     // Render the post

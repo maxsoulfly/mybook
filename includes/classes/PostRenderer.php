@@ -8,12 +8,12 @@ class PostRenderer
     private $avatar;
     private $date;
     private $content;
-    private $latestComment;
+    private $latestComments = [];
     private $comments = [];
 
     private $baseUrl;
 
-    public function __construct($postId, $display_name, $username, $avatar, $date, $content, $baseUrl, $latestComment = null, $comments = [])
+    public function __construct($postId, $display_name, $username, $avatar, $date, $content, $baseUrl, $latestComments = [], $comments = [])
     {
         $this->postId = $postId;
         $this->display_name = htmlspecialchars($display_name);
@@ -21,7 +21,7 @@ class PostRenderer
         $this->avatar = $avatar;
         $this->date = $date;
         $this->content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8');
-        $this->latestComment = $latestComment;
+        $this->latestComments = $latestComments;
         $this->comments = $comments;
         $this->baseUrl = $baseUrl;
     }
@@ -198,9 +198,11 @@ class PostRenderer
             foreach ($this->comments as $comment) {
                 $this->renderComment($comment, $showReplies);
             }
-        } elseif ($this->latestComment) {
-            // Render only the latest comment and the "View All" link
-            $this->renderComment($this->latestComment, showReplies: false);
+        } elseif (!empty($this->latestComments)) {
+            // Render the latest comments and the "View All" link
+            foreach ($this->latestComments as $comment) {
+                $this->renderComment($comment, showReplies: false);
+            }
             $this->renderViewAllCommentsLink();
         }
     }
