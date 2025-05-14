@@ -12,15 +12,23 @@ class PostManager
     public function fetchPost($post_id)
     {
         $stmt = $this->pdo->prepare(
-            'SELECT posts.*, users.display_name, users.username, users.avatar
-             FROM posts
-             JOIN users ON posts.user_id = users.id
-             WHERE posts.id = :post_id
-             LIMIT 1'
+            'SELECT 
+            posts.*, 
+            users.display_name, 
+            users.username, 
+            users.avatar,
+            recipient.display_name AS recipient_name,
+            recipient.username AS recipient_username
+         FROM posts
+         JOIN users ON posts.user_id = users.id
+         LEFT JOIN users AS recipient ON posts.recipient_id = recipient.id
+         WHERE posts.id = :post_id
+         LIMIT 1'
         );
         $stmt->execute(['post_id' => $post_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
 
     public function fetchComments($post_id)
     {

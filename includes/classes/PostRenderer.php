@@ -43,17 +43,30 @@ class PostRenderer
     {
         echo '
         <div class="post-header">
-                <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->post['username'] . '">
-                    <img src="' . $this->baseUrl . $this->post['avatar'] . '" alt="' . $this->post['username'] . '">
-                </a>
-                <div class="post-user-info">
-                    <strong>
-                        <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->post['username'] . '">
-                            ' . $this->post['display_name'] . '</strong>
-                        </a>
-                    <span class="post-date">' . $this->post['created_at'] . '</span>
-                </div>
+            <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->post['username'] . '">
+                <img src="' . $this->baseUrl . $this->post['avatar'] . '" alt="' . $this->post['username'] . '">
+            </a>
+            <div class="post-user-info">
+                <strong>
+                    <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->post['username'] . '">
+                        ' . $this->post['display_name'] . '
+                    </a> 
+        ';
+
+        if (isset($this->post['recipient_username'])) {
+            echo '
+                &nbsp;&nbsp;->&nbsp;&nbsp;
+                    <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->post['recipient_username'] . '">
+                        ' . $this->post['recipient_name'] . '
+                    </a> 
+                </strong>
+            ';
+        }
+
+        echo '
+                <span class="post-date">' . $this->post['created_at'] . '</span>
             </div>
+        </div>
         ';
     }
 
