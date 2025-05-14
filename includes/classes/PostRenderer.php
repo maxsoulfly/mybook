@@ -3,42 +3,55 @@
 class PostRenderer
 {
     private $postId;
-    private $display_name;
-    private $username;
-    private $avatar;
-    private $date;
-    private $content;
-    private $latestComments = [];
-    private $comments = [];
-
+    private $pdo;
+    private $postManager;
     private $baseUrl;
+    private $post;
+    private $comments;
+    private $latestComments;
+    private $replies;
+    private $commentCount;
+    private $likes;
 
-    public function __construct($postId, $display_name, $username, $avatar, $date, $content, $baseUrl, $latestComments = [], $comments = [])
+    public function __construct($postId, $pdo)
     {
+
+        global $BASE_URL;
         $this->postId = $postId;
-        $this->display_name = htmlspecialchars($display_name);
-        $this->username = htmlspecialchars($username);
-        $this->avatar = $avatar;
-        $this->date = $date;
-        $this->content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8');
-        $this->latestComments = $latestComments;
-        $this->comments = $comments;
-        $this->baseUrl = $baseUrl;
+        $this->baseUrl = $BASE_URL;
+        $this->pdo = $pdo;
+        $this->postManager = new PostManager($pdo);
+
+        $this->loadPostData();
+    }
+
+    private function loadPostData()
+    {
+        $this->post = $this->postManager->fetchPost($this->postId);
+        if (!$this->post) {
+            die('Post not found.');
+        }
+
+        $this->comments = $this->postManager->fetchComments($this->postId);
+        $this->latestComments = $this->postManager->fetchRecentComments($this->pdo, $this->postId, numComments: 2);
+        $this->commentCount = $this->postManager->countComments($this->postId);
+        // $this->replies = $this->postManager->fetchReplies($this->postId);
+        // $this->likes = $this->postManager->countLikes($this->postId); // future system
     }
 
     private function renderHeader()
     {
         echo '
         <div class="post-header">
-                <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->username . '">
-                    <img src="' . $this->baseUrl . $this->avatar . '" alt="' . $this->username . '">
+                <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->post['username'] . '">
+                    <img src="' . $this->baseUrl . $this->post['avatar'] . '" alt="' . $this->post['username'] . '">
                 </a>
                 <div class="post-user-info">
                     <strong>
-                        <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->username . '">
-                            ' . $this->display_name . '</strong>
+                        <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->post['username'] . '">
+                            ' . $this->post['display_name'] . '</strong>
                         </a>
-                    <span class="post-date">' . $this->date . '</span>
+                    <span class="post-date">' . $this->post['created_at'] . '</span>
                 </div>
             </div>
         ';
@@ -48,7 +61,7 @@ class PostRenderer
     {
         echo '
             <p class="post-content">
-            ' . escapeOutput($this->content) . '
+            ' . escapeOutput($this->post['content']) . '
             </p>
         ';
     }
@@ -146,6 +159,7 @@ class PostRenderer
         $this->renderCommentText($comment);
         echo '</div>';
         $this->renderReplyActions();
+
         if ($showReplies) {
             $this->renderAllReplies($comment);
         }
@@ -170,7 +184,8 @@ class PostRenderer
 
     public function renderAllReplies(array $comment)
     {
-        foreach ($comment['replies'] as $reply) {
+        $replies = $this->postManager->fetchReplies($comment['id']);
+        foreach ($replies as $reply) {
             $this->renderReply($reply);
         }
     }
@@ -191,32 +206,39 @@ class PostRenderer
         }
     }
 
-    private function renderComments($showReplies): void
+    private function renderComments($showReplies, $mode = 'full'): void
     {
-        if (!empty($this->comments)) {
-            // Render all comments if provided
-            foreach ($this->comments as $comment) {
+        $commentsToRender = [];
+
+        if ($mode === 'full') {
+            $commentsToRender = $this->comments;
+        } elseif ($mode === 'timeline' || $mode === 'profile') {
+            $commentsToRender = $this->latestComments;
+        }
+
+        // Render the chosen comments
+        if (!empty($commentsToRender)) {
+            foreach ($commentsToRender as $comment) {
                 $this->renderComment($comment, $showReplies);
             }
-        } elseif (!empty($this->latestComments)) {
-            // Render the latest comments and the "View All" link
-            foreach ($this->latestComments as $comment) {
-                $this->renderComment($comment, showReplies: false);
+
+            // Show "View All Comments" only in limited mode
+            if ($mode !== 'full' && count($this->comments) > count($this->latestComments)) {
+                $this->renderViewAllCommentsLink();
             }
-            $this->renderViewAllCommentsLink();
         }
     }
 
 
 
-    public function render($showReplies = true)
+    public function render($showReplies = true, $mode = "full")
     {
         echo '<div class="post">';
         $this->renderHeader();
         $this->renderContent();
         $this->renderCommentActions();
         $this->renderCommentForm();
-        $this->renderComments($showReplies);
+        $this->renderComments($showReplies, $mode);
         echo '</div>';
     }
 }
