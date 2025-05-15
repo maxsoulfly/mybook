@@ -11,7 +11,7 @@ class PostRenderer
     private $latestComments;
     private $replies;
     private $commentCount;
-    private $likes;
+    private $likeCount;
 
     public function __construct($postId, $pdo)
     {
@@ -36,7 +36,7 @@ class PostRenderer
         $this->latestComments = $this->postManager->fetchRecentComments($this->pdo, $this->postId, numComments: 2);
         $this->commentCount = $this->postManager->countComments($this->postId);
         // $this->replies = $this->postManager->fetchReplies($this->postId);
-        // $this->likes = $this->postManager->countLikes($this->postId); // future system
+        $this->likeCount = $this->postManager->countLikes($this->postId); // future system
     }
 
     private function renderHeader()
@@ -79,17 +79,38 @@ class PostRenderer
             </p>
         ';
     }
+
+
     private function renderCommentActions()
     {
-        echo '
-            <div class="post-actions">
-                <a href="#">Like</a>
-                <a href="#" class="comment-toggle">Comment</a>
-            </div>
-        ';
+        echo '<div class="post-actions">';
+
+        $this->renderLikeForm();
+
+        echo '<a href="#" class="comment-toggle">Comment</a>';
+        echo '</div>';
     }
 
+    private function renderLikeForm()
+    {
+        $loggedInUserId = $_SESSION['user_id'];
+        $postId = (int) $this->postId;
 
+        echo '
+        <div class="post-like">
+            <a href="#" onclick="submitLike(' . $postId . '); return false;" class="like-link">';
+
+        $existingLike = $this->postManager->existingLike($postId, $loggedInUserId);
+        echo $existingLike ? 'Unlike' : 'Like';
+
+        echo '</a>
+            <form id="likeForm-' . $postId . '" action="' . $this->baseUrl . '/actions/like-process.php" method="POST" style="display: none;">
+                <input type="hidden" name="post_id" value="' . $postId . '">
+                <input type="hidden" name="user_id" value="' . $loggedInUserId . '">
+            </form>
+        </div>
+    ';
+    }
     private function renderCommentForm($parentId = null)
     {
         // Make sure you have a session started
@@ -228,13 +249,13 @@ class PostRenderer
 
     private function renderCommentsLikesLink()
     {
-
-        // $likeCount = $this->postManager->countLikes($this->postId);
-        $likeCount = 5;
-
-        if ($likeCount > 0) {
+        if ($this->likeCount > 0) {
             echo '<div class="likes">';
-            echo '👍 ' . $likeCount . ' people liked this';
+            if ($this->likeCount > 1) {
+                echo $this->likeCount . ' people liked this';
+            } else {
+                echo $this->likeCount . ' person liked this';
+            }
             echo '</div>';
         }
     }

@@ -56,6 +56,31 @@ class PostManager
         return $result['comment_count'] ?? 0;
     }
 
+    public function countLikes($post_id)
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT COUNT(*) AS like_count FROM likes WHERE post_id = :post_id'
+        );
+        $stmt->execute(['post_id' => $post_id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['like_count'] ?? 0;
+    }
+
+    public function existingLike($post_id, $user_id)
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT id FROM likes WHERE post_id = :post_id AND user_id = :user_id'
+        );
+        $stmt->execute([
+            'post_id' => $post_id,
+            'user_id' => $user_id
+        ]);
+        $existingLike = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $existingLike;
+    }
+
+
     public function fetchReplies($parent_id)
     {
         $stmt = $this->pdo->prepare(

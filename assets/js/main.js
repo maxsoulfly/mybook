@@ -68,3 +68,10 @@ function resetTextarea() {
         this.style.height = '3em';
     }
 }
+
+function submitLike(postId) {
+    const form = document.getElementById(`likeForm-${postId}`);
+    if (form) {
+        form.submit();
+    }
+}

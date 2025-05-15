@@ -22,6 +22,9 @@ switch ($query) {
     case 'delete':
         handleDelete($pdo, $_GET);
         break;
+    case 'createIndex':
+        handleCreateIndex($pdo, $_GET);
+        break;
     default:
         echo "Unknown query.";
 }
@@ -125,3 +128,26 @@ function handleDelete($pdo, $params)
     }
 }
 // db-admin.php?query=delete&table=users&where=id=5
+
+
+function handleCreateIndex($pdo, $params): void
+{
+    $table = $params['table'] ?? null;
+    $indexName = $params['index'] ?? null;
+    $columns = $params['columns'] ?? null;
+
+    if ($table && $indexName && $columns) {
+        // Build the query
+        $query = "CREATE UNIQUE INDEX IF NOT EXISTS $indexName ON $table ($columns)";
+
+        try {
+            $pdo->exec($query);
+            echo "Index $indexName created successfully on table $table!";
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    } else {
+        echo "Invalid CREATE INDEX query parameters.";
+    }
+}
+// db-admin.php?query=createIndex&table=likes&index=unique_like&columns=post_id, user_id
