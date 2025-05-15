@@ -55,13 +55,14 @@ class PostRenderer
 
         if (isset($this->post['recipient_username'])) {
             echo '
+            
                 &nbsp;&nbsp;->&nbsp;&nbsp;
                     <a href="' . $this->baseUrl . '/pages/profile.php?u=' . $this->post['recipient_username'] . '">
                         ' . $this->post['recipient_name'] . '
                     </a> 
-                </strong>
             ';
         }
+        echo '</strong>';
 
         echo '
                 <span class="post-date">' . $this->post['created_at'] . '</span>
@@ -212,11 +213,47 @@ class PostRenderer
         ';
     }
 
+    private function renderCommentsCountLink()
+    {
+
+        $commentCount = $this->commentCount;
+        if ($commentCount > 0) {
+            echo '<div class="comments-count">';
+            echo '<a href="' . $this->baseUrl . '/pages/post.php?id=' . $this->postId . '">';
+            echo $commentCount . ' comments';
+            echo '</a>';
+            echo '</div>';
+        }
+    }
+
+    private function renderCommentsLikesLink()
+    {
+
+        // $likeCount = $this->postManager->countLikes($this->postId);
+        $likeCount = 5;
+
+        if ($likeCount > 0) {
+            echo '<div class="likes">';
+            echo '👍 ' . $likeCount . ' people liked this';
+            echo '</div>';
+        }
+    }
+
     public function renderAllComments(array $comments)
     {
         foreach ($comments as $comment) {
             $this->renderComment($comment, showReplies: true);
         }
+    }
+
+    private function renderLikesAndComments()
+    {
+        echo '<div class="post-likes-comments">';
+
+        $this->renderCommentsLikesLink();
+        $this->renderCommentsCountLink();
+
+        echo '</div>';
     }
 
     private function renderComments($showReplies, $mode = 'full'): void
@@ -234,11 +271,6 @@ class PostRenderer
             foreach ($commentsToRender as $comment) {
                 $this->renderComment($comment, $showReplies);
             }
-
-            // Show "View All Comments" only in limited mode
-            if ($mode !== 'full' && count($this->comments) > count($this->latestComments)) {
-                $this->renderViewAllCommentsLink();
-            }
         }
     }
 
@@ -249,6 +281,7 @@ class PostRenderer
         echo '<div class="post">';
         $this->renderHeader();
         $this->renderContent();
+        $this->renderLikesAndComments();
         $this->renderCommentActions();
         $this->renderCommentForm();
         $this->renderComments($showReplies, $mode);

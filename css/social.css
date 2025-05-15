@@ -170,6 +170,25 @@ img.avatar-large {
 }
 
 /* comments */
+
+.post-likes-comments {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.post-likes-comments .likes {
+    display: flex;
+    align-items: center;
+}
+
+.post-likes-comments .comments-count {
+    font-weight: bold;
+}
+
 /* Main Comment Form (Hidden by default) */
 .comment-form.hidden {
     max-height: 0;
