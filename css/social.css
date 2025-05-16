@@ -272,6 +272,17 @@ img.avatar-large {
 .comment-text {
     margin: 4px 0;
 }
+.comment-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comment-actions .dot-separator {
+    font-weight: bold;
+    color: var(--lighter-text-color);
+    pointer-events: none; /* Prevent clicking on the dot */
+}
 
 .comment-actions,
 .comment-time {

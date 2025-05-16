@@ -65,19 +65,33 @@ class PostManager
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['like_count'] ?? 0;
     }
-
-    public function existingLike($post_id, $user_id)
+    public function countCommentLikes($comment_id)
     {
         $stmt = $this->pdo->prepare(
-            'SELECT id FROM likes WHERE post_id = :post_id AND user_id = :user_id'
+            'SELECT COUNT(*) AS comment_likes 
+                    FROM likes 
+                    WHERE comment_id = :comment_id;'
         );
-        $stmt->execute([
-            'post_id' => $post_id,
-            'user_id' => $user_id
-        ]);
-        $existingLike = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute(['comment_id' => $comment_id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['comment_likes'] ?? 0;
+    }
 
-        return $existingLike;
+    public function existingLike($user_id, $post_id = null, $comment_id = null)
+    {
+        if ($comment_id) {
+            $query = 'SELECT id FROM likes WHERE comment_id = :comment_id AND user_id = :user_id';
+            $params = ['comment_id' => $comment_id, 'user_id' => $user_id];
+        } elseif ($post_id) {
+            $query = 'SELECT id FROM likes WHERE post_id = :post_id AND user_id = :user_id';
+            $params = ['post_id' => $post_id, 'user_id' => $user_id];
+        } else {
+            throw new InvalidArgumentException('Either post_id or comment_id must be provided.');
+        }
+
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 

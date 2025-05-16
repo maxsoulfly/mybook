@@ -91,26 +91,44 @@ class PostRenderer
         echo '</div>';
     }
 
-    private function renderLikeForm()
+    private function renderLikeForm($commentLikeMode = null, $comment_id = null)
     {
         $loggedInUserId = $_SESSION['user_id'];
         $postId = (int) $this->postId;
 
-        echo '
-        <div class="post-like">
+        if (!$comment_id) {
+            echo '
+            <div class="post-like">
             <a href="#" onclick="submitLike(' . $postId . '); return false;" class="like-link">';
 
-        $existingLike = $this->postManager->existingLike($postId, $loggedInUserId);
+            $existingLike = $this->postManager->existingLike($loggedInUserId, $postId);
+        } else {
+            echo '
+            <div class="comment-like">
+            <a href="#" onclick="submitCommentLike(' . $comment_id . '); return false;" class="like-link">';
+
+            $existingLike = $this->postManager->existingLike($loggedInUserId, null, $comment_id);
+        }
         echo $existingLike ? 'Unlike' : 'Like';
 
-        echo '</a>
-            <form id="likeForm-' . $postId . '" action="' . $this->baseUrl . '/actions/like-process.php" method="POST" style="display: none;">
-                <input type="hidden" name="post_id" value="' . $postId . '">
-                <input type="hidden" name="user_id" value="' . $loggedInUserId . '">
-            </form>
-        </div>
-    ';
+        echo '</a>';
+        echo '<form 
+                    id="likeForm-' . ($comment_id ?? $postId) . '" 
+                    action="' . $this->baseUrl . '/actions/like-process.php" 
+                    method="POST" 
+                    style="display: none;">';
+
+        if ($comment_id) {
+            echo '<input type="hidden" name="comment_id" value="' . $comment_id . '">';
+        } else {
+            echo '<input type="hidden" name="post_id" value="' . $postId . '">';
+        }
+        echo '<input type="hidden" name="user_id" value="' . $loggedInUserId . '">';
+        echo '</form>';
+        echo '</div>';
     }
+
+
     private function renderCommentForm($parentId = null)
     {
         // Make sure you have a session started
@@ -126,8 +144,7 @@ class PostRenderer
         } else {
             echo '<div class="reply-form hidden">';
         }
-        echo '
-            <form method="post" action="' . $this->baseUrl . '/actions/comment-process.php">
+        echo '<form method="post" action="' . $this->baseUrl . '/actions/comment-process.php">
                 <input type="hidden" name="post_id" value="' . $this->postId . '">
                 <input type="hidden" name="user_id" value="' . $loggedInUserId . '">';
 
@@ -175,13 +192,19 @@ class PostRenderer
             </p>
         ';
     }
-    private function renderReplyActions()
+    private function renderReplyActions($comment_id)
     {
-        echo '
-            <div class="comment-actions">
-                <a href="#">Like</a> · <a href="#" class="reply-toggle">Reply</a>
-            </div>
-        ';
+        $likesCount = $this->postManager->countCommentLikes($comment_id);
+
+        echo '<div class="comment-actions">';
+        $this->renderLikeForm(true, $comment_id);
+        echo '<span class="dot-separator">·</span>';
+        echo '<a href="#" class="reply-toggle">Reply</a>';
+        if ($likesCount > 0) {
+            echo '<span class="dot-separator">·</span>';
+            $this->renderLikesCount($likesCount);
+        }
+        echo '</div>';
     }
 
     private function renderComment($comment, $showReplies)
@@ -193,7 +216,7 @@ class PostRenderer
         $this->renderCommentHeader($comment);
         $this->renderCommentText($comment);
         echo '</div>';
-        $this->renderReplyActions();
+        $this->renderReplyActions($comment['id']);
 
         if ($showReplies) {
             $this->renderAllReplies($comment);
@@ -212,7 +235,7 @@ class PostRenderer
         $this->renderCommentHeader($reply);
         $this->renderCommentText($reply);
         echo '</div>';
-        $this->renderReplyActions();
+        $this->renderReplyActions($reply['id']);
         echo '</div>';
         echo '</div>';
     }
@@ -247,14 +270,14 @@ class PostRenderer
         }
     }
 
-    private function renderCommentsLikesLink()
+    private function renderLikesCount($likeCount = 0)
     {
-        if ($this->likeCount > 0) {
+        if ($likeCount > 0) {
             echo '<div class="likes">';
-            if ($this->likeCount > 1) {
-                echo $this->likeCount . ' people liked this';
+            if ($likeCount > 1) {
+                echo $likeCount . ' people liked this';
             } else {
-                echo $this->likeCount . ' person liked this';
+                echo $likeCount . ' person liked this';
             }
             echo '</div>';
         }
@@ -271,7 +294,7 @@ class PostRenderer
     {
         echo '<div class="post-likes-comments">';
 
-        $this->renderCommentsLikesLink();
+        $this->renderLikesCount($this->likeCount);
         $this->renderCommentsCountLink();
 
         echo '</div>';

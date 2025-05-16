@@ -73,5 +73,16 @@ function submitLike(postId) {
     const form = document.getElementById(`likeForm-${postId}`);
     if (form) {
         form.submit();
+    } else {
+        console.error('Like form not found for post ID:', postId);
+    }
+}
+
+function submitCommentLike(commentID) {
+    const form = document.getElementById(`likeForm-${commentID}`);
+    if (form) {
+        form.submit();
+    } else {
+        console.error('Like form not found for comment ID:', commentID);
     }
 }
