@@ -49,3 +49,20 @@ function getFriendStatus(PDO $pdo, int $userId, int $profileId): string
 
     return 'none'; // fallback
 }
+function getFriends($pdo, $profileId)
+{
+    $stmt = $pdo->prepare(
+        'SELECT 
+            users.username, 
+            users.id AS user_id, 
+            users.display_name, 
+            users.avatar
+         FROM friends
+         JOIN users 
+           ON (users.id = friends.friend_id AND friends.user_id = :id)
+           OR (users.id = friends.user_id AND friends.friend_id = :id)
+         WHERE friends.status = "accepted"'
+    );
+    $stmt->execute(['id' => $profileId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

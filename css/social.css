@@ -375,10 +375,29 @@ img.avatar-large {
     padding: var(--padding-default);
     border-radius: var(--border-radius-medium);
     box-shadow: var(--shadow-default);
+    max-width: var(--sidebar-max-width);
 }
 
 .sidebar-box h3 {
     margin-bottom: var(--padding-small);
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--padding-small);
+    margin-bottom: var(--padding-small);
+}
+
+.sidebar-item i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.sidebar-item p {
+    margin: 0;
+    font-size: var(--font-size-medium);
+    color: var(--primary-text-color);
 }
 
 .friends-list {

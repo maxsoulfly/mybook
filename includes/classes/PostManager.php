@@ -8,6 +8,18 @@ class PostManager
     {
         $this->pdo = $pdo;
     }
+    public function fetchProfilePosts(PDO $pdo, int $profileId): array
+    {
+        $stmt = $pdo->prepare(
+            'SELECT posts.*, users.display_name, users.username, users.avatar
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            WHERE recipient_id = :id OR (recipient_id IS NULL AND user_id = :id)
+            ORDER BY created_at DESC'
+        );
+        $stmt->execute(['id' => $profileId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function fetchPost($post_id)
     {

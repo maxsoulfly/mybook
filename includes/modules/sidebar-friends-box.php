@@ -11,7 +11,7 @@ $friends = getFriends($pdo, $profileId);
 
 ?>
 
-<div class="content-box">
+<div class="sidebar-box">
     <h3>Friends</h3>
     <ul class="friends-list">
         <?php

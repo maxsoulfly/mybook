@@ -50,6 +50,8 @@
     --avatar-size-medium-small: 3em;
     --avatar-size-medium: 4em;
     --avatar-size-large: 8em;
+
+    --sidebar-max-width: 15em;
 }
 
 /* Body */
