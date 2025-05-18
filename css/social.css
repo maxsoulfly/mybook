@@ -299,7 +299,18 @@ img.avatar-large {
     object-fit: cover;
 }
 
+.content-box .header {
+    /* padding: var(--padding-small); */
+    text-align: center;
+}
+
+.content-box label {
+    padding: var(--padding-small);
+    margin-bottom: var(--padding-default);
+}
+.content-box,
 .status-box {
+    color: var(--primary-text-color);
     background: var(--container-bg-color);
     padding: var(--padding-default);
     border-radius: var(--border-radius-medium);
@@ -307,6 +318,7 @@ img.avatar-large {
     margin-bottom: var(--padding-small);
 }
 
+.content-box form,
 .status-box form {
     all: unset;
     display: flex;
@@ -314,6 +326,7 @@ img.avatar-large {
     gap: var(--padding-small);
 }
 
+.content-box textarea,
 .status-box textarea {
     width: 100%;
     resize: vertical;
@@ -325,8 +338,30 @@ img.avatar-large {
     box-sizing: border-box;
 }
 
+.content-box button,
 .status-box button {
     align-self: flex-end;
+}
+
+.content-box input,
+.content-box textarea {
+    width: 100%;
+    padding: var(--padding-small);
+    font-size: var(--font-size-medium);
+    border: var(--light-border);
+    border-radius: var(--border-radius-medium);
+    background-color: var(--lighter-bg-color);
+    color: var(--primary-text-color);
+    transition: border 0.2s ease;
+    box-sizing: border-box; /* This is the fix */
+}
+
+.content-box input:focus,
+.content-box textarea:focus {
+    outline: none;
+    border: 1px solid var(--primary-color);
+    background-color: var(--container-bg-color);
+    box-shadow: 0 0 5px var(--primary-color);
 }
 
 .sidebar-box--nobg {
