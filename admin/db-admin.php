@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
 
+// Validate Query Parameter
 if (!isset($_GET['query'])) {
     die('No query specified.');
 }
@@ -8,7 +9,7 @@ if (!isset($_GET['query'])) {
 $query = $_GET['query'];
 $pdo = getDBConnection();
 
-// Route to the correct handler based on query type
+// Secure Query Routing
 switch ($query) {
     case 'alter':
         handleAlterTable($pdo, $_GET);
@@ -29,125 +30,96 @@ switch ($query) {
         echo "Unknown query.";
 }
 
-// Functions for each type of query
+// Examples of GET inputs for each query type:
+// ALTER TABLE: db-admin.php?query=alter&table=your_table&name=new_column&type=INTEGER
+// UPDATE: db-admin.php?query=update&table=your_table&set=column=value&where=id=1
+// CREATE TABLE: db-admin.php?query=create&table=your_table&columns=id INTEGER PRIMARY KEY, name TEXT
+// DELETE ROWS: db-admin.php?query=delete&table=your_table&where=id=1
+// DELETE TABLE: db-admin.php?query=delete&table=your_table&drop=true
+// CREATE INDEX: db-admin.php?query=createIndex&table=your_table&index=index_name&columns=column1, column2
+
+// Secure Function Definitions
 function handleAlterTable($pdo, $params)
 {
-    $table = $params['table'] ?? null;
-    $action = $params['action'] ?? null;
-    $name = $params['name'] ?? null;
-    $type = $params['type'] ?? null;
-    $default = $params['default'] ?? null;
+    $table = sanitize($params['table']);
+    $name = sanitize($params['name']);
+    $type = sanitize($params['type']);
 
-    if ($action === 'add_column' && $table && $name && $type) {
-        $defaultClause = ($default !== null) ? "DEFAULT $default" : "";
-        $query = "ALTER TABLE $table ADD COLUMN $name $type $defaultClause";
-        try {
-            $pdo->exec($query);
-            echo "Column $name added to table $table successfully!";
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+    if ($table && $name && $type) {
+        $query = "ALTER TABLE $table ADD COLUMN $name $type";
+        executeQuery($pdo, $query, "Column $name added to table $table");
     } else {
         echo "Invalid ALTER query parameters.";
     }
 }
-// db-admin.php?query=alter&table=comments&action=add_column&name=parent_id&type=INTEGER&default=NULL
-
 
 function handleUpdate($pdo, $params)
 {
-    $table = $params['table'] ?? null;
-    $set = $params['set'] ?? null;
-    $where = $params['where'] ?? null;
+    $table = sanitize($params['table']);
+    $set = sanitize($params['set']);
+    $where = sanitize($params['where']);
 
     if ($table && $set) {
-        $query = "UPDATE $table SET $set";
-        if ($where) {
-            $query .= " WHERE $where";
-        }
-
-        try {
-            $pdo->exec($query);
-            echo "Update successful on table $table!";
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+        $query = "UPDATE $table SET $set" . ($where ? " WHERE $where" : "");
+        executeQuery($pdo, $query, "Update successful on table $table");
     } else {
         echo "Invalid UPDATE query parameters.";
     }
 }
 
-
 function handleCreateTable($pdo, $params)
 {
-    $table = $params['table'] ?? null;
-    $columns = $params['columns'] ?? null;
+    $table = sanitize($params['table']);
+    $columns = sanitize($params['columns']);
 
     if ($table && $columns) {
-        // Build the query
         $query = "CREATE TABLE IF NOT EXISTS $table ($columns)";
-        try {
-            $pdo->exec($query);
-            echo "Table $table created successfully!";
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+        executeQuery($pdo, $query, "Table $table created successfully!");
     } else {
         echo "Invalid CREATE query parameters.";
     }
 }
-// db-admin.php?query=create&table=users&columns=id INTEGER PRIMARY KEY, username TEXT, email TEXT
-
 
 function handleDelete($pdo, $params)
 {
-    $table = $params['table'] ?? null;
-    $where = $params['where'] ?? null;
-    $drop = $params['drop'] ?? null;
+    $table = sanitize($params['table']);
+    $where = sanitize($params['where']);
 
-    if ($drop === 'true' && $table) {
-        // Drop entire table
-        $query = "DROP TABLE IF EXISTS $table";
-        try {
-            $pdo->exec($query);
-            echo "Table $table dropped successfully!";
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    } elseif ($table && $where) {
-        // Delete specific rows
-        $query = "DELETE FROM $table WHERE $where";
-        try {
-            $pdo->exec($query);
-            echo "Rows deleted successfully from $table!";
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+    if ($table) {
+        $query = $where ? "DELETE FROM $table WHERE $where" : "DROP TABLE IF EXISTS $table";
+        executeQuery($pdo, $query, "Operation successful on table $table");
     } else {
         echo "Invalid DELETE query parameters.";
     }
 }
-// db-admin.php?query=delete&table=users&where=id=5
 
-
-function handleCreateIndex($pdo, $params): void
+function handleCreateIndex($pdo, $params)
 {
-    $table = $params['table'] ?? null;
-    $indexName = $params['index'] ?? null;
-    $columns = $params['columns'] ?? null;
+    $table = sanitize($params['table']);
+    $indexName = sanitize($params['index']);
+    $columns = sanitize($params['columns']);
 
     if ($table && $indexName && $columns) {
-        // Build the query
         $query = "CREATE UNIQUE INDEX IF NOT EXISTS $indexName ON $table ($columns)";
-
-        try {
-            $pdo->exec($query);
-            echo "Index $indexName created successfully on table $table!";
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+        executeQuery($pdo, $query, "Index $indexName created successfully on table $table");
     } else {
         echo "Invalid CREATE INDEX query parameters.";
     }
 }
-// db-admin.php?query=createIndex&table=likes&index=unique_like&columns=post_id, user_id
+
+// Secure Query Execution
+function executeQuery($pdo, $query, $successMessage)
+{
+    try {
+        $pdo->exec($query);
+        echo $successMessage;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+// Input Sanitization
+function sanitize($input)
+{
+    return htmlspecialchars(strip_tags($input));
+}
