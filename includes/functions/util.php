@@ -5,7 +5,10 @@ function escapeOutput(string $string): string
     $safeString = str_replace(['<', '>', '&'], ['&lt;', '&gt;', '&amp;'], $string);
     return nl2br($safeString);
 }
-
+function safeOutput($value)
+{
+    return htmlspecialchars($value ?? '');
+}
 function redirectBackWithParam($key, $value)
 {
     $referer = $_SERVER['HTTP_REFERER'];
