@@ -1,9 +1,9 @@
 <?php
 error_log("Like process triggered - POST Data: " . json_encode($_POST));
 
-include_once __DIR__ . '/../config.php';
-include_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../includes/db.php';
+include_once __DIR__ . '/../../config.php';
+include_once __DIR__ . '/../../includes/functions.php';
+require_once __DIR__ . '/../../includes/db.php';
 
 $pdo = getDBConnection();
 $postManager = new PostManager($pdo);

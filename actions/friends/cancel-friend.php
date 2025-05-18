@@ -1,16 +1,18 @@
 <?php
 
-include_once __DIR__ . '/../includes/functions.php';
-require_once __DIR__ . '/../includes/auth.php';
-require_once __DIR__ . '/../includes/db.php';
+
+include_once __DIR__ . '/../../config.php';
+include_once __DIR__ . '/../../includes/functions.php';
+include_once __DIR__ . '/../../includes/auth.php';
+require_once __DIR__ . '/../../includes/db.php';
 $pdo = getDBConnection();
 
 const FRIEND_STATUS = [
     'PENDING' => 'pending',
     'ACCEPTED' => 'accepted',
     'BLOCKED' => 'blocked',
-    'STALKER'=> 'stalker',
-    'UNFRIENDED'=> 'unfriended',
+    'STALKER' => 'stalker',
+    'UNFRIENDED' => 'unfriended',
 ];
 // Validate POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['friend_id'])) {
@@ -33,5 +35,3 @@ $stmt->execute(['user' => $userId, 'friend' => $friendId]);
 $finalUrl = redirectBackWithParam('request', 'cancelled');
 header('Location: ' . $finalUrl);
 exit;
-
-

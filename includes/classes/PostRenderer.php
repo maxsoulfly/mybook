@@ -114,7 +114,7 @@ class PostRenderer
         echo '</a>';
         echo '<form 
                     id="likeForm-' . ($comment_id ?? $postId) . '" 
-                    action="' . $this->baseUrl . '/actions/like-process.php" 
+                    action="' . $this->baseUrl . '/actions/posts/like-process.php" 
                     method="POST" 
                     style="display: none;">';
 
@@ -144,7 +144,7 @@ class PostRenderer
         } else {
             echo '<div class="reply-form hidden">';
         }
-        echo '<form method="post" action="' . $this->baseUrl . '/actions/comment-process.php">
+        echo '<form method="post" action="' . $this->baseUrl . '/actions/posts/comment-process.php">
                 <input type="hidden" name="post_id" value="' . $this->postId . '">
                 <input type="hidden" name="user_id" value="' . $loggedInUserId . '">';
 

@@ -8,7 +8,7 @@ $user = getUserByUsername($pdo, $username);
 
 <div class="content-box">
 
-    <form action="<?= $BASE_URL ?>/actions/edit-profile-process.php" method="post" class="mt-4">
+    <form action="<?= $BASE_URL ?>/actions/profile/edit-profile-process.php" method="post" class="mt-4">
         <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
         <div class="mb-3">
             <label for="display_name" class="form-label">Display Name</label>
