@@ -340,6 +340,10 @@ img.avatar-large {
     padding: var(--padding-small);
     margin-bottom: var(--padding-default);
 }
+
+.content-box h3 {
+    padding-bottom: var(--padding-small);
+}
 .content-box,
 .status-box {
     color: var(--primary-text-color);
@@ -432,7 +436,13 @@ img.avatar-large {
     color: var(--primary-text-color);
 }
 
-.friends-list {
+.content-box .friends-list {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping to next line if needed */
+    gap: var(--padding-default);
+}
+
+.sidebar-box .friends-list {
     list-style: none;
     padding: 0;
     display: flex;
@@ -440,13 +450,20 @@ img.avatar-large {
     gap: var(--padding-small);
 }
 
-.friends-list li {
+.content-box .friends-list li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.sidebar-box .friends-list li {
     display: flex;
     align-items: center;
     gap: var(--padding-small);
 }
 
-.friends-list img {
+.content-box .friends-list img,
+.sidebar-box .friends-list img {
     width: var(--avatar-size-medium);
     height: var(--avatar-size-medium);
     border-radius: 50%;
@@ -454,12 +471,14 @@ img.avatar-large {
     box-shadow: var(--shadow-default);
 }
 
-.friends-list a {
+.content-box .friends-list a,
+.sidebar-box .friends-list a {
     display: flex;
     align-items: center;
 }
 
-.friends-list .friend-name {
+.content-box .friends-list .friend-name,
+.sidebar-box .friends-list .friend-name {
     display: inline-block;
     margin-left: var(--padding-small);
 }

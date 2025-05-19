@@ -5,8 +5,8 @@ require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
-$page_title = "About";
-$page = "about";
+$page_title = "Friends";
+$page = "friends";
 
 if (!isset($_SESSION["username"])) {
     header('Location: ' . $BASE_URL . '/pages/login.php');
@@ -44,7 +44,7 @@ include_once __DIR__ . '/../includes/header.php';
         <div class="content-container">
 
 
-            <?php include_once __DIR__ . '/../includes/about-main.php'; ?>
+            <?php include_once __DIR__ . '/../includes/friends-main.php'; ?>
 
         </div>
         <!-- <div id="right-container"></div> -->
