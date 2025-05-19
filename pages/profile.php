@@ -12,21 +12,12 @@ require_once __DIR__ . '/../includes/functions.php';
 $page_title = "Profile";
 $page = "profile";
 
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['u'])) {
-    // if logged in display logged in user
-    if (isset($_SESSION["username"])) {
-        header('Location: ' . $BASE_URL . '/pages/profile.php?u=' . $_SESSION['username']);
-    }
-    // else redirect to login
-    else {
-        header('Location: ' . $BASE_URL . '/pages/login.php');
-    }
-}
-
-$username = $_GET['u'];
-
 $pdo = getDBConnection();
+
+
+$UserManager = new UserManager($pdo);
+$UserManager->redirectIfNotLoggedIn($BASE_URL, "profile");
+$username = $_GET['u'];
 
 $FriendManager = new FriendManager($pdo);
 $UserManager = new UserManager($pdo);
@@ -38,7 +29,7 @@ if (!$user) {
     exit;
 }
 
-// echo "user id:".$user["id"]. " | profile id:" .$profile["id"];
+// echo "user id:" . $user["id"] . " | profile id:" . $profile["id"];
 
 $coverImage = $BASE_URL . $profile['cover'];
 $profilePicUrl = $BASE_URL . $profile['avatar'];

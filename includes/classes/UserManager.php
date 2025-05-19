@@ -39,4 +39,18 @@ class UserManager
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         return $user ?: null;
     }
+
+    public static function redirectIfNotLoggedIn($BASE_URL, $currentPage)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['u'])) {
+            // if logged in display logged in user
+            if (isset($_SESSION["username"])) {
+                header('Location: ' . $BASE_URL . '/pages/' . $currentPage . '.php?u=' . $_SESSION['username']);
+            }
+            // else redirect to login
+            else {
+                header('Location: ' . $BASE_URL . '/pages/login.php');
+            }
+        }
+    }
 }
