@@ -14,8 +14,10 @@ if (!isset($_SESSION["username"])) {
 
 $username = $_SESSION["username"];
 $pdo = getDBConnection();
-$user = getLoggedInUser($pdo);
-$profile = getUserByUsername($pdo, $username);
+$UserManager = new UserManager($pdo);
+
+$user = $UserManager->getLoggedInUser();
+$profile = $UserManager->getUserByUsername($username);
 
 if (!$user) {
     header('Location: ' . $BASE_URL . '/pages/login.php');
