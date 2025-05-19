@@ -156,7 +156,7 @@ class PostRenderer
         echo '
                 <div class="comment-input-row">
                     <textarea name="content" placeholder="Write a comment..." ></textarea>
-                    <button class="info" type="submit">Comment</button>
+                    <button class="info" type="submit"><i class="mdi mdi-send"></i></button>
                 </div>
             </form>
         </div>

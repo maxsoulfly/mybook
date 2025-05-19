@@ -6,6 +6,10 @@
     align-items: flex-start;
     gap: var(--padding-small);
     box-shadow: var(--shadow-default);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 #header.header-large {
@@ -36,14 +40,12 @@
     text-decoration: none;
 }
 
-
 /* Main Layout */
 main {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     gap: var(--padding-small);
 }
-
 
 /* Containers */
 .container {

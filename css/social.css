@@ -28,6 +28,10 @@
     box-shadow: var(--shadow-default);
     border-bottom-left-radius: var(--border-radius-medium);
     border-bottom-right-radius: var(--border-radius-medium);
+
+    position: sticky;
+    top: 4.5em;
+    z-index: 1000;
 }
 
 .profile-nav ul {
@@ -244,7 +248,20 @@ img.avatar-large {
 
 .comment-input-row button {
     align-self: flex-end; /* 👈 This sticks the button to the right */
-    border-radius: var(--border-radius-large);
+    /* border-radius: var(--border-radius-large); */
+
+    padding: var(--padding-smaller);
+    font-size: var(--font-size-large);
+    background: none;
+    position: relative;
+    z-index: 2;
+    margin-top: -3em;
+    margin-right: 0em;
+}
+
+.comment-input-row button:hover {
+    background: none;
+    color: var(--primary-color);
 }
 
 .comment,
