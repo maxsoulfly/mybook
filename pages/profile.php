@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['u'])) {
 
 $username = $_GET['u'];
 $pdo = getDBConnection();
+
+$FriendManager = new FriendManager($pdo);
 $user = getLoggedInUser($pdo);
 $profile = getUserByUsername($pdo, $username);
 
@@ -39,7 +41,7 @@ if (!$user) {
 $coverImage = $BASE_URL . $profile['cover'];
 $profilePicUrl = $BASE_URL . $profile['avatar'];
 $profileFullName = $profile['display_name'];
-$friendStatus = getFriendStatus($pdo, $user["id"], $profile["id"]);
+$friendStatus = $FriendManager->getFriendStatus($user["id"], $profile["id"]);
 
 include_once __DIR__ . '/../includes/header.php';
 

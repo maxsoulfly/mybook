@@ -1,5 +1,7 @@
 <?php
-$status = getFriendStatus($pdo, $user['id'], $profile['id']);
+
+$FriendManager = new FriendManager($pdo);
+$status = $FriendManager->getFriendStatus($user['id'], $profile['id']);
 ?>
 
 <?php if ($status === 'none' && ($profile['id'] !== $_SESSION['user_id'])): ?>

@@ -3,10 +3,9 @@ include_once __DIR__ . '/../functions.php';
 
 
 $pdo = getDBConnection();
-
-
+$FriendManager = new FriendManager($pdo);
 $profileId = $profile['id'];
-$friends = getFriends($pdo, $profileId);
+$friends = $FriendManager->getFriends($profileId);
 
 
 ?>
