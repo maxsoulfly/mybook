@@ -5,8 +5,8 @@ include_once __DIR__ . '/../functions.php';
 $pdo = getDBConnection();
 $profileId = $profile['id'];
 
-
-$user = getUserByUsername($pdo, $username);
+$UserManager = new UserManager($pdo);
+$user = $UserManager->getUserByUsername(username: $username);
 
 
 ?>

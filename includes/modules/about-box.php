@@ -6,7 +6,8 @@ $pdo = getDBConnection();
 $profileId = $profile['id'];
 
 
-$user = getUserByUsername($pdo, $username);
+$UserManager = new UserManager($pdo);
+$user = $UserManager->getUserByUsername($username);
 
 
 ?>

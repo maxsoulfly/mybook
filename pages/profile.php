@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['u'])) {
 }
 
 $username = $_GET['u'];
+
 $pdo = getDBConnection();
 
 $FriendManager = new FriendManager($pdo);

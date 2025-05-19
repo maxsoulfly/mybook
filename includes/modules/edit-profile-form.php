@@ -1,6 +1,6 @@
 <?php include_once __DIR__ . '/../functions.php';
-
-$user = getUserByUsername($pdo, $username);
+$UserManager = new UserManager($pdo);
+$user = $UserManager->getUserByUsername($username);
 
 
 ?>

@@ -19,7 +19,9 @@ if (!isset($_SESSION["username"])) {
 
 $post_id = $_GET['id'];
 $pdo = getDBConnection();
-$user = getLoggedInUser($pdo);
+
+$UserManager = new UserManager($pdo);
+$user = $UserManager->getLoggedInUser();
 
 if (!$user) {
     header('Location: ' . $BASE_URL . '/pages/login.php');
