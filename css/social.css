@@ -462,7 +462,14 @@ img.avatar-large {
     gap: var(--padding-small);
 }
 
-.content-box .friends-list img,
+.content-box .friends-list img {
+    width: var(--avatar-size-large);
+    height: var(--avatar-size-large);
+    border-radius: 25%;
+    object-fit: cover;
+    box-shadow: var(--shadow-default);
+}
+
 .sidebar-box .friends-list img {
     width: var(--avatar-size-medium);
     height: var(--avatar-size-medium);
