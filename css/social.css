@@ -66,6 +66,21 @@
     justify-content: end;
     gap: var(--padding-small);
 }
+.avatar a img:hover {
+    filter: brightness(1.15);
+}
+
+.avatar a span.username {
+    color: var(--secondary-text-color);
+    transition: text-shadow 0.2s ease, color 0.2s ease;
+}
+
+.avatar a span.username:hover {
+    text-shadow: 0 0 8px var(--primary-glow-color),
+        0 0 16px var(--primary-glow-color), 0 0 24px var(--primary-color),
+        0 0 32px var(--primary-color), 0 0 48px var(--primary-hover-color);
+    color: var(--primary-glow-color);
+}
 
 .avatar-small img,
 img.avatar-small {
