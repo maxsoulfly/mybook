@@ -41,5 +41,5 @@ $_SESSION['display_name'] = $user['display_name'];
 $_SESSION['avatar'] = $user['avatar'];
 $_SESSION['username'] = $user['username'];
 
-header('Location: ' . $BASE_URL . '/index.php');
+header('Location: ' . $BASE_URL . '/timeline.php');
 exit;

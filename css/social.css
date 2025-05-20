@@ -445,13 +445,19 @@ img.avatar-large {
     flex-direction: column;
     gap: var(--padding-small);
 }
+
+.content-box .friends-request-list li {
+    display: flex;
+    gap: var(--padding-small);
+}
+
+.content-box .friends-request-list,
 .content-box .friends-list {
     display: flex;
     flex-wrap: wrap; /* Allows wrapping to next line if needed */
     gap: var(--padding-default);
 }
 
-.content-box .friends-request-list,
 .sidebar-box .friends-list {
     list-style: none;
     padding: 0;
@@ -466,12 +472,13 @@ img.avatar-large {
     align-items: center;
     text-align: center;
 }
-.content-box .friends-request-list li,
+
 .sidebar-box .friends-list li {
     display: flex;
     align-items: center;
     gap: var(--padding-small);
 }
+
 .content-box .friends-request-list img,
 .content-box .friends-list img {
     width: var(--avatar-size-large);
@@ -489,12 +496,14 @@ img.avatar-large {
     box-shadow: var(--shadow-default);
 }
 
+.content-box .friends-request-list a,
 .content-box .friends-list a,
 .sidebar-box .friends-list a {
     display: flex;
     align-items: center;
 }
 
+.content-box .friends-request-list .friend-name,
 .content-box .friends-list .friend-name,
 .sidebar-box .friends-list .friend-name {
     display: inline-block;

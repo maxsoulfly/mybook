@@ -16,7 +16,7 @@ function renderFriend($username, $display_name, $avatar)
     ';
 }
 
-function renderPendingFriend($username, $display_name, $avatar)
+function renderPendingFriend($username, $display_name, $avatar, $user_id)
 {
     global $BASE_URL;
 
@@ -29,13 +29,13 @@ function renderPendingFriend($username, $display_name, $avatar)
                 </div>
             </a>
            <div class="button-group">
-            <form method="post" action="<?= $BASE_URL ?>/friends/accept-friend.php" style="display: inline-block;">
-                <input type="hidden" name="friend_id" value="<?= $profile[\'id\'] ?>">
-                <button class="button secondary">Accept</button>
+            <form method="post" action="' .  $BASE_URL . '/actions/friends/accept-friend.php" style="display: inline-block;">
+                <input type="hidden" name="friend_id" value="' . $user_id . '">
+                <button class="button primary">Accept</button>
             </form>
-                <form method="post" action="<?= $BASE_URL ?>/friends/deny-friend.php" style="display: inline-block;">
-                    <input type="hidden" name="friend_id" value="<?= $profile[\'id\'] ?>">
-                    <button class="button alert">Reject</button>
+                <form method="post" action="' . $BASE_URL . '/actions/friends/deny-friend.php" style="display: inline-block;">
+                    <input type="hidden" name="friend_id" value="' . $user_id . '">
+                    <button class="button transparent">X</button>
                 </form>
             </div>
         </li>

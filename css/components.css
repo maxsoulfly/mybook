@@ -52,6 +52,19 @@ a.info {
     }
 }
 
+button.link {
+    background: none;
+    color: var(--primary-text-color);
+}
+button.transparent {
+    background: none;
+    color: var(--primary-color);
+}
+
+button.link:hover {
+    text-decoration: underline;
+}
+
 /* Search Form */
 .search-form {
     position: relative;

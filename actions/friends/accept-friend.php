@@ -28,7 +28,6 @@ $friendId  = (int) $_POST['friend_id'];
 if ($userId == $friendId) {
     die('You cannot add yourself as a friend.');
 }
-
 // Check if they are already friends (not just a pending request)
 $stmt = $pdo->prepare("SELECT status FROM friends 
     WHERE (user_id = :user AND friend_id = :friend)
@@ -42,7 +41,6 @@ if ($row && $row['status'] === FRIEND_STATUS['ACCEPTED']) {
     exit;
 }
 
-// Send a friend request
 $stmt = $pdo->prepare("UPDATE friends
     SET status = :status
     WHERE user_id = :friend AND friend_id = :user AND status = :pending");
