@@ -55,7 +55,11 @@ a.info {
 button.link {
     background: none;
     color: var(--primary-text-color);
+    &:hover {
+        text-decoration: underline;
+    }
 }
+
 button.transparent {
     background: none;
     color: var(--primary-color);
