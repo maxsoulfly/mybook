@@ -12,7 +12,7 @@ $pdo = getDBConnection();
 
 
 $UserManager = new UserManager($pdo);
-$UserManager->redirectIfNotLoggedIn($BASE_URL, "profile");
+$UserManager->redirectIfNotLoggedIn($BASE_URL, "friends");
 $username = $_GET['u'];
 
 $FriendManager = new FriendManager($pdo);

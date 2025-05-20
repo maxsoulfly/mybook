@@ -77,4 +77,36 @@ class FriendManager
         $stmt->execute(['id' => $profileId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getPendingFriendRequests(int $profileId): array
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT 
+                users.username, 
+                users.id AS user_id, 
+                users.display_name, 
+                users.avatar
+             FROM friends
+             JOIN users
+                ON users.id = friends.user_id
+             WHERE friends.status = "pending"
+                AND friends.friend_id = :id'
+        );
+        $stmt->execute(['id' => $profileId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getFriendsCount(int $profileId): int
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT COUNT(*) AS count
+         FROM friends
+         JOIN users 
+           ON (users.id = friends.friend_id AND friends.user_id = :id)
+           OR (users.id = friends.user_id AND friends.friend_id = :id)
+         WHERE friends.status = "accepted"'
+        );
+        $stmt->execute(['id' => $profileId]);
+        return (int) $stmt->fetchColumn();
+    }
 }

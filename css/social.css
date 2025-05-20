@@ -337,8 +337,10 @@ img.avatar-large {
 }
 
 .content-box label {
-    padding: var(--padding-small);
-    margin-bottom: var(--padding-default);
+    display: block;
+    padding-bottom: var(--padding-smaller);
+    margin-top: var(--padding-small);
+    font-weight: 500;
 }
 
 .content-box h3 {
@@ -436,12 +438,20 @@ img.avatar-large {
     color: var(--primary-text-color);
 }
 
+.content-box .friends-request-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-small);
+}
 .content-box .friends-list {
     display: flex;
     flex-wrap: wrap; /* Allows wrapping to next line if needed */
     gap: var(--padding-default);
 }
 
+.content-box .friends-request-list,
 .sidebar-box .friends-list {
     list-style: none;
     padding: 0;
@@ -456,12 +466,13 @@ img.avatar-large {
     align-items: center;
     text-align: center;
 }
+.content-box .friends-request-list li,
 .sidebar-box .friends-list li {
     display: flex;
     align-items: center;
     gap: var(--padding-small);
 }
-
+.content-box .friends-request-list img,
 .content-box .friends-list img {
     width: var(--avatar-size-large);
     height: var(--avatar-size-large);
