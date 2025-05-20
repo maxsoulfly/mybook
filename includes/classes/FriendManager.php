@@ -3,28 +3,20 @@
 class FriendManager
 {
     private PDO $pdo;
+    private const FRIEND_STATUS = [
+        'PENDING' => 'pending',
+        'ACCEPTED' => 'accepted',
+        'BLOCKED' => 'blocked',
+        'STALKER' => 'stalker',
+        'UNFRIENDED' => 'unfriended',
+    ];
 
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
 
-    public function areFriends(int $userId, int $friendId): bool
-    {
-        $stmt = $this->pdo->prepare(
-            "SELECT 1 FROM friends 
-             WHERE (
-                 (user_id = :user AND friend_id = :friend) 
-                 OR (user_id = :friend AND friend_id = :user)
-             )
-             AND status = 'accepted'"
-        );
-        $stmt->execute([
-            'user' => $userId,
-            'friend' => $friendId
-        ]);
-        return (bool) $stmt->fetch();
-    }
+
 
     public function getFriendStatus(int $userId, int $profileId): string
     {
@@ -108,5 +100,41 @@ class FriendManager
         );
         $stmt->execute(['id' => $profileId]);
         return (int) $stmt->fetchColumn();
+    }
+
+    public function validateFriendRequest(int $userId, int $friendId): void
+    {
+        if ($userId === $friendId) {
+            throw new Exception('You cannot add yourself as a friend.');
+        }
+    }
+
+    public function areAlreadyFriends(int $userId, int $friendId): bool
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT status FROM friends 
+                WHERE (user_id = :user AND friend_id = :friend)
+                OR (user_id = :friend AND friend_id = :user)
+    "
+        );
+        $stmt->execute(['user' => $userId, 'friend' => $friendId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row && $row['status'] === self::FRIEND_STATUS['ACCEPTED'];
+    }
+
+    public function acceptFriendRequest(int $userId, int $friendId): void
+    {
+        $stmt = $this->pdo->prepare(
+            "UPDATE friends
+                    SET status = :status
+                    WHERE user_id = :friend AND friend_id = :user AND status = :pending
+            "
+        );
+        $stmt->execute([
+            'status'  => self::FRIEND_STATUS['ACCEPTED'],
+            'friend'  => $friendId,
+            'user'    => $userId,
+            'pending' => self::FRIEND_STATUS['PENDING']
+        ]);
     }
 }
