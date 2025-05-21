@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     setupCommentToggle();
     setupAutoResizeTextareas();
+    setupAvatarEditForm();
+    setupCoverEditForm();
 });
 
 // Function to handle comment toggle (Main and Reply)
@@ -85,4 +87,41 @@ function submitCommentLike(commentID) {
     } else {
         console.error('Like form not found for comment ID:', commentID);
     }
+}
+
+function setupAvatarEditForm() {
+    document.getElementById('avatar-upload-form').style.display = 'none';
+    document
+        .getElementById('edit-avatar')
+        .addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('avatar-upload-form').style.display =
+                'block';
+        });
+    // Optional: Hide form on 'X' button click
+    document
+        .querySelector('#avatar-upload-form .button.transparent')
+        .addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('avatar-upload-form').style.display =
+                'none';
+        });
+}
+
+function setupCoverEditForm() {
+    document.getElementById('cover-upload-form').style.display = 'none';
+    document
+        .getElementById('edit-cover')
+        .addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('cover-upload-form').style.display =
+                'block';
+        });
+    // Optional: Hide form on 'X' button click
+    document
+        .querySelector('#cover-upload-form .button.transparent')
+        .addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('cover-upload-form').style.display = 'none';
+        });
 }

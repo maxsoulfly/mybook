@@ -455,14 +455,19 @@ img.avatar-huge {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--padding-medium);
+    gap: var(--padding-default);
+    flex-direction: column;
 }
 
 .upload-fields {
     display: flex;
-    flex-direction: column;
     gap: var(--padding-small);
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-fields input {
+    padding: var(--padding-smaller);
 }
 
 .content-box .upload-form input[type='file'] {
