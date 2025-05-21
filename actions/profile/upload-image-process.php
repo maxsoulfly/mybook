@@ -10,7 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Invalid request.');
 }
 
-$errorMsg = validateFields($_POST);
+$errorMsg = validateFields([
+    'user_id' => $_POST['user_id'],
+    'type'    => $_POST['type'],
+]);
 if ($errorMsg !== '') {
     die($errorMsg);
 }
@@ -23,6 +26,7 @@ $type = trim($_POST['type']);
 if (!in_array($type, ['avatar', 'cover'])) {
     die('Invalid image type.');
 }
+
 
 if (!isset($_FILES[$type]) || $_FILES[$type]['error'] !== UPLOAD_ERR_OK) {
     die('File upload failed.');
@@ -47,6 +51,8 @@ $tmpFile = $_FILES[$type]['tmp_name'];
 
 $success = false;
 
+
+
 if ($type === 'avatar') {
     $success = resizeAndCropImage($tmpFile, $destinationPath, 500, 500);
 } elseif ($type === 'cover') {
@@ -58,12 +64,12 @@ if (!$success) {
 }
 
 
-if (!move_uploaded_file($tmpFile, $destinationPath)) {
-    die('Error saving uploaded file.');
-}
+// if (!move_uploaded_file($tmpFile, $destinationPath)) {
+//     die('Error saving uploaded file.');
+// }
 
 // Update DB with new path if needed (optional MVP)
-$relativePath = 'assets/uploads/' . $user_id . '/' . $type . '.jpg';
+$relativePath = '/assets/uploads/' . $user_id . '/' . $type . '.jpg';
 
 $stmt = $pdo->prepare("UPDATE users SET $type = :path WHERE id = :user_id");
 
