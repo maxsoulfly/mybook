@@ -1,6 +1,8 @@
 /* Buttons */
 button,
-a.button {
+a.button,
+input[type='button'],
+input[type='submit'] {
     font-size: var(--font-size-small);
     border: 0;
     padding: var(--padding-small) var(--padding-default);
@@ -12,7 +14,9 @@ a.button {
 }
 
 button.primary,
-a.primary {
+a.primary,
+input[type='button'].primary,
+input[type='submit'].primary {
     background-color: var(--primary-color);
     color: var(--secondary-text-color);
     &:hover {
@@ -22,7 +26,9 @@ a.primary {
 }
 
 button.secondary,
-a.secondary {
+a.secondary,
+input[type='button'].secondary,
+input[type='submit'].secondary {
     background-color: var(--secondary-color);
     color: var(--secondary-text-color);
 
@@ -33,7 +39,9 @@ a.secondary {
 }
 
 button.alert,
-a.alert {
+a.alert,
+input[type='button'].alert,
+input[type='submit'].alert {
     background-color: var(--alert-color);
     color: var(--secondary-text-color);
     &:hover {
@@ -43,7 +51,9 @@ a.alert {
 }
 
 button.info,
-a.info {
+a.info,
+input[type='button'].info,
+input[type='submit'].info {
     background-color: var(--info-color);
     color: var(--primary-text-color);
     &:hover {
@@ -52,7 +62,9 @@ a.info {
     }
 }
 
-button.link {
+button.link,
+input[type='button'].link,
+input[type='submit'].link {
     background: none;
     color: var(--primary-text-color);
     &:hover {
@@ -60,12 +72,16 @@ button.link {
     }
 }
 
-button.transparent {
+button.transparent,
+input[type='button'].transparent,
+input[type='submit'].transparent {
     background: none;
     color: var(--primary-color);
 }
 
-button.link:hover {
+button.link:hover,
+input[type='button'].link:hover,
+input[type='submit'].link:hover {
     text-decoration: underline;
 }
 

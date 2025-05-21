@@ -441,6 +441,39 @@ img.avatar-huge {
     box-shadow: 0 0 5px var(--primary-color);
 }
 
+.content-box .upload-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--padding-small);
+    flex-wrap: nowrap;
+}
+.upload-form > * {
+    flex: 0 0 auto;
+}
+.edit-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--padding-medium);
+}
+
+.upload-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-small);
+    align-items: flex-start;
+}
+
+.content-box .upload-form input[type='file'] {
+    width: auto;
+}
+
+.content-box .upload-form button,
+.content-box .upload-form a {
+    white-space: nowrap;
+}
+
 .sidebar-box--nobg {
     margin-bottom: var(--padding-default);
     padding: var(--padding-default);
