@@ -137,4 +137,17 @@ class FriendManager
             'pending' => self::FRIEND_STATUS['PENDING']
         ]);
     }
+
+    public function sendFriendRequest(int $userId, int $friendId)
+    {
+        $stmt = $pdo->prepare('INSERT INTO friends (user_id, friend_id, status) 
+                                VALUES (:user, :friend, :status)');
+        $stmt->execute(
+            [
+                'user' => $userId,
+                'friend' => $friendId,
+                'status' => self::FRIEND_STATUS['PENDING']
+            ]
+        );
+    }
 }
