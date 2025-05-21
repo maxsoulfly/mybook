@@ -21,19 +21,20 @@ class FriendManager
     public function getFriendStatus(int $userId, int $profileId): string
     {
         $stmt = $this->pdo->prepare(
-            "SELECT user_id, friend_id, status FROM friends 
-             WHERE 
-                 (user_id = :user AND friend_id = :profile)
-              OR (user_id = :profile AND friend_id = :user)"
+            "SELECT user_id, friend_id, status 
+                    FROM friends 
+                    WHERE 
+                        (user_id = :user AND friend_id = :profile)
+                    OR (user_id = :profile AND friend_id = :user)"
         );
         $stmt->execute(['user' => $userId, 'profile' => $profileId]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) return 'none';
 
-        if ($row['status'] === 'accepted') return 'accepted';
+        if ($row['status'] === self::FRIEND_STATUS['ACCEPTED']) return 'accepted';
 
-        if ($row['status'] === 'pending') {
+        if ($row['status'] === self::FRIEND_STATUS['PENDING']) {
             if ((int)$row['user_id'] === $userId) {
                 return 'pending_sent';
             } else {
@@ -41,7 +42,7 @@ class FriendManager
             }
         }
 
-        if ($row['status'] === 'stalker') {
+        if ($row['status'] === self::FRIEND_STATUS['STALKER']) {
             if ($row['user_id'] == $_SESSION['user_id']) {
                 return 'stalker';
             } else {
@@ -56,17 +57,20 @@ class FriendManager
     {
         $stmt = $this->pdo->prepare(
             'SELECT 
-                users.username, 
-                users.id AS user_id, 
-                users.display_name, 
-                users.avatar
-             FROM friends
-             JOIN users 
-               ON (users.id = friends.friend_id AND friends.user_id = :id)
-               OR (users.id = friends.user_id AND friends.friend_id = :id)
-             WHERE friends.status = "accepted"'
+                        users.username, 
+                        users.id AS user_id, 
+                        users.display_name, 
+                        users.avatar
+                    FROM friends
+                    JOIN users 
+                    ON (users.id = friends.friend_id AND friends.user_id = :id)
+                    OR (users.id = friends.user_id AND friends.friend_id = :id)
+                    WHERE friends.status = :status'
         );
-        $stmt->execute(['id' => $profileId]);
+        $stmt->execute([
+            'id' => $profileId,
+            'status'  => self::FRIEND_STATUS['ACCEPTED']
+        ]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -74,17 +78,20 @@ class FriendManager
     {
         $stmt = $this->pdo->prepare(
             'SELECT 
-                users.username, 
-                users.id AS user_id, 
-                users.display_name, 
-                users.avatar
-             FROM friends
-             JOIN users
-                ON users.id = friends.user_id
-             WHERE friends.status = "pending"
-                AND friends.friend_id = :id'
+                        users.username, 
+                        users.id AS user_id, 
+                        users.display_name, 
+                        users.avatar
+                    FROM friends
+                    JOIN users
+                    ON users.id = friends.user_id
+                    WHERE friends.status = :status
+                    AND friends.friend_id = :id'
         );
-        $stmt->execute(['id' => $profileId]);
+        $stmt->execute([
+            'id' => $profileId,
+            'status'  => self::FRIEND_STATUS['PENDING']
+        ]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -96,9 +103,12 @@ class FriendManager
          JOIN users 
            ON (users.id = friends.friend_id AND friends.user_id = :id)
            OR (users.id = friends.user_id AND friends.friend_id = :id)
-         WHERE friends.status = "accepted"'
+         WHERE friends.status = :status'
         );
-        $stmt->execute(['id' => $profileId]);
+        $stmt->execute([
+            'id' => $profileId,
+            'status'  => self::FRIEND_STATUS['ACCEPTED']
+        ]);
         return (int) $stmt->fetchColumn();
     }
 
@@ -113,8 +123,8 @@ class FriendManager
     {
         $stmt = $this->pdo->prepare(
             "SELECT status FROM friends 
-                WHERE (user_id = :user AND friend_id = :friend)
-                OR (user_id = :friend AND friend_id = :user)
+                    WHERE (user_id = :user AND friend_id = :friend)
+                    OR (user_id = :friend AND friend_id = :user)
     "
         );
         $stmt->execute(['user' => $userId, 'friend' => $friendId]);
@@ -140,8 +150,10 @@ class FriendManager
 
     public function sendFriendRequest(int $userId, int $friendId)
     {
-        $stmt = $this->pdo->prepare('INSERT INTO friends (user_id, friend_id, status) 
-                                VALUES (:user, :friend, :status)');
+        $stmt = $this->pdo->prepare(
+            'INSERT INTO friends (user_id, friend_id, status) 
+                    VALUES (:user, :friend, :status)'
+        );
         $stmt->execute(
             [
                 'user' => $userId,
@@ -154,7 +166,43 @@ class FriendManager
     public function cancelFriendRequest(int $userId, int $friendId)
     {
         // Delete where *you* initiated the relationship
-        $stmt = $this->pdo->prepare("DELETE FROM friends WHERE user_id = :user AND friend_id = :friend");
+        $stmt = $this->pdo->prepare(
+            "DELETE FROM friends 
+                    WHERE user_id = :user AND friend_id = :friend"
+        );
         $stmt->execute(['user' => $userId, 'friend' => $friendId]);
+    }
+
+    public function handleDenyFriendRequest(int $userId, int $friendId): void
+    {
+        // Check if they are already friends (not just a pending request)
+        $stmt = $this->pdo->prepare(
+            "SELECT status FROM friends 
+                    WHERE (user_id = :user AND friend_id = :friend)
+                    OR (user_id = :friend AND friend_id = :user)"
+        );
+        $stmt->execute(['user' => $userId, 'friend' => $friendId]);
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row && $row['status'] === self::FRIEND_STATUS['STALKER']) {
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+
+        // Update the friend request status to 'stalker'
+        $stmt = $pdo->prepare(
+            "UPDATE friends
+                SET status = :status
+                WHERE user_id = :friend 
+                  AND friend_id = :user AND status = :pending"
+        );
+
+        $stmt->execute([
+            'status' => self::FRIEND_STATUS['STALKER'],
+            'friend' => $friendId,
+            'user'   => $userId,
+            'pending' => self::FRIEND_STATUS['PENDING']
+        ]);
     }
 }
