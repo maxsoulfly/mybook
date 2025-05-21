@@ -7,7 +7,7 @@ class UserRenderer
         $formId = $type . '-upload-form';
 
         return '
-            <form id="' . $formId . '" action="' . $baseUrl . '/actions/profile/upload-image.php" method="post" class="upload-form mt-4" enctype="multipart/form-data">
+            <form id="' . $formId . '" action="' . $baseUrl . '/actions/profile/upload-image-process.php" method="post" class="upload-form mt-4" enctype="multipart/form-data">
                 <div class="upload-fields">
                     <input type="hidden" name="user_id" value="' . $userId . '">
                     <input type="hidden" name="type" value="' . $type . '">

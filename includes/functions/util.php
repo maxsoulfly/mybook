@@ -44,3 +44,53 @@ function validateFields($data)
 
     return $error ?: "";
 }
+
+
+function resizeAndCropImage(string $sourcePath, string $destinationPath, int $targetWidth, int $targetHeight): bool
+{
+    $info = getimagesize($sourcePath);
+    if (!$info) return false;
+
+    [$width, $height, $type] = $info;
+
+    switch ($type) {
+        case IMAGETYPE_JPEG:
+            $src = imagecreatefromjpeg($sourcePath);
+            break;
+        case IMAGETYPE_PNG:
+            $src = imagecreatefrompng($sourcePath);
+            break;
+        case IMAGETYPE_WEBP:
+            $src = imagecreatefromwebp($sourcePath);
+            break;
+        default:
+            return false;
+    }
+
+    // Original aspect ratio
+    $srcAspect = $width / $height;
+    $targetAspect = $targetWidth / $targetHeight;
+
+    // Crop to center based on aspect ratio
+    if ($srcAspect > $targetAspect) {
+        // Wider: crop sides
+        $newWidth = $height * $targetAspect;
+        $srcX = ($width - $newWidth) / 2;
+        $srcY = 0;
+        $cropWidth = $newWidth;
+        $cropHeight = $height;
+    } else {
+        // Taller: crop top/bottom
+        $newHeight = $width / $targetAspect;
+        $srcX = 0;
+        $srcY = ($height - $newHeight) / 2;
+        $cropWidth = $width;
+        $cropHeight = $newHeight;
+    }
+
+    $dst = imagecreatetruecolor($targetWidth, $targetHeight);
+    imagecopyresampled($dst, $src, 0, 0, $srcX, $srcY, $targetWidth, $targetHeight, $cropWidth, $cropHeight);
+
+    // Save as JPEG
+    return imagejpeg($dst, $destinationPath, 90);
+}
