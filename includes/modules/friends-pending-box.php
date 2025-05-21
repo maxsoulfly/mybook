@@ -17,7 +17,7 @@ $pendingFriend = $FriendManager->getPendingFriendRequests($profileId);
             $friendName = $friend['display_name'];
             $friendAvatar = $friend['avatar'];
 
-            renderPendingFriend($friendUsername, $friendName, $friendAvatar, $friend['user_id']);
+            echo FriendRenderer::pendingRequestItem($friendUsername, $friendName, $friendAvatar, $friend['user_id'], $BASE_URL);
         }
 
         ?>

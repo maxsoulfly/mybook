@@ -19,7 +19,7 @@ $friends = $FriendManager->getFriends($profileId);
             $friendName = $friend['display_name'];
             $friendAvatar = $friend['avatar'];
 
-            renderFriend($friendUsername, $friendName, $friendAvatar);
+            echo FriendRenderer::friendItem($friendUsername, $friendName, $friendAvatar, $BASE_URL);
         }
 
         ?>
