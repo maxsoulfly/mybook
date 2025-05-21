@@ -60,6 +60,13 @@
     height: var(--avatar-size-small);
     object-fit: cover;
 }
+.avatar {
+    display: flex;
+    align-items: center;
+    gap: var(--padding-small);
+    justify-content: center;
+}
+
 .avatar a {
     display: flex;
     align-items: center;
@@ -74,7 +81,7 @@
     color: var(--secondary-text-color);
     transition: text-shadow 0.2s ease, color 0.2s ease;
 }
-
+.avatar .logout a:hover,
 .avatar a span.username:hover {
     text-shadow: 0 0 8px var(--primary-glow-color),
         0 0 16px var(--primary-glow-color), 0 0 24px var(--primary-color),
