@@ -71,6 +71,8 @@ class FriendRenderer
             $output .= self::renderActionButton($profileId, $baseUrl, '/actions/friends/accept-friend.php', 'secondary', 'Accept', $formStyle);
             $output .= self::renderActionButton($profileId, $baseUrl, '/actions/friends/deny-friend.php', 'alert', 'Reject', $formStyle);
             $output .= '</div>';
+        } elseif ($status === 'accepted') {
+            // Already friends: no button for now
         } elseif ($status === 'stalker') {
             $output .= self::renderActionButton($profileId, $baseUrl, '/actions/friends/cancel-friend.php', 'info', 'Unfollow');
         } elseif ($status === 'followed_by') {
