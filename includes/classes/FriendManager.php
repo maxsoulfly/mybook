@@ -140,7 +140,7 @@ class FriendManager
 
     public function sendFriendRequest(int $userId, int $friendId)
     {
-        $stmt = $pdo->prepare('INSERT INTO friends (user_id, friend_id, status) 
+        $stmt = $this->pdo->prepare('INSERT INTO friends (user_id, friend_id, status) 
                                 VALUES (:user, :friend, :status)');
         $stmt->execute(
             [
@@ -149,5 +149,12 @@ class FriendManager
                 'status' => self::FRIEND_STATUS['PENDING']
             ]
         );
+    }
+
+    public function cancelFriendRequest(int $userId, int $friendId)
+    {
+        // Delete where *you* initiated the relationship
+        $stmt = $this->pdo->prepare("DELETE FROM friends WHERE user_id = :user AND friend_id = :friend");
+        $stmt->execute(['user' => $userId, 'friend' => $friendId]);
     }
 }
