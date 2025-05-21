@@ -3,7 +3,6 @@
 
 <div class="content-box">
 
-
     <div class="header">
         <h2>Edit Profile</h2>
     </div>

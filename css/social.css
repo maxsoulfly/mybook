@@ -14,6 +14,17 @@
     gap: var(--padding-smaller);
 }
 
+.profile-cover-display img {
+    aspect-ratio: 16 / 7;
+    display: block;
+    width: 70vw;
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: cover;
+    border-radius: var(--border-radius-large);
+}
+
 .profile-top img {
     box-shadow: var(--shadow-large);
 }
@@ -110,6 +121,22 @@ img.avatar-large {
     border-radius: 50%;
     width: var(--avatar-size-large);
     height: var(--avatar-size-large);
+    object-fit: cover;
+}
+
+.avatar-larger img,
+img.avatar-larger {
+    border-radius: 50%;
+    width: var(--avatar-size-larger);
+    height: var(--avatar-size-larger);
+    object-fit: cover;
+}
+
+.avatar-huge img,
+img.avatar-huge {
+    border-radius: 50%;
+    width: var(--avatar-size-huge);
+    height: var(--avatar-size-huge);
     object-fit: cover;
 }
 
@@ -341,6 +368,11 @@ img.avatar-large {
 .content-box .header {
     /* padding: var(--padding-small); */
     text-align: center;
+}
+.content-box .edit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .content-box label {

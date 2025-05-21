@@ -63,6 +63,8 @@
     --avatar-size-medium-small: 3em;
     --avatar-size-medium: 4em;
     --avatar-size-large: 8em;
+    --avatar-size-larger: 12em;
+    --avatar-size-huge: 16em;
 
     --sidebar-max-width: 15em;
 }
