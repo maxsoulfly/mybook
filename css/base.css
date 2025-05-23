@@ -15,6 +15,7 @@
     /* Alert Colors */
     --alert-color: #e74c3c;
     --alert-hover-color: #c0392b;
+    --warning-color: #f8c555;
 
     /* Information Colors */
     --info-color: #f5f5f5;
@@ -26,6 +27,7 @@
     --secondary-text-darker-color: #eeeeee;
     --secondary-text-color: #fff; /* Light (White) Text */
     --primary-glow-color: #fff;
+    --link-color: #3498db;
 
     /* Background Colors */
     --container-bg-color: #fff;

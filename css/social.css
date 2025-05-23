@@ -42,7 +42,7 @@
 
     position: sticky;
     top: 4.5em;
-    z-index: 1000;
+    z-index: 500;
 }
 
 .profile-nav ul {
@@ -51,6 +51,7 @@
     list-style: none;
     margin: 0;
     padding: var(--padding-smaller) var(--padding-small);
+    /* z-index: 20; */
 }
 
 .profile-nav a {
@@ -585,4 +586,91 @@ img.avatar-huge {
 .sidebar-box .friends-list .friend-name {
     display: inline-block;
     margin-left: var(--padding-small);
+}
+
+/* Notifications */
+.notification-button {
+    all: unset;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-wrapper .mdi {
+    font-size: 1.5rem;
+    color: var(--secondary-text-color);
+}
+
+.notification-badge {
+    position: absolute;
+    top: -4px;
+    background: var(--alert-color);
+    color: var(--secondary-text-color);
+    font-size: 0.65rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 999px;
+    box-shadow: 0 0 0 2px #fff;
+}
+.notification-dropdown {
+    position: absolute;
+    /* top: 100%; */
+    right: 0;
+    background: var(--container-bg-color);
+    box-shadow: var(--shadow-default);
+    display: block; /* toggle this with JS */
+    z-index: 9999; /* max priority */
+
+    min-width: 250px;
+    padding: var(--padding-smaller);
+    border-radius: var(--border-radius-large);
+    margin: 0;
+}
+.notification-dropdown ul {
+    margin: 0;
+    padding: var(--padding-smaller);
+}
+.notification-dropdown li {
+    list-style: none;
+}
+.notification-dropdown li:last-child {
+    margin-bottom: 0;
+}
+
+#header .notification-dropdown a {
+    color: var(--lighter-text-color);
+    display: flex;
+    padding: var(--padding-smaller);
+    gap: var(--padding-small);
+    white-space: normal;
+}
+
+#header .notification-dropdown a.new {
+    font-weight: 500;
+    color: var(--primary-text-color);
+}
+
+#header .notification-dropdown li:hover {
+    background-color: var(--lighter-bg-color);
+    border-radius: var(--border-radius-medium);
+}
+#header .notification-dropdown .view-all {
+    display: block;
+    text-align: center;
+    color: var(--link-color);
+    padding: var(--padding-smaller);
+    gap: var(--padding-small);
+    white-space: normal;
+    border-top: var(--default-border);
+}
+
+#header .notification-dropdown .view-all:hover {
+    text-decoration: underline;
 }

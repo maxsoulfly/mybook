@@ -27,6 +27,8 @@ include_once(__DIR__ . '/../config.php');
         <div class="wrapper">
             <?php include_once __DIR__ . '/modules/header-logo.php'; ?>
             <?php include_once __DIR__ . '/modules/header-search.php'; ?>
+
+            <?php include_once __DIR__ . '/modules/header-notifications.php'; ?>
             <?php include_once __DIR__ . '/modules/user-avatar.php'; ?>
         </div>
     </header>
