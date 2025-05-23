@@ -5,19 +5,19 @@ $iconClass = 'mdi mdi-bell has-unread';
 ?>
 
 <div class="notification-wrapper">
-    <button class="notification-button" aria-label="Notifications">
+    <button id="notification-toggle" class="notification-button" aria-label="Notifications">
         <i class="mdi mdi-bell has-unread"></i>
     </button>
     <span class="notification-badge">1</span>
-    <div class="notification-dropdown">
+    <div id="notification-dropdown" class="hidden">
         <ul>
-            <li class="notification-item">
+            <li>
                 <a href="" class="new">
                     <img src="/assets/img/maxxavatar.jpg" alt="Profile" class="avatar-small">
                     <span class="notification-text">Maxx posted on your wall.</span>
                 </a>
             </li>
-            <li class="notification-item">
+            <li>
                 <a href="">
                     <img src=" /assets/img/maxxavatar.jpg" alt="Profile" class="avatar-small">
                     <span class="notification-text">Yana liked your photo.</span>

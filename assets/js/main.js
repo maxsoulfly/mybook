@@ -125,3 +125,18 @@ function setupCoverEditForm() {
             document.getElementById('cover-upload-form').style.display = 'none';
         });
 }
+
+const toggleBtn = document.getElementById('notification-toggle');
+const dropdown = document.getElementById('notification-dropdown');
+
+toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('hidden');
+});
+
+// Close dropdown on outside click
+document.addEventListener('click', (e) => {
+    if (!dropdown.classList.contains('hidden')) {
+        dropdown.classList.add('hidden');
+    }
+});
