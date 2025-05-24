@@ -20,11 +20,20 @@ class NotificationsRenderer
     public function renderItem(array $notification): string
     {
         $userManager = new UserManager($this->pdo);
-        $user = $userManager->getUserByUserId($notification['user_id']);
+        $actorId = $notification['actor_id'] ?? null;
+
+        if ($actorId) {
+            $actor = $userManager->getUserByUserId($actorId);
+        } else {
+            $actor = [
+                'display_name' => 'System',
+                'avatar' => '/assets/img/default-avatar.png'
+            ];
+        }
         $when = timeAgoShort($notification['created_at']);
         return '<li class="notification-item">
                     <a href="' . $notification['link'] . '" class="' . ($notification['is_read'] ? '' : 'new') . '">
-                        <img src="' . $user['avatar'] . '" alt="Profile" class="avatar-small">
+                        <img src="' . $actor['avatar'] . '" alt="Profile" class="avatar-small">
                         <div>
                             <span class="notification-text">' . $notification['content'] . '</span>
                             <span class="post-date">' . $when . '</span>

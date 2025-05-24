@@ -63,14 +63,15 @@ class NotificationsManager
         $stmt->execute(['id' => $notificationId, 'user_id' => $user_id]);
     }
 
-    public function add(PDO $pdo, int $user_id, string $content, string $link): void
+    public function add(PDO $pdo, int $user_id, string $content, string $link, ?int $actorId = null): void
     {
         $stmt = $pdo->prepare(
-            "INSERT INTO notifications (user_id, content, link) 
-                    VALUES (:user_id, :content, :link)"
+            "INSERT INTO notifications (user_id, actor_id, content, link) 
+                    VALUES (:user_id, :actor_id, :content, :link)"
         );
         $stmt->execute([
             'user_id' => $user_id,
+            'actor_id' => $actorId,
             'content' => $content,
         ]);
 
@@ -96,14 +97,37 @@ class NotificationsManager
             if ($post && $post['user_id'] !== $likerId) {
                 $content = $actor['display_name'] . ' liked your post.';
                 $baseLink  = '/pages/post.php?id=' . $postId;
-                $this->add($pdo, $post['user_id'], $content, $baseLink);
+                $this->add($pdo, $post['user_id'], $content, $baseLink,  $likerId);
             }
         } elseif ($commentId) {
             $comment = $postManager->getCommentById($commentId);
             if ($comment && $comment['user_id'] !== $likerId) {
                 $content = $actor['display_name'] . ' liked your comment.';
                 $baseLink  = '/pages/post.php?id=' . $comment['post_id'];
-                $this->add($pdo, $comment['user_id'], $content, $baseLink);
+                $this->add($pdo, $comment['user_id'], $content, $baseLink, $likerId);
+            }
+        }
+    }
+
+    public function notifyComment(PDO $pdo, int $likerId, ?int $postId = null, ?int $commentId = null): void
+    {
+        $userManager = new UserManager($pdo);
+        $postManager = new PostManager($pdo);
+        $actor = $userManager->getUserByUserId($likerId);
+
+        if ($postId) {
+            $post = $postManager->fetchPost($postId);
+            if ($post && $post['user_id'] !== $likerId) {
+                $content = $actor['display_name'] . ' commented on your post.';
+                $baseLink  = '/pages/post.php?id=' . $postId;
+                $this->add($pdo, $post['user_id'], $content, $baseLink,  $likerId);
+            }
+        } elseif ($commentId) {
+            $comment = $postManager->getCommentById($commentId);
+            if ($comment && $comment['user_id'] !== $likerId) {
+                $content = $actor['display_name'] . ' replied to your comment.';
+                $baseLink  = '/pages/post.php?id=' . $comment['post_id'];
+                $this->add($pdo, $comment['user_id'], $content, $baseLink, $likerId);
             }
         }
     }
