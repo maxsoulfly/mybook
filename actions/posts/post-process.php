@@ -21,7 +21,10 @@ $content = trim($_POST['content']);
 $recipient_id = filter_input(INPUT_POST, 'recipient_id', FILTER_SANITIZE_NUMBER_INT) ?? NULL;
 
 try {
-    $postManager->insertPost($pdo, $user_id, $content, $recipient_id);
+    $newPostId = $postManager->insertPost($pdo, $user_id, $content, $recipient_id);
+
+    $NotificationsManager = new NotificationsManager();
+    $NotificationsManager->notifyPost($pdo, $user_id, $newPostId);
 
     $finalUrl = redirectBackWithParam('post', 'success');
 } catch (PDOException $e) {

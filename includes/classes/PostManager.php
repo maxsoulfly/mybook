@@ -166,18 +166,18 @@ class PostManager
         return $latestComment ?: null;
     }
 
-    public function getCommentById($commentId)
+    public function getCommentById($comment_id)
     {
         $stmt = $this->pdo->prepare(
             "SELECT c.*, u.username, u.display_name, u.avatar
                     FROM comments c
                     JOIN users u ON c.user_id = u.id
-                    WHERE c.commentId = :commentId
+                    WHERE c.id = :comment_id
                         AND c.parent_id IS NULL
             "
         );
 
-        $stmt->execute(['commentId' => $commentId]);
+        $stmt->execute(['comment_id' => $comment_id]);
         $comment = $stmt->fetch(PDO::FETCH_ASSOC);
         return $comment ?: null;
     }
@@ -188,25 +188,29 @@ class PostManager
             "INSERT INTO posts (user_id, content, recipient_id)
              VALUES (:user_id, :content, :recipient_id)"
         );
-        return $stmt->execute([
+        $stmt->execute([
             'user_id'      => $user_id,
             'content'      => $content,
             'recipient_id' => $recipient_id
         ]);
+
+        return (int) $pdo->lastInsertId();
     }
 
-    public function insertComment(int $postId, ?int $parentId, int $userId, string $content): bool
+    public function insertComment($pdo, int $postId, ?int $parentId, int $userId, string $content): bool
     {
         $stmt = $this->pdo->prepare(
             "INSERT INTO comments (post_id, parent_id, user_id, content)
              VALUES (:post_id, :parent_id, :user_id, :content)"
         );
 
-        return $stmt->execute([
+        $stmt->execute([
             'post_id'   => $postId,
             'parent_id' => $parentId,
             'user_id'   => $userId,
             'content'   => $content,
         ]);
+
+        return (int) $pdo->lastInsertId();
     }
 }

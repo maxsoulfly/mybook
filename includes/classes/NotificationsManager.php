@@ -105,15 +105,28 @@ class NotificationsManager
 
         if ($postId) {
             $post = $postManager->fetchPost($postId);
-            if ($post && $post['user_id'] !== $actorId) {
-                $content = match ($actionType) {
-                    'like' => "$displayName liked your post.",
-                    'comment' => "$displayName commented on your post.",
-                    default => null
-                };
-                if ($content) {
+
+            // Handle 'post' notifications (user posted on someone’s wall)
+            if ($actionType === 'post') {
+                if ($post && $post['recipient_id'] !== $actorId) {
+                    $content = "$displayName posted on your wall.";
                     $baseLink = '/pages/post.php?id=' . $postId;
-                    $this->add($pdo, $post['user_id'], $content, $baseLink, $actorId);
+                    $this->add($pdo, $post['recipient_id'], $content, $baseLink, $actorId);
+                }
+            }
+
+            // Handle like/comment on a post (notify the post author)
+            elseif (in_array($actionType, ['like', 'comment'])) {
+                if ($post && $post['user_id'] !== $actorId) {
+                    $content = match ($actionType) {
+                        'like' => "$displayName liked your post.",
+                        'comment' => "$displayName commented on your post.",
+                        default => null
+                    };
+                    if ($content) {
+                        $baseLink = '/pages/post.php?id=' . $postId;
+                        $this->add($pdo, $post['user_id'], $content, $baseLink, $actorId);
+                    }
                 }
             }
         } elseif ($commentId) {
@@ -140,5 +153,10 @@ class NotificationsManager
     public function notifyComment(PDO $pdo, int $commenterId, ?int $postId = null, ?int $commentId = null): void
     {
         $this->dispatchActionNotification($pdo, $commenterId, 'comment', $postId, $commentId);
+    }
+
+    public function notifyPost(PDO $pdo, int $posterId, int $postId): void
+    {
+        $this->dispatchActionNotification($pdo, $posterId, 'post', $postId, null);
     }
 }
