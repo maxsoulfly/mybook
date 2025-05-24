@@ -9,6 +9,7 @@ $page_title = "Profile";
 $page = "profile";
 
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['id'])) {
     die('No post id');
 }
@@ -19,9 +20,14 @@ if (!isset($_SESSION["username"])) {
 
 $post_id = $_GET['id'];
 $pdo = getDBConnection();
-
 $UserManager = new UserManager($pdo);
+$NotificationsManager = new NotificationsManager();
 $user = $UserManager->getLoggedInUser();
+
+if (isset($_GET['notification_id'])) {
+    $notificationId = (int)$_GET['notification_id'];
+    $NotificationsManager->markRead($pdo, $user['id'], $notificationId);
+}
 
 if (!$user) {
     header('Location: ' . $BASE_URL . '/pages/login.php');
