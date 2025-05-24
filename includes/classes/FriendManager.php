@@ -191,7 +191,7 @@ class FriendManager
         }
 
         // Update the friend request status to 'stalker'
-        $stmt = $pdo->prepare(
+        $stmt = $this->pdo->prepare(
             "UPDATE friends
                 SET status = :status
                 WHERE user_id = :friend 

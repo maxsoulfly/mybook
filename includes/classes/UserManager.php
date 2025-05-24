@@ -27,15 +27,34 @@ class UserManager
             return null;
         }
 
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = :username");
+        $stmt = $this->pdo->prepare(
+            "SELECT * 
+                    FROM users 
+                    WHERE username = :username"
+        );
         $stmt->execute(['username' => $_SESSION['username']]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
     public function getUserByUsername(string $username): ?array
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = :username");
+        $stmt = $this->pdo->prepare(
+            "SELECT * 
+                    FROM users 
+                    WHERE username = :username"
+        );
         $stmt->execute(['username' => $username]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user ?: null;
+    }
+    public function getUserByUserId(string $user_id): ?array
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT * 
+                    FROM users 
+                    WHERE id = :user_id"
+        );
+        $stmt->execute(['user_id' => $user_id]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         return $user ?: null;
     }

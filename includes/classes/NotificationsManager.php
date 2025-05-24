@@ -1,0 +1,67 @@
+<?php
+
+class NotificationsManager
+{
+    public  function getUnreadByUser(PDO $pdo, int $user_id): ?array
+    {
+        $stmt = $pdo->prepare(
+            "SELECT * 
+                    FROM notifications 
+                    WHERE user_id = :user_id
+                    AND is_read = 0 
+                    ORDER BY created_at DESC"
+        );
+        $stmt->execute(['user_id' => $user_id]);
+        $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $notifications ?: null;
+    }
+    public  function getReadByUser(PDO $pdo, int $user_id): ?array
+    {
+        $stmt = $pdo->prepare(
+            "SELECT * 
+                    FROM notifications 
+                    WHERE user_id = :user_id
+                    AND is_read = 1 
+                    ORDER BY created_at DESC"
+        );
+        $stmt->execute(['user_id' => $user_id]);
+        $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $notifications ?: null;
+    }
+
+    public  function getAllByUser(PDO $pdo, int $user_id): ?array
+    {
+        $stmt = $pdo->prepare(
+            "SELECT * 
+                    FROM notifications 
+                    WHERE user_id = :user_id
+                    ORDER BY created_at DESC"
+        );
+        $stmt->execute(['user_id' => $user_id]);
+        $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $notifications ?: null;
+    }
+    public function markAllRead(PDO $pdo, int $user_id): void
+    {
+        $stmt = $pdo->prepare(
+            "UPDATE notifications 
+                    SET is_read = 1 
+                    WHERE user_id = :user_id 
+                    AND is_read = 0"
+        );
+        $stmt->execute(['user_id' => $user_id]);
+    }
+
+    public function add(PDO $pdo, int $user_id, string $content, string $link): void
+    {
+        $stmt = $pdo->prepare(
+            "INSERT INTO notifications (user_id, content, link) 
+                    VALUES (:user_id, :content, :link)"
+        );
+        $stmt->execute([
+            'user_id' => $user_id,
+            'content' => $content,
+            'link'    => $link,
+        ]);
+    }
+}

@@ -94,3 +94,21 @@ function resizeAndCropImage(string $sourcePath, string $destinationPath, int $ta
     // Save as JPEG
     return imagejpeg($dst, $destinationPath, 90);
 }
+
+
+function timeAgoShort(string $datetime): string
+{
+    $timestamp = strtotime($datetime);
+    if ($timestamp === false) return '';
+
+    $diff = time() - $timestamp;
+    if ($diff < 60) {
+        return $diff . 's';
+    } elseif ($diff < 3600) {
+        return floor($diff / 60) . 'm';
+    } elseif ($diff < 86400) {
+        return floor($diff / 3600) . 'h';
+    } else {
+        return floor($diff / 86400) . 'd';
+    }
+}
