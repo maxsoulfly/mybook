@@ -180,16 +180,15 @@ class NotificationsManager
 
     public function notifyFriendAccept(PDO $pdo, int $senderId, int $recipientId): void
     {
-        if ($senderId === $recipientId) return; // Safety check
+        if ($senderId === $recipientId) return;
 
-        $UserManager = new UserManager($pdo);
+        $userManager = new UserManager($pdo);
+        $friend = $userManager->getUserByUserId($recipientId); // <-- use recipient
 
-        $user = $UserManager->getUserByUserId($senderId);
-        $displayName = $this->getActorDisplayName($pdo, $recipientId);
-        if (!$displayName) return;
+        if (!$friend) return;
 
-        $content = "You are now friends with $displayName";
-        $link = "/pages/profile.php?u=" . $user['username']; // or your confirmation page
+        $content = "You are now friends with {$friend['display_name']}";
+        $link = "/pages/profile.php?u=" . $friend['username'];
 
         $this->add($pdo, $senderId, $content, $link, $recipientId);
     }
