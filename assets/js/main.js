@@ -33,7 +33,7 @@ const MyBookUI = {
         const parent = link.closest('.post'); // Scope to the specific post
         const form = parent.querySelector('.comment-form');
         if (form) {
-            form.classList.toggle('show');
+            form.classList.toggle('hidden');
             const textarea = form.querySelector('textarea');
             if (textarea) textarea.focus();
         }
