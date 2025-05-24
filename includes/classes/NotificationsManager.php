@@ -64,4 +64,27 @@ class NotificationsManager
             'link'    => $link,
         ]);
     }
+
+    public function notifyLike(PDO $pdo, int $likerId, ?int $postId = null, ?int $commentId = null): void
+    {
+        $userManager = new UserManager($pdo);
+        $postManager = new PostManager($pdo);
+        $actor = $userManager->getUserByUserId($likerId);
+
+        if ($postId) {
+            $post = $postManager->fetchPost($postId);
+            if ($post && $post['user_id'] !== $likerId) {
+                $content = $actor['display_name'] . ' liked your post.';
+                $link = '/post.php?id=' . $postId;
+                $this->add($pdo, $post['user_id'], $content, $link);
+            }
+        } elseif ($commentId) {
+            $comment = $postManager->getCommentById($commentId);
+            if ($comment && $comment['user_id'] !== $likerId) {
+                $content = $actor['display_name'] . ' liked your comment.';
+                $link = '/post.php?id=' . $comment['post_id'];
+                $this->add($pdo, $comment['user_id'], $content, $link);
+            }
+        }
+    }
 }

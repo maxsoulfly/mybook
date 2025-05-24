@@ -5,6 +5,8 @@ const MyBookUI = {
         this.setupAvatarEditForm();
         this.setupCoverEditForm();
         this.setupNotificationToggle();
+        this.setupCommentLikes();
+        this.setupPostLikes();
     },
 
     // Function to handle comment toggle (Main and Reply)
@@ -147,6 +149,26 @@ const MyBookUI = {
             if (!dropdown.classList.contains('hidden')) {
                 dropdown.classList.add('hidden');
             }
+        });
+    },
+
+    setupCommentLikes() {
+        document.querySelectorAll('.comment-like').forEach((link) => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const commentId = this.dataset.commentId;
+                MyBookUI.submitCommentLike(commentId);
+            });
+        });
+    },
+
+    setupPostLikes() {
+        document.querySelectorAll('.post-like').forEach((link) => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const postId = this.dataset.postId;
+                MyBookUI.submitLike(postId);
+            });
         });
     },
 };

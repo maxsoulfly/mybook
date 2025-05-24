@@ -71,7 +71,9 @@ class PostManager
     public function countLikes($post_id)
     {
         $stmt = $this->pdo->prepare(
-            'SELECT COUNT(*) AS like_count FROM likes WHERE post_id = :post_id'
+            'SELECT COUNT(*) AS like_count 
+            FROM likes 
+            WHERE post_id = :post_id'
         );
         $stmt->execute(['post_id' => $post_id]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -81,8 +83,8 @@ class PostManager
     {
         $stmt = $this->pdo->prepare(
             'SELECT COUNT(*) AS comment_likes 
-                    FROM likes 
-                    WHERE comment_id = :comment_id;'
+             FROM likes 
+             WHERE comment_id = :comment_id;'
         );
         $stmt->execute(['comment_id' => $comment_id]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -92,10 +94,18 @@ class PostManager
     public function existingLike($user_id, $post_id = null, $comment_id = null)
     {
         if ($comment_id) {
-            $query = 'SELECT id FROM likes WHERE comment_id = :comment_id AND user_id = :user_id';
+            $query =    'SELECT id 
+                         FROM likes 
+                         WHERE comment_id = :comment_id 
+                           AND user_id = :user_id
+            ';
             $params = ['comment_id' => $comment_id, 'user_id' => $user_id];
         } elseif ($post_id) {
-            $query = 'SELECT id FROM likes WHERE post_id = :post_id AND user_id = :user_id';
+            $query = 'SELECT id 
+                      FROM likes 
+                      WHERE post_id = :post_id 
+                        AND user_id = :user_id
+            ';
             $params = ['post_id' => $post_id, 'user_id' => $user_id];
         } else {
             throw new InvalidArgumentException('Either post_id or comment_id must be provided.');
@@ -154,5 +164,21 @@ class PostManager
         $stmt->execute(['post_id' => $postId]);
         $latestComment = $stmt->fetch(PDO::FETCH_ASSOC);
         return $latestComment ?: null;
+    }
+
+    public function getCommentById($commentId)
+    {
+        $stmt = $this->pdo->prepare(
+            "SELECT c.*, u.username, u.display_name, u.avatar
+                    FROM comments c
+                    JOIN users u ON c.user_id = u.id
+                    WHERE c.commentId = :commentId
+                        AND c.parent_id IS NULL
+            "
+        );
+
+        $stmt->execute(['commentId' => $commentId]);
+        $comment = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $comment ?: null;
     }
 }

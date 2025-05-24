@@ -99,13 +99,16 @@ class PostRenderer
         if (!$comment_id) {
             echo '
             <div class="post-like">
-            <a href="#" onclick="submitLike(' . $postId . '); return false;" class="like-link">';
+            <a href="#" data-post-id="' . $postId . '" class="like-link post-like">
+            ';
 
             $existingLike = $this->postManager->existingLike($loggedInUserId, $postId);
         } else {
             echo '
             <div class="comment-like">
-            <a href="#" onclick="submitCommentLike(' . $comment_id . '); return false;" class="like-link">';
+            <a href="#" data-comment-id="' . $comment_id . '" class="like-link comment-like">
+
+            ';
 
             $existingLike = $this->postManager->existingLike($loggedInUserId, null, $comment_id);
         }
