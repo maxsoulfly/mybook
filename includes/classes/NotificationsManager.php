@@ -85,50 +85,60 @@ class NotificationsManager
             ]);
         }
     }
-
-    public function notifyLike(PDO $pdo, int $likerId, ?int $postId = null, ?int $commentId = null): void
+    private function getActorDisplayName(PDO $pdo, int $actorId): ?string
     {
         $userManager = new UserManager($pdo);
+        $actor = $userManager->getUserByUserId($actorId);
+        return $actor['display_name'] ?? null;
+    }
+
+    private function dispatchActionNotification(
+        PDO $pdo,
+        int $actorId,
+        string $actionType,
+        ?int $postId = null,
+        ?int $commentId = null
+    ): void {
         $postManager = new PostManager($pdo);
-        $actor = $userManager->getUserByUserId($likerId);
+        $displayName = $this->getActorDisplayName($pdo, $actorId);
+        if (!$displayName) return;
 
         if ($postId) {
             $post = $postManager->fetchPost($postId);
-            if ($post && $post['user_id'] !== $likerId) {
-                $content = $actor['display_name'] . ' liked your post.';
-                $baseLink  = '/pages/post.php?id=' . $postId;
-                $this->add($pdo, $post['user_id'], $content, $baseLink,  $likerId);
+            if ($post && $post['user_id'] !== $actorId) {
+                $content = match ($actionType) {
+                    'like' => "$displayName liked your post.",
+                    'comment' => "$displayName commented on your post.",
+                    default => null
+                };
+                if ($content) {
+                    $baseLink = '/pages/post.php?id=' . $postId;
+                    $this->add($pdo, $post['user_id'], $content, $baseLink, $actorId);
+                }
             }
         } elseif ($commentId) {
             $comment = $postManager->getCommentById($commentId);
-            if ($comment && $comment['user_id'] !== $likerId) {
-                $content = $actor['display_name'] . ' liked your comment.';
-                $baseLink  = '/pages/post.php?id=' . $comment['post_id'];
-                $this->add($pdo, $comment['user_id'], $content, $baseLink, $likerId);
+            if ($comment && $comment['user_id'] !== $actorId) {
+                $content = match ($actionType) {
+                    'like' => "$displayName liked your comment.",
+                    'comment' => "$displayName replied to your comment.",
+                    default => null
+                };
+                if ($content) {
+                    $baseLink = '/pages/post.php?id=' . $comment['post_id'];
+                    $this->add($pdo, $comment['user_id'], $content, $baseLink, $actorId);
+                }
             }
         }
     }
 
-    public function notifyComment(PDO $pdo, int $likerId, ?int $postId = null, ?int $commentId = null): void
+    public function notifyLike(PDO $pdo, int $likerId, ?int $postId = null, ?int $commentId = null): void
     {
-        $userManager = new UserManager($pdo);
-        $postManager = new PostManager($pdo);
-        $actor = $userManager->getUserByUserId($likerId);
+        $this->dispatchActionNotification($pdo, $likerId, 'like', $postId, $commentId);
+    }
 
-        if ($postId) {
-            $post = $postManager->fetchPost($postId);
-            if ($post && $post['user_id'] !== $likerId) {
-                $content = $actor['display_name'] . ' commented on your post.';
-                $baseLink  = '/pages/post.php?id=' . $postId;
-                $this->add($pdo, $post['user_id'], $content, $baseLink,  $likerId);
-            }
-        } elseif ($commentId) {
-            $comment = $postManager->getCommentById($commentId);
-            if ($comment && $comment['user_id'] !== $likerId) {
-                $content = $actor['display_name'] . ' replied to your comment.';
-                $baseLink  = '/pages/post.php?id=' . $comment['post_id'];
-                $this->add($pdo, $comment['user_id'], $content, $baseLink, $likerId);
-            }
-        }
+    public function notifyComment(PDO $pdo, int $commenterId, ?int $postId = null, ?int $commentId = null): void
+    {
+        $this->dispatchActionNotification($pdo, $commenterId, 'comment', $postId, $commentId);
     }
 }
