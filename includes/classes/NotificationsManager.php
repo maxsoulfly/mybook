@@ -108,10 +108,12 @@ class NotificationsManager
 
             // Handle 'post' notifications (user posted on someone’s wall)
             if ($actionType === 'post') {
-                if ($post && $post['recipient_id'] !== $actorId) {
+                $recipientId = $post['recipient_id'] ?? null;
+
+                if ($recipientId && $recipientId !== $actorId) {
                     $content = "$displayName posted on your wall.";
                     $baseLink = '/pages/post.php?id=' . $postId;
-                    $this->add($pdo, $post['recipient_id'], $content, $baseLink, $actorId);
+                    $this->add($pdo, $recipientId, $content, $baseLink, $actorId);
                 }
             }
 
@@ -189,6 +191,6 @@ class NotificationsManager
         $content = "You are now friends with $displayName";
         $link = "/pages/profile.php?u=" . $user['username']; // or your confirmation page
 
-        $this->add($pdo, $recipientId, $content, $link, $senderId);
+        $this->add($pdo, $senderId, $content, $link, $recipientId);
     }
 }

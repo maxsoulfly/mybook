@@ -30,6 +30,7 @@ $FriendManager->acceptFriendRequest($userId, $friendId);
 
 $NotificationsManager = new NotificationsManager();
 $NotificationsManager->notifyFriendAccept($pdo, $friendId, $userId);
+$NotificationsManager->notifyFriendAccept($pdo, $userId, $friendId);
 
 $finalUrl = redirectBackWithParam('request', 'accepted');
 header('Location: ' . $finalUrl);
