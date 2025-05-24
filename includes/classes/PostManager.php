@@ -186,22 +186,27 @@ class PostManager
     {
         $stmt = $pdo->prepare(
             "INSERT INTO posts (user_id, content, recipient_id)
-            VALUES (:user_id, :content, :recipient_id)"
+             VALUES (:user_id, :content, :recipient_id)"
         );
-        try {
-            $stmt->execute([
-                'user_id'      => $user_id,
-                'content'      => $content,
-                'recipient_id' => $recipient_id
-            ]);
+        return $stmt->execute([
+            'user_id'      => $user_id,
+            'content'      => $content,
+            'recipient_id' => $recipient_id
+        ]);
+    }
 
-            $finalUrl = redirectBackWithParam('post', 'success');
-            header('Location: ' . $finalUrl);
-            exit;
-        } catch (PDOException $e) {
-            $finalUrl = redirectBackWithParam('post', 'failed');
-            header('Location: ' . $finalUrl);
-            exit;
-        }
+    public function insertComment(int $postId, ?int $parentId, int $userId, string $content): bool
+    {
+        $stmt = $this->pdo->prepare(
+            "INSERT INTO comments (post_id, parent_id, user_id, content)
+             VALUES (:post_id, :parent_id, :user_id, :content)"
+        );
+
+        return $stmt->execute([
+            'post_id'   => $postId,
+            'parent_id' => $parentId,
+            'user_id'   => $userId,
+            'content'   => $content,
+        ]);
     }
 }

@@ -4,6 +4,7 @@ include_once __DIR__ . '/../../config.php';
 include_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/db.php';
 $pdo = getDBConnection();
+$postManager = new PostManager($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die('Invalid request.');
@@ -19,25 +20,13 @@ $parent_id = filter_input(INPUT_POST, 'parent_id', FILTER_SANITIZE_NUMBER_INT);
 $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
 $content = trim($_POST['content']);
 
-
-$stmt = $pdo->prepare(
-    "INSERT INTO comments (post_id, parent_id, user_id, content)
-                VALUES (:post_id, :parent_id, :user_id, :content)
-        "
-);
 try {
-    $stmt->execute([
-        'post_id'   => $post_id,
-        'parent_id'   => $parent_id,
-        'user_id'   => $user_id,
-        'content'      => $content,
-    ]);
+    $postManager->insertComment($post_id, $parent_id, $user_id, $content);
 
     $finalUrl = redirectBackWithParam('comment', 'success');
-    header('Location: ' . $finalUrl);
-    exit;
 } catch (PDOException $e) {
     $finalUrl = redirectBackWithParam('comment', 'failed');
-    header('Location: ' . $finalUrl);
-    exit;
 }
+
+header('Location: ' . $finalUrl);
+exit;

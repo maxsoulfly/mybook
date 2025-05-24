@@ -17,6 +17,15 @@ if ($errorMsg !== '') {
 $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
 $content = trim($_POST['content']);
 
+
 $recipient_id = filter_input(INPUT_POST, 'recipient_id', FILTER_SANITIZE_NUMBER_INT) ?? NULL;
 
-$postManager->insertPost($pdo, $user_id, $content, $recipient_id);
+try {
+    $postManager->insertPost($pdo, $user_id, $content, $recipient_id);
+
+    $finalUrl = redirectBackWithParam('post', 'success');
+} catch (PDOException $e) {
+    $finalUrl = redirectBackWithParam('post', 'failed');
+}
+header('Location: ' . $finalUrl);
+exit;
