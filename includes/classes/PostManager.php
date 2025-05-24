@@ -181,4 +181,27 @@ class PostManager
         $comment = $stmt->fetch(PDO::FETCH_ASSOC);
         return $comment ?: null;
     }
+
+    public function insertPost($pdo, $user_id, $content, $recipient_id)
+    {
+        $stmt = $pdo->prepare(
+            "INSERT INTO posts (user_id, content, recipient_id)
+            VALUES (:user_id, :content, :recipient_id)"
+        );
+        try {
+            $stmt->execute([
+                'user_id'      => $user_id,
+                'content'      => $content,
+                'recipient_id' => $recipient_id
+            ]);
+
+            $finalUrl = redirectBackWithParam('post', 'success');
+            header('Location: ' . $finalUrl);
+            exit;
+        } catch (PDOException $e) {
+            $finalUrl = redirectBackWithParam('post', 'failed');
+            header('Location: ' . $finalUrl);
+            exit;
+        }
+    }
 }
