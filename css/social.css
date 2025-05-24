@@ -310,7 +310,7 @@ img.avatar-huge {
 }
 
 .comment-input-row button:hover {
-    background: none;
+    background: none !important;
     color: var(--primary-color);
 }
 
