@@ -159,4 +159,36 @@ class NotificationsManager
     {
         $this->dispatchActionNotification($pdo, $posterId, 'post', $postId, null);
     }
+
+    public function notifyFriendRequest(PDO $pdo, int $senderId, int $recipientId): void
+    {
+        if ($senderId === $recipientId) return; // Safety check
+
+        $UserManager = new UserManager($pdo);
+
+        $user = $UserManager->getUserByUserId($recipientId);
+        $displayName = $this->getActorDisplayName($pdo, $senderId);
+        if (!$displayName) return;
+
+        $content = "$displayName sent you a friend request.";
+        $link = "/pages/friends.php?u=" . $user['username']; // or your confirmation page
+
+        $this->add($pdo, $recipientId, $content, $link, $senderId);
+    }
+
+    public function notifyFriendAccept(PDO $pdo, int $senderId, int $recipientId): void
+    {
+        if ($senderId === $recipientId) return; // Safety check
+
+        $UserManager = new UserManager($pdo);
+
+        $user = $UserManager->getUserByUserId($senderId);
+        $displayName = $this->getActorDisplayName($pdo, $recipientId);
+        if (!$displayName) return;
+
+        $content = "You are now friends with $displayName";
+        $link = "/pages/profile.php?u=" . $user['username']; // or your confirmation page
+
+        $this->add($pdo, $recipientId, $content, $link, $senderId);
+    }
 }

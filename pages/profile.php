@@ -24,6 +24,12 @@ $UserManager = new UserManager($pdo);
 $user = $UserManager->getLoggedInUser();
 $profile = $UserManager->getUserByUsername($username);
 
+if (isset($_GET['notification_id'])) {
+    $notificationId = (int)$_GET['notification_id'];
+    $NotificationsManager = new NotificationsManager();
+    $NotificationsManager->markRead($pdo, $user['id'], $notificationId);
+}
+
 if (!$user) {
     header('Location: ' . $BASE_URL . '/pages/login.php');
     exit;

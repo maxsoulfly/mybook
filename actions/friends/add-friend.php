@@ -25,6 +25,9 @@ if ($FriendManager->areAlreadyFriends($userId, $friendId)) {
 
 $FriendManager->sendFriendRequest($userId, $friendId);
 
+$NotificationsManager = new NotificationsManager();
+$NotificationsManager->notifyFriendRequest($pdo, $userId, $friendId);
+
 $finalUrl = redirectBackWithParam('request', 'sent');
 header('Location: ' . $finalUrl);
 exit;
