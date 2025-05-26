@@ -23,7 +23,7 @@ This MVP demonstrates the full cycle of user interaction, including posting, com
 
 - PHP (vanilla, procedural + OOP mix)
 - SQLite database
-- HTML/CSS (custom + minimal responsive layout)
+- HTML/CSS (custom)
 - JavaScript (DOM interactions, dropdowns, auto-form behaviors)
 
 ---
