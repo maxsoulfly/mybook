@@ -1,178 +1,299 @@
-/* Global image styles */
+/* Base styles (mobile-first - effectively 320px and up, unless overridden by larger breakpoints) */
+
+/* General body and typography for readability */
+body {
+    font-size: 16px; /* Ensure a readable base font size */
+    line-height: 1.6;
+    color: var(--primary-text-color); /* Assuming this is defined in base.css */
+    background-color: var(--primary-bg-color); /* Assuming this is defined */
+    word-wrap: break-word; /* Prevent long words from overflowing */
+}
+
 img {
     max-width: 100%;
     height: auto;
 }
 
-/* Mobile devices (smartphones, 600px and down) */
-@media only screen and (max-width: 600px) {
-    /* Styles for mobile devices */
-    #header.header-compact .wrapper {
-        grid-template-columns: auto 1fr auto; /* logo, search, menu icon */
-        gap: var(--padding-smaller);
-        padding: 0 var(--padding-small);
-    }
-
-    #header.header-compact .search-form {
-        max-width: 100%; 
-    }
-    
-    /* Note: Hiding main-nav and user-menu for mobile. Requires HTML/JS for hamburger menu. */
-    #header .main-nav { 
-        display: none; 
-    }
-    #header .user-menu {
-        display: none; /* Simplified for now, might need to show a menu icon */
-    }
-
-    #header {
-        padding: var(--padding-smaller);
-    }
-
-    #header.header-large {
-        padding: var(--padding-small);
-        /* Assuming font sizes inside header-large might need adjustment, but no specific variables given */
-    }
-
-    main {
-        grid-template-columns: 1fr; /* Stack columns */
-        gap: var(--padding-smaller);
-    }
-
-    .container,
-    .container-centered {
-        width: auto; /* Allow them to take full available width */
-        margin-left: var(--padding-smaller);
-        margin-right: var(--padding-smaller);
-        padding: var(--padding-small);
-    }
-
-    /* Global Typography Adjustments */
-    :root {
-        --font-size-small: 0.8rem;
-        --font-size-medium: 0.9rem;
-        --font-size-large: 1.1rem;
-        /* Adjust padding variables if necessary */
-        --padding-small: 0.8em;
-        --padding-default: 1.5em;
-    }
-
-    body {
-        font-size: var(--font-size-medium); /* Adjust base font size for mobile */
-    }
-
-    /* Buttons */
-    button,
-    a.button,
-    input[type='button'],
-    input[type='submit'] {
-        padding: var(--padding-small) var(--padding-default); /* Adjust padding */
-        font-size: var(--font-size-small); /* Ensure font size is appropriate */
-        /* width: 100%; /* Optional: make buttons full width */
-        /* margin-bottom: 0.5em; /* Optional: add some margin if they stack */
-    }
-
-    /* Forms */
-    .form-section input,
-    .form-section select,
-    .form-section button {
-        width: 100%; /* Make form elements full width */
-    }
-
-    .form-section {
-        padding: var(--padding-small);
-    }
-    
-    /* Images - already added globally at the top of this file */
-
-    /* Avatar Sizes Adjustments */
-    :root {
-        --avatar-size-small: 1.8em;
-        --avatar-size-medium-small: 2.5em;
-        --avatar-size-medium: 3.5em;
-        /* Add other avatar variables if they need adjustment */
-    }
-    
-    /* Specific component example: Adjust padding for profile-box or status-box */
-    .profile-box, .status-box /* Add other relevant component selectors */ {
-        padding: var(--padding-small);
-    }
-    
-    /* Adjust sidebar elements if they become too cramped */
-    .sidebar-about-box, .sidebar-friends-box {
-        /* font-size: var(--font-size-small); /* Example */
-        /* padding: var(--padding-smaller); /* Example */
-    }
+/* Header adjustments for mobile */
+#header.header-compact .wrapper {
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* Logo, (flexible space or search), Menu Icon placeholder */
+    padding: 0 var(--padding-small); /* Use existing variables if possible */
+    align-items: center;
+    gap: var(--padding-smaller);
 }
 
-/* Tablet devices (iPads, portrait tablets, 600px to 768px) */
-@media only screen and (min-width: 600px) and (max-width: 768px) {
-    /* Styles for tablet devices */
-    #header.header-compact .wrapper {
-        /* Adjust grid to fit tablet screen */
-        grid-template-columns: 1fr 2fr 1fr 1fr; /* Example: logo, search, nav links, user menu */
-        padding: 0 var(--padding-small); /* Corrected from example's --padding-medium */
-        gap: var(--padding-small);
-    }
-
-    /* On tablets, we might show some navigation links if space allows */
-    #header .main-nav {
-        display: block; /* Or flex, depending on its structure */
-        /* Potentially reduce number of visible links or their padding/margin */
-    }
-   
-    #header .user-menu {
-        display: block; /* Or flex */
-    }
-
-    #header {
-        padding: var(--padding-small);
-    }
-
-    main {
-        grid-template-columns: 1fr 2fr; /* Example: Stack one sidebar or adjust proportions */
-        /* Or, adjust proportions of the 3-column layout if space allows:
-           grid-template-columns: 0.75fr 2fr 0.75fr; 
-        */
-        gap: var(--padding-small);
-    }
-
-    .container,
-    .container-centered {
-        /* Adjust max-width if necessary, or keep as is if layout.css handles it well */
-        /* max-width: 90%; */ /* Example */
-    }
-
-    /* Global Typography Adjustments for tablets (optional, if needed) */
-    :root {
-        --font-size-small: 0.85rem;
-        --font-size-medium: 0.95rem;
-        --font-size-large: 1.15rem;
-        /* Adjust padding variables if necessary */
-        --padding-small: 0.9em;
-        --padding-default: 1.8em;
-    }
-
-    body {
-        font-size: var(--font-size-medium); /* Adjust base font size for tablet */
-    }
-
-    /* Form elements might not need to be full width, but perhaps adjust their width */
-    .form-section input,
-    .form-section select,
-    .form-section button {
-        width: 80%; /* Example: not full width, but wider than default */
-    }
-    
-    /* Adjust avatar sizes if they were significantly reduced for mobile */
-    :root {
-        --avatar-size-small: 1.9em;
-        --avatar-size-medium-small: 2.8em;
-        --avatar-size-medium: 3.8em;
-    }
+/* Hide elements that would be in a hamburger menu */
+#header .main-nav,
+#header .user-menu,
+#header.header-compact .search-form /* Example: hide search form, replace with icon if possible */ {
+    display: none; 
 }
 
-/* Desktop devices (laptops, desktops, 768px and up) */
+/* You might need a placeholder for a menu icon if one exists in HTML, e.g. */
+/* .menu-icon { display: block !important; } */
+
+/* Main layout: Single column, sidebars stack below */
+main {
+    display: flex; /* Using flexbox for easier reordering if needed */
+    flex-direction: column;
+    gap: var(--padding-small); /* Adjust gap as needed */
+    padding: var(--padding-small);
+}
+
+/* Assuming your main content area has a class like .main-content or is identifiable */
+/* And sidebars have classes like .sidebar-left, .sidebar-right */
+/* For flexbox, order can be used if HTML structure is fixed.
+   If HTML structure is main, then sidebar1, then sidebar2:
+   .main-content { order: 1; }
+   .sidebar-left { order: 2; }
+   .sidebar-right { order: 3; } 
+   This makes them appear in order. If they are already in this order in HTML, no 'order' is needed.
+   Just ensure they are full width.
+*/
+
+/* Using inferred selectors based on file structure */
+.main-content-area, /* Placeholder for main content area (e.g., in timeline.php) */
+#profile-sidebar,   /* From includes/profile-sidebar.php */
+#timeline-sidebar  /* From includes/timeline-sidebar.php */ {
+    width: 100%; /* Make them full width to stack */
+    margin-bottom: var(--padding-small); /* Add some space between stacked elements */
+}
+
+/* Posts: Ensure they stack vertically */
+/* If posts are in a container that uses grid or flex, adjust it */
+.posts-container, /* Generic placeholder, if one exists */
+.timeline-posts /* From includes/modules/timeline-posts.php */ {
+    display: block; /* Or flex with flex-direction: column */
+}
+
+.display-post /* From includes/modules/display-post.php */ {
+    width: 100%;
+    margin-bottom: var(--padding-small); /* Space between posts */
+    box-shadow: none; /* Simpler display on mobile */
+    border: var(--default-border);
+}
+
+/* Containers: ensure they don't overflow */
+.container,
+.container-centered {
+    width: auto; /* Full width within padding */
+    max-width: 100%; /* Prevent overflow */
+    padding-left: var(--padding-smaller);
+    padding-right: var(--padding-smaller);
+    margin-top: var(--padding-small);
+    box-sizing: border-box;
+}
+
+/* Form elements - ensure usability */
+.form-section input,
+.form-section select,
+.form-section button,
+input[type='text'],
+input[type='email'],
+input[type='password'],
+textarea {
+    width: 100%;
+    padding: var(--padding-small);
+    margin-bottom: var(--padding-smaller);
+    box-sizing: border-box; /* Important for width calculations */
+    font-size: 1rem; /* Ensure readable font size */
+}
+
+/* General component adjustments */
+.profile-box, .status-box, .friends-box, .about-box {
+    padding: var(--padding-small);
+}
+
+/* TODO: Add more specific selectors based on existing HTML for posts, sidebars, etc. */
+/* The classes .main-content, .sidebar-left, .sidebar-right, .posts-container are placeholders. */
+/* You'll need to identify the correct selectors from the file structure provided earlier. */
+/* For example, sidebars might be #profile-sidebar, #timeline-sidebar */
+/* Main content area might be identified by its parent in profile.php or timeline.php */
+
+/* Tablet - 768px and up */
 @media only screen and (min-width: 768px) {
-    /* Styles for desktop devices */
+    /* Styles for tablets and larger */
+    /* Header adjustments for tablet */
+    #header.header-compact .wrapper {
+        /* Example: Reintroduce search or adjust spacing if main-nav is still hidden */
+        grid-template-columns: auto 1fr 1fr auto; /* Logo, Search, Links (partial), Menu Icon */
+        gap: var(--padding-small);
+    }
+
+    /* Optionally, show some navigation links if space allows, or keep hamburger */
+    /* #header .main-nav { display: block; } */ /* If showing some links */
+    #header.header-compact .search-form {
+        display: block; /* Show search form again */
+        max-width: 300px; /* Or other appropriate width */
+    }
+
+    /* Main layout for tablet: Could be 2 columns, e.g., main content and one sidebar */
+    main {
+        flex-direction: row; /* Change from column to row */
+        flex-wrap: wrap; /* Allow wrapping if content exceeds width */
+        justify-content: space-between; /* Distribute space */
+        padding: var(--padding-default);
+    }
+
+    /* Main content area takes up more space */
+    .main-content-area { /* Selector used in previous step, ensure it's correct */
+        width: 65%; /* Example: 2/3 of the width */
+        order: 1; /* Ensure it comes first if flex order was used previously */
+    }
+
+    /* Show one sidebar, e.g., profile sidebar */
+    #profile-sidebar { /* Selector used in previous step */
+        width: 30%; /* Example: 1/3 of the width */
+        order: 2;
+        margin-bottom: 0; /* Remove bottom margin from mobile stacking */
+    }
+
+    /* Hide the other sidebar if two are too much for tablet view */
+    #timeline-sidebar { /* Selector used in previous step */
+        display: none; /* Example: Hide the second sidebar on tablets */
+        /* Or, if you want to stack one sidebar below main and another to the side:
+           #timeline-sidebar { width: 100%; order: 3; margin-bottom: var(--padding-small); }
+           This would require .main-content-area and #profile-sidebar to not sum to 100% width
+           if they are to be side-by-side. The example above is simpler (one sidebar shown).
+        */
+    }
+
+    /* Posts: Can they have a bit more structure? Maybe not full width anymore */
+    .display-post {
+        /* Re-add some shadow or styling if desired for larger screens */
+        /* box-shadow: var(--shadow-default); */
+    }
+
+    /* Form elements might not need to be full width */
+    .form-section input,
+    .form-section select,
+    .form-section button,
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    textarea {
+        width: auto; /* Revert to default or set a specific percentage like 80% */
+        /* Or, for specific forms:
+           .some-form .input-class { width: 70%; }
+        */
+    }
+    
+    .container,
+    .container-centered {
+         padding-left: var(--padding-default);
+         padding-right: var(--padding-default);
+    }
+}
+
+/* Small Desktop - 1024px and up */
+@media only screen and (min-width: 1024px) {
+    /* Styles for small desktops and larger */
+    /* Header: Restore full navigation */
+    #header .main-nav {
+        display: flex; /* Assuming main-nav is a flex container for links */
+        align-items: center;
+    }
+    #header .user-menu {
+        display: flex; /* Assuming user-menu is a flex container */
+        align-items: center;
+    }
+    /* Adjust wrapper if full nav is shown */
+    #header.header-compact .wrapper {
+        grid-template-columns: auto 1fr auto auto; /* Logo, Search, Nav, UserMenu */
+        gap: var(--padding-default); /* Increase gap for more spacing */
+    }
+    /* Hide any mobile-specific menu icon if a full nav is restored */
+    /* .menu-icon { display: none !important; } */ /* Assuming a class like .menu-icon for the hamburger */
+
+    /* Main layout: Restore 3-column layout */
+    main {
+        /* Sticking with flexbox as per the example, and ensuring it behaves like 3-column */
+        /* If layout.css used grid:
+           display: grid;
+           grid-template-columns: 1fr 2fr 1fr; 
+           gap: var(--padding-default);
+           Then, .main-content-area, #profile-sidebar, #timeline-sidebar might not need width/order.
+        */
+        flex-direction: row; /* Ensure it's row, continuing from tablet */
+        justify-content: space-between;
+        align-items: flex-start; /* Align items to the top */
+        padding: var(--padding-default); /* Keep or adjust padding */
+    }
+
+    /* Main content area (center column) */
+    .main-content-area { /* Selector used in previous step */
+        width: 50%; /* Example: Main content takes half the space */
+        order: 2; /* Middle column */
+        margin-bottom: 0; /* Remove bottom margin if it was added for stacking */
+    }
+
+    /* Profile sidebar (left column) */
+    #profile-sidebar { /* Selector used in previous step */
+        width: 23%; /* Example: Sidebar width */
+        order: 1; /* Left column */
+        display: block !important; /* Ensure it's visible, overriding potential tablet 'display:none' if logic was different */
+        margin-bottom: 0;
+    }
+
+    /* Timeline sidebar (right column) */
+    #timeline-sidebar { /* Selector used in previous step */
+        width: 23%; /* Example: Sidebar width */
+        order: 3; /* Right column */
+        display: block !important; /* Ensure it's visible (was hidden on tablet) */
+        margin-bottom: 0;
+    }
+
+    /* Container adjustments for wider screens */
+    .container,
+    .container-centered {
+        max-width: var(--container-width); /* Restore original max-width from base.css */
+        margin-left: auto;
+        margin-right: auto;
+        /* Padding was increased for tablet, might be okay or revert if too much with max-width */
+    }
+    
+    /* Posts styling can be more refined */
+    .display-post {
+        box-shadow: var(--shadow-default); /* Restore default shadow */
+        /* Other potential refinements: more padding, interactive hover effects, etc. */
+    }
+
+    /* Form elements can revert to more compact, non-full-width styles if appropriate */
+    /* This was already done in tablet, confirm it's still desired or adjust */
+    /* .form-section input, etc. { width: auto; } */
+}
+
+/* Large Desktop - 1280px and up */
+@media only screen and (min-width: 1280px) {
+    /* Styles for large desktops */
+    /* Most styles from 1024px (small desktop) should carry over.
+       Adjustments here are for optimizing for even wider screens. */
+
+    /* Increase max-width of the main container by updating the CSS variable.
+       The .container and .container-centered elements should use this variable
+       as per the 1024px media query styles. */
+    :root {
+        --container-width: 1140px; /* Increased from 1000px (base) / 1024px breakpoint */
+    }
+
+    /* 
+       The existing 3-column layout with percentage widths (e.g., 50% for main content, 
+       23% for each sidebar) will naturally adapt to this new --container-width.
+       If, with this wider container, the sidebars become too wide or the main content
+       too narrow proportionally, their percentage widths could be tweaked here.
+       For now, we assume the existing percentages will scale acceptably.
+    
+       Example of further tweaking column proportions if needed:
+       .main-content-area {
+           width: 52%; /* Adjust if 50% feels off with the new container width */
+       }
+       #profile-sidebar,
+       #timeline-sidebar {
+           width: 23%; /* Keep or adjust if sidebars look too wide/narrow */
+       }
+    */
+    
+    /* Font sizes are generally inherited from the 1024px breakpoint or base styles.
+       Only adjust if specific elements need to be larger for very wide screens. */
 }
