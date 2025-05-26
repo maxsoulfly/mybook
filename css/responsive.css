@@ -1,0 +1,178 @@
+/* Global image styles */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Mobile devices (smartphones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    /* Styles for mobile devices */
+    #header.header-compact .wrapper {
+        grid-template-columns: auto 1fr auto; /* logo, search, menu icon */
+        gap: var(--padding-smaller);
+        padding: 0 var(--padding-small);
+    }
+
+    #header.header-compact .search-form {
+        max-width: 100%; 
+    }
+    
+    /* Note: Hiding main-nav and user-menu for mobile. Requires HTML/JS for hamburger menu. */
+    #header .main-nav { 
+        display: none; 
+    }
+    #header .user-menu {
+        display: none; /* Simplified for now, might need to show a menu icon */
+    }
+
+    #header {
+        padding: var(--padding-smaller);
+    }
+
+    #header.header-large {
+        padding: var(--padding-small);
+        /* Assuming font sizes inside header-large might need adjustment, but no specific variables given */
+    }
+
+    main {
+        grid-template-columns: 1fr; /* Stack columns */
+        gap: var(--padding-smaller);
+    }
+
+    .container,
+    .container-centered {
+        width: auto; /* Allow them to take full available width */
+        margin-left: var(--padding-smaller);
+        margin-right: var(--padding-smaller);
+        padding: var(--padding-small);
+    }
+
+    /* Global Typography Adjustments */
+    :root {
+        --font-size-small: 0.8rem;
+        --font-size-medium: 0.9rem;
+        --font-size-large: 1.1rem;
+        /* Adjust padding variables if necessary */
+        --padding-small: 0.8em;
+        --padding-default: 1.5em;
+    }
+
+    body {
+        font-size: var(--font-size-medium); /* Adjust base font size for mobile */
+    }
+
+    /* Buttons */
+    button,
+    a.button,
+    input[type='button'],
+    input[type='submit'] {
+        padding: var(--padding-small) var(--padding-default); /* Adjust padding */
+        font-size: var(--font-size-small); /* Ensure font size is appropriate */
+        /* width: 100%; /* Optional: make buttons full width */
+        /* margin-bottom: 0.5em; /* Optional: add some margin if they stack */
+    }
+
+    /* Forms */
+    .form-section input,
+    .form-section select,
+    .form-section button {
+        width: 100%; /* Make form elements full width */
+    }
+
+    .form-section {
+        padding: var(--padding-small);
+    }
+    
+    /* Images - already added globally at the top of this file */
+
+    /* Avatar Sizes Adjustments */
+    :root {
+        --avatar-size-small: 1.8em;
+        --avatar-size-medium-small: 2.5em;
+        --avatar-size-medium: 3.5em;
+        /* Add other avatar variables if they need adjustment */
+    }
+    
+    /* Specific component example: Adjust padding for profile-box or status-box */
+    .profile-box, .status-box /* Add other relevant component selectors */ {
+        padding: var(--padding-small);
+    }
+    
+    /* Adjust sidebar elements if they become too cramped */
+    .sidebar-about-box, .sidebar-friends-box {
+        /* font-size: var(--font-size-small); /* Example */
+        /* padding: var(--padding-smaller); /* Example */
+    }
+}
+
+/* Tablet devices (iPads, portrait tablets, 600px to 768px) */
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+    /* Styles for tablet devices */
+    #header.header-compact .wrapper {
+        /* Adjust grid to fit tablet screen */
+        grid-template-columns: 1fr 2fr 1fr 1fr; /* Example: logo, search, nav links, user menu */
+        padding: 0 var(--padding-small); /* Corrected from example's --padding-medium */
+        gap: var(--padding-small);
+    }
+
+    /* On tablets, we might show some navigation links if space allows */
+    #header .main-nav {
+        display: block; /* Or flex, depending on its structure */
+        /* Potentially reduce number of visible links or their padding/margin */
+    }
+   
+    #header .user-menu {
+        display: block; /* Or flex */
+    }
+
+    #header {
+        padding: var(--padding-small);
+    }
+
+    main {
+        grid-template-columns: 1fr 2fr; /* Example: Stack one sidebar or adjust proportions */
+        /* Or, adjust proportions of the 3-column layout if space allows:
+           grid-template-columns: 0.75fr 2fr 0.75fr; 
+        */
+        gap: var(--padding-small);
+    }
+
+    .container,
+    .container-centered {
+        /* Adjust max-width if necessary, or keep as is if layout.css handles it well */
+        /* max-width: 90%; */ /* Example */
+    }
+
+    /* Global Typography Adjustments for tablets (optional, if needed) */
+    :root {
+        --font-size-small: 0.85rem;
+        --font-size-medium: 0.95rem;
+        --font-size-large: 1.15rem;
+        /* Adjust padding variables if necessary */
+        --padding-small: 0.9em;
+        --padding-default: 1.8em;
+    }
+
+    body {
+        font-size: var(--font-size-medium); /* Adjust base font size for tablet */
+    }
+
+    /* Form elements might not need to be full width, but perhaps adjust their width */
+    .form-section input,
+    .form-section select,
+    .form-section button {
+        width: 80%; /* Example: not full width, but wider than default */
+    }
+    
+    /* Adjust avatar sizes if they were significantly reduced for mobile */
+    :root {
+        --avatar-size-small: 1.9em;
+        --avatar-size-medium-small: 2.8em;
+        --avatar-size-medium: 3.8em;
+    }
+}
+
+/* Desktop devices (laptops, desktops, 768px and up) */
+@media only screen and (min-width: 768px) {
+    /* Styles for desktop devices */
+}
