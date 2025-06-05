@@ -22,7 +22,7 @@ include_once __DIR__ . '/../includes/header-public.php';
 
     <div class="main-container">
         <div class="form-section container-centered">
-            <h2>Sign up to Mybook</h2>
+            <h2>Sign up to MyBook</h2>
             <form action="<?= $BASE_URL ?>/actions/auth/signup-process.php" method="POST">
                 <input type="text" name="display_name" placeholder="Full Name">
                 <input type="text" name="username" placeholder="Username">
@@ -41,7 +41,7 @@ include_once __DIR__ . '/../includes/header-public.php';
                 <button class="primary">Create Account</button>
 
                 <ul class="links">
-                    <li><a href="<?= $BASE_URL ?>/pages/login.php">Log in to Mybook</a></li>
+                    <li><a href="<?= $BASE_URL ?>/pages/login.php">Log in to MyBook</a></li>
                 </ul>
             </form>
         </div>

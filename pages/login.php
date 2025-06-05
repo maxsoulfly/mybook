@@ -13,7 +13,7 @@ include_once __DIR__ . '/../includes/header-public.php';
 
     <div id="main-container">
         <div class="form-section container-centered">
-            <h2>Log in to Mybook</h2>
+            <h2>Log in to MyBook</h2>
             <form action="<?= $BASE_URL ?>/actions/auth/login-process.php" method="POST">
                 <input type="text" name="email" id="email" placeholder="Enter your email">
                 <input type="password" name="password" id="password" placeholder="Password">
@@ -21,7 +21,7 @@ include_once __DIR__ . '/../includes/header-public.php';
             </form>
             <ul class="links">
                 <li><a href="#">Forgotten Password?</a></li>
-                <li><a href="<?= $BASE_URL ?>/pages/signup.php">Sign Up for Mybook</a></li>
+                <li><a href="<?= $BASE_URL ?>/pages/signup.php">Sign Up for MyBook</a></li>
             </ul>
 
         </div>
