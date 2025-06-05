@@ -18,7 +18,7 @@ function redirectBackWithParam($key, $value)
     $baseUrl = $urlParts['path'];
     parse_str($urlParts['query'] ?? '', $queryParams);
 
-    // Replace or add `request`
+    // Update or add the provided parameter
     $queryParams[$key] = $value;
 
     // Build final redirect
