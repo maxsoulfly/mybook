@@ -27,7 +27,7 @@ class NotificationsRenderer
         } else {
             $actor = [
                 'display_name' => 'System',
-                'avatar' => '/assets/img/default-avatar.png'
+                'avatar' => '/assets/img/default_avatar.png'
             ];
         }
         $when = timeAgoShort($notification['created_at']);
